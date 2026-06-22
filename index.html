@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Ruven Studio | Premium Christian Streetwear & Lifestyle Label</title>
+  <meta name="description" content="Ruven Studio is an independent fashion label creating limited pieces that reflect a journey of self-discovery, renewal of mind, and walking in faith. Explore our premium oversized tees and streetwear hoodies.">
+  <meta name="keywords" content="Christian clothing brand, premium streetwear India, oversized tees, hoodies, faith clothing, Ruven Studio, modern Christian apparel">
+  
+  <!-- OG / Social Share Meta Tags -->
+  <meta property="og:title" content="Ruven Studio | Premium Christian Streetwear">
+  <meta property="og:description" content="India's most beautiful Christian lifestyle fashion brand. Hand-screen-printed premium apparel with a story of faith.">
+  <meta property="og:image" content="/hero_lifestyle.png">
+  <meta property="og:url" content="https://ruvenstudio.in">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/index.css">
+  
+  <!-- Lucide Icons (CDN for quick elegant icons) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Header Navigation
+       ========================================================================== -->
+  <header class="header" id="site-header">
+    <a href="#home" class="brand-logo nav-trigger" data-view="home">
+      <span class="logo-top">ruven<span class="logo-tm">TM</span></span>
+      <span class="logo-bottom">studio</span>
+    </a>
+    
+    <nav>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="#home" class="nav-link nav-trigger" data-view="home">Home</a></li>
+        <li class="nav-item mega-menu-trigger">
+          <a href="#shop" class="nav-link nav-trigger" data-view="shop">Collections</a>
+          <!-- Mega Menu Dropdown -->
+          <div class="mega-menu">
+            <div class="mega-column">
+              <h4>Shop Apparel</h4>
+              <ul>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="oversized-tees">Oversized Tees</a></li>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="hoodies">Streetwear Hoodies</a></li>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="women">Women's Collection</a></li>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="accessories">Accessories</a></li>
+              </ul>
+            </div>
+            <div class="mega-column">
+              <h4>Featured Releases</h4>
+              <ul>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="new-arrivals">Armor of Light (New)</a></li>
+                <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="best-sellers">Renewal of Mind (Best Seller)</a></li>
+              </ul>
+            </div>
+            <div class="mega-column">
+              <h4>About Us</h4>
+              <ul>
+                <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="brand-story-section">Our Mission</a></li>
+                <li><a href="#community" class="nav-trigger" data-view="community">Community Stories</a></li>
+                <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="faq-section">FAQs</a></li>
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <img src="/brand_story_lifestyle.png" class="mega-promo-img" alt="Ruven Studio design sketches">
+              <div class="mega-promo-content">
+                <h5>Made with Purpose</h5>
+                <p>Learn about our 240 GSM heavy fabrics & screen prints.</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item"><a href="#community" class="nav-link nav-trigger" data-view="community">Community</a></li>
+        <li class="nav-item"><a href="#home" class="nav-link nav-trigger scroll-to" data-view="home" data-target="brand-story-section">Our Story</a></li>
+      </ul>
+    </nav>
+    
+    <div class="nav-actions">
+      <button class="nav-action-btn" id="search-btn" aria-label="Search Catalog" title="Search">
+        <i data-lucide="search"></i>
+      </button>
+      <button class="nav-action-btn" id="wishlist-toggle-btn" aria-label="View Wishlist" title="Wishlist">
+        <i data-lucide="heart"></i>
+        <span class="badge-count" id="wishlist-badge">0</span>
+      </button>
+      <button class="nav-action-btn" id="cart-toggle-btn" aria-label="Open Shopping Cart" title="Cart">
+        <i data-lucide="shopping-bag"></i>
+        <span class="badge-count" id="cart-badge">0</span>
+      </button>
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Main View Containers (Single Page Application viewports)
+       ========================================================================== -->
+  <main id="main-content">
+    
+    <!-- 1. HOMEPAGE VIEW -->
+    <section id="home-view" class="view-section active">
+      
+      <!-- Hero Banner -->
+      <div class="hero">
+        <div class="hero-bg">
+          <img src="/hero_lifestyle.png" alt="Young creative streetwear lookbook banner">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p>The Armor & Protection Lookbook</p>
+          <h1>put on the<span>armor of light</span></h1>
+          <div class="hero-ctas">
+            <a href="#shop" class="cta-button cta-button-primary nav-trigger" data-view="shop" data-filter="new-arrivals">Explore Collection</a>
+            <a href="#community" class="cta-button cta-button-secondary nav-trigger" data-view="community">Join the Studio</a>
+          </div>
+        </div>
+        <div class="scroll-indicator">
+          <span>Scroll to Discover</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+
+      <!-- New Collection Highlight -->
+      <div class="section-padding">
+        <div class="section-header">
+          <div>
+            <p class="section-subtitle">New Release</p>
+            <h2 class="section-title">The Armor & Protection Collection</h2>
+          </div>
+          <a href="#shop" class="cta-button cta-button-secondary nav-trigger" data-view="shop" data-filter="new-arrivals">View All</a>
+        </div>
+        <div class="product-grid" id="new-arrivals-grid">
+          <!-- Populated Dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Marquee Bible Verse Banner -->
+      <div class="featured-verse-section section-padding">
+        <span class="verse-mark">“</span>
+        <blockquote class="bible-verse">
+          Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect.
+        </blockquote>
+        <p class="bible-reference">Romans 12:2</p>
+        <span class="verse-mark verse-mark-end">”</span>
+      </div>
+
+      <!-- Best Sellers Section -->
+      <div class="section-padding">
+        <div class="section-header">
+          <div>
+            <p class="section-subtitle">Faith-Inspired Streetwear</p>
+            <h2 class="section-title">Ruven Studio Best Sellers</h2>
+          </div>
+          <a href="#shop" class="cta-button cta-button-secondary nav-trigger" data-view="shop" data-filter="best-sellers">View All</a>
+        </div>
+        <div class="product-grid" id="best-sellers-grid">
+          <!-- Populated Dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Mission / Craftsmanship Story Section -->
+      <div class="mission-section section-padding" id="brand-story-section">
+        <div class="mission-text">
+          <p class="section-subtitle">Our Heart & Mission</p>
+          <h2 class="section-title" style="margin-bottom: var(--spacing-md);">Made with Purpose, Crafted for Conversations.</h2>
+          <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-lg);">
+            At Ruven Studio, we construct premium, oversized garments that serve as starting points for faith-filled conversations. We do not design standard merchandise. We select heavy-weight French Terry fabrics, implement hand-pulled screen printing, and pair every drop with scriptures that remind you of God's love and protection. 
+          </p>
+          <div class="details-verse-box" style="margin-bottom: var(--spacing-lg);">
+            <div class="details-verse-quote">"Walk in faith, dress in truth."</div>
+            <div class="details-verse-ref">Ruven Studio Core Maxim</div>
+          </div>
+          <a href="#community" class="cta-button cta-button-primary nav-trigger" data-view="community">Explore Faith Journal</a>
+        </div>
+        <div class="mission-media">
+          <img src="/brand_story_lifestyle.png" alt="Ruven Studio design table showing sketches and organic linen fabrics">
+        </div>
+      </div>
+
+      <!-- Trust Badges Section -->
+      <div style="background-color: var(--color-bg-card); padding: var(--spacing-2xl) var(--spacing-3xl); border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: var(--spacing-xl); text-align: center;">
+          <div style="max-width: 250px;">
+            <i data-lucide="shield-check" style="color: var(--color-brand-burgundy); width: 36px; height: 36px; margin: 0 auto var(--spacing-xs);"></i>
+            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Premium Heavyweight Fabric</h4>
+            <p style="font-size: 0.75rem; color: var(--color-text-muted);">240 GSM heavy French Terry and premium ring-spun cotton.</p>
+          </div>
+          <div style="max-width: 250px;">
+            <i data-lucide="heart" style="color: var(--color-brand-burgundy); width: 36px; height: 36px; margin: 0 auto var(--spacing-xs);"></i>
+            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Made with Purpose</h4>
+            <p style="font-size: 0.75rem; color: var(--color-text-muted);">Every piece contains biblical narratives and subtle faith details.</p>
+          </div>
+          <div style="max-width: 250px;">
+            <i data-lucide="refresh-cw" style="color: var(--color-brand-burgundy); width: 36px; height: 36px; margin: 0 auto var(--spacing-xs);"></i>
+            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Sustainable 7-Day Returns</h4>
+            <p style="font-size: 0.75rem; color: var(--color-text-muted);">Hassle-free size exchanges for perfect, oversized streetwear fits.</p>
+          </div>
+          <div style="max-width: 250px;">
+            <i data-lucide="truck" style="color: var(--color-brand-burgundy); width: 36px; height: 36px; margin: 0 auto var(--spacing-xs);"></i>
+            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 4px;">Pan-India Fast Shipping</h4>
+            <p style="font-size: 0.75rem; color: var(--color-text-muted);">Fully trackable orders, dispatched from our creative studio.</p>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- 2. SHOP / COLLECTION VIEW -->
+    <section id="shop-view" class="view-section">
+      <div class="section-padding shop-page">
+        <div class="shop-toolbar">
+          <div>
+            <h1 class="editorial-title" style="font-size: 2.5rem;" id="shop-collection-title">All Apparel</h1>
+            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 4px;" id="shop-items-count">Showing 2 premium products</p>
+          </div>
+          <div class="filter-group">
+            <select id="category-filter" class="filter-select">
+              <option value="all">All Drops</option>
+              <option value="oversized-tees">Oversized Tees</option>
+              <option value="hoodies">Streetwear Hoodies</option>
+            </select>
+            <select id="sort-select" class="filter-select">
+              <option value="featured">Featured Releases</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="product-grid" id="shop-products-grid">
+          <!-- Populated Dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PRODUCT DETAILS VIEW -->
+    <section id="product-view" class="view-section">
+      <div class="section-padding product-detail-page">
+        <a href="#shop" class="nav-trigger" data-view="shop" style="display: inline-flex; align-items: center; gap: var(--spacing-xs); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: var(--spacing-xl); color: var(--color-text-muted);"><i data-lucide="arrow-left" style="width: 14px;"></i> Back to collections</a>
+        
+        <div class="product-detail-container" id="product-detail-wrapper">
+          <!-- Populated Dynamically via JS (Gallery Left, Info Right) -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. COMMUNITY HUB VIEW -->
+    <section id="community-view" class="view-section">
+      <div class="section-padding community-page">
+        <div class="community-hero">
+          <p class="section-subtitle">Ruven Studio Collective</p>
+          <h1 class="editorial-title" style="font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: var(--spacing-sm);">The Fellowship Studio</h1>
+          <p style="color: var(--color-text-muted);">A creative sanctuary connecting youth across India. Post your prayer requests, read weekly faith devotionals, and share how you start conversations about Christ in your college or church.</p>
+        </div>
+        
+        <div class="community-grid">
+          <!-- Prayer Wall Left Column -->
+          <div class="prayer-wall-section">
+            <div class="prayer-form-container">
+              <h3>Share a Prayer Request</h3>
+              <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Need prayer for college, exams, church work, or personal growth? Submit anonymously or with your initials, and our studio community will stand with you.</p>
+              <form class="prayer-form" id="prayer-request-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                  <input type="text" id="prayer-author" placeholder="Your Name or Initials (e.g. S. R.)" required>
+                  <input type="text" id="prayer-location" placeholder="City (e.g. Bengaluru)" required>
+                </div>
+                <textarea id="prayer-message" placeholder="Type your prayer request..." required></textarea>
+                <button type="submit" class="cta-button cta-button-primary" style="padding: 0.8rem; font-size: 0.8rem; margin-top: var(--spacing-xs);">Submit to Prayer Wall</button>
+              </form>
+            </div>
+            
+            <h2 class="editorial-title" style="font-size: 1.8rem; margin-bottom: var(--spacing-lg);">The Active Prayer Wall</h2>
+            <div class="prayer-wall-feed" id="prayer-wall-feed">
+              <!-- Populated Dynamically via JS -->
+            </div>
+          </div>
+          
+          <!-- Devotional & Scripture Right Column -->
+          <div class="community-sidebar">
+            <div class="sidebar-widget">
+              <h4>Verse of the Week</h4>
+              <div class="verse-week-card">
+                <p class="verse-week-quote">"The light shines in the darkness, and the darkness has not overcome it."</p>
+                <p class="bible-reference" style="margin-top: 4px;">John 1:5</p>
+              </div>
+            </div>
+            
+            <div class="sidebar-widget">
+              <h4>Faith Journal & Devotionals</h4>
+              <div class="devotional-post">
+                <span class="devotional-date">June 22, 2026 • Streetwear & Ministry</span>
+                <a href="#community" class="devotional-title">How Graphic Tees Become Open Doors for Faith Conversations</a>
+              </div>
+              <div class="devotional-post">
+                <span class="devotional-date">June 15, 2026 • Christian Youth</span>
+                <a href="#community" class="devotional-title">Finding Peace in the Rush: A Gen Z Devotional on Stillness</a>
+              </div>
+              <div class="devotional-post">
+                <span class="devotional-date">June 08, 2026 • Studio Process</span>
+                <a href="#community" class="devotional-title">The Art of Hand-Screen Printing: Why We Choose French Terry</a>
+              </div>
+            </div>
+            
+            <div class="sidebar-widget" style="background-color: var(--color-bg-card); text-align: center;">
+              <h4 style="border-bottom: none; margin-bottom: var(--spacing-xs);">Join our Church Group</h4>
+              <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Get updates on monthly studio fellowships, scripture reading circles, and new clothing drops.</p>
+              <a href="#" class="cta-button cta-button-primary" style="padding: 0.6rem 1.2rem; font-size: 0.75rem; width: 100%;">Connect on WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Drawers & Overlays (Cart, Wishlist, Search, Mobile Menu)
+       ========================================================================== -->
+       
+  <!-- Backdrop Overlay -->
+  <div class="drawer-backdrop" id="backdrop-overlay"></div>
+  
+  <!-- Shopping Cart Drawer -->
+  <div class="drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h3>Your Bag</h3>
+      <button class="drawer-close-btn" id="cart-close-btn" aria-label="Close cart"><i data-lucide="x"></i></button>
+    </div>
+    <div class="drawer-content" id="cart-drawer-content">
+      <!-- Dynamically Rendered Cart Items or Empty State -->
+    </div>
+    <div class="drawer-footer" id="cart-drawer-footer">
+      <div class="cart-totals-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal-val">₹0.00</span>
+      </div>
+      <p class="cart-totals-subtitle">Free standard shipping applied. Taxes calculated at checkout.</p>
+      <button class="cta-button cta-button-primary checkout-btn" id="checkout-btn">Proceed to Secure Checkout</button>
+    </div>
+  </div>
+
+  <!-- Wishlist Drawer -->
+  <div class="drawer" id="wishlist-drawer">
+    <div class="drawer-header">
+      <h3>Your Wishlist</h3>
+      <button class="drawer-close-btn" id="wishlist-close-btn" aria-label="Close wishlist"><i data-lucide="x"></i></button>
+    </div>
+    <div class="drawer-content" id="wishlist-drawer-content">
+      <!-- Dynamically Rendered Wishlist Items -->
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Sticky Cart Indicator -->
+  <div class="mobile-sticky-bar" id="mobile-bottom-bar">
+    <div style="display: flex; flex-direction: column;">
+      <span style="font-size: 0.65rem; text-transform: uppercase; color: var(--color-text-muted);">Bag Subtotal</span>
+      <span id="mobile-sticky-price" style="font-weight: 700; font-size: 0.95rem;">₹0.00</span>
+    </div>
+    <button class="mobile-sticky-btn" id="mobile-checkout-btn">Checkout</button>
+  </div>
+
+  <!-- ==========================================================================
+       Newsletter Signup & Footer
+       ========================================================================== -->
+  <section class="newsletter-section section-padding">
+    <p class="section-subtitle" style="color: var(--color-brand-gold);">Faith, Stories, and Studio Drops</p>
+    <h2>Subscribe to the Studio Newsletter</h2>
+    <p>Sign up to receive reflections on scripture, design diary insights, and priority access to limited collections.</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input type="email" placeholder="Your Email Address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="brand-logo nav-trigger" data-view="home" style="margin-bottom: var(--spacing-sm);">
+          <span class="logo-top" style="color: var(--color-white); font-size: 2.2rem;">ruven<span class="logo-tm">TM</span></span>
+          <span class="logo-bottom" style="color: var(--color-white); font-size: 2rem; padding-left: 2rem; margin-top: -8px;">studio</span>
+        </a>
+        <p>An independent Christian lifestyle fashion label crafting limited pieces that reflect a journey of self-discovery through God and transformation into His purpose.</p>
+      </div>
+      <div class="footer-links-col">
+        <h4>Studio Collections</h4>
+        <ul>
+          <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="oversized-tees">Oversized T-Shirts</a></li>
+          <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="hoodies">French Terry Hoodies</a></li>
+          <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="new-arrivals">Armor of Light Drop</a></li>
+          <li><a href="#shop" class="nav-trigger filter-trigger" data-view="shop" data-filter="best-sellers">Best Sellers</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="#community" class="nav-trigger" data-view="community">The Prayer Wall</a></li>
+          <li><a href="#community" class="nav-trigger" data-view="community">Weekly Faith Devotionals</a></li>
+          <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="brand-story-section">Our Core Mission</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-col">
+        <h4>Support & Help</h4>
+        <ul>
+          <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="faq-section">Sizing Guidelines</a></li>
+          <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="faq-section">Sustainable 7-Day Exchange</a></li>
+          <li><a href="#home" class="nav-trigger scroll-to" data-view="home" data-target="faq-section">Pan-India Support</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2026 Ruven Studio. Crafted with purpose in India.</p>
+      <div class="footer-bottom-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic JavaScript -->
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
