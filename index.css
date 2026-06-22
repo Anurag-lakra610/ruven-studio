@@ -10,6 +10,8 @@
   /* Harmonious Color Palette */
   --color-bg-warm: #FAF9F6;          /* Clean warm linen/cream */
   --color-bg-card: #F4F2EB;          /* Slightly deeper warm cream for cards */
+  --color-bg-primary: var(--color-bg-warm);   /* Primary background */
+  --color-bg-secondary: var(--color-bg-card); /* Secondary background */
   --color-text-primary: #1C1C1C;     /* Charcoal/off-black for premium look */
   --color-text-muted: #6B6862;       /* Subdued grayish-brown body/caption */
   
@@ -78,8 +80,11 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   line-height: 1.65;
-  overflow-x: hidden;
   padding-top: 0;
+}
+
+#main-content {
+  overflow-x: hidden;
 }
 
 /* Custom Scrollbar */
@@ -263,12 +268,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-premium);
 }
 
-/* Dark Mode Navigation Adjustments */
-@media (prefers-color-scheme: dark) {
-  .header {
-    background-color: var(--color-bg-primary);
-  }
-}
+/* Dark Mode Navigation Adjustments - Removed background override to keep solid white navbar matching logo background */
 
 .brand-logo {
   display: inline-flex;
