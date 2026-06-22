@@ -2624,25 +2624,9 @@ function setupNewsletter() {
   }
 }
 
-// 11. ANNOUNCEMENT BAR VALUE ROTATION
+// 11. ANNOUNCEMENT BAR VALUE ROTATION (Now handled via CSS infinite marquee)
 function setupAnnouncementBar() {
-  const messages = [
-    "Designed to Start Conversations About Christ",
-    "Premium Quality • Faith Inspired • Limited Collections",
-    "Made with Purpose"
-  ];
-  let currentIndex = 0;
-  const container = document.getElementById("announcement-text");
-  if (!container) return;
-
-  setInterval(() => {
-    container.style.opacity = 0;
-    setTimeout(() => {
-      currentIndex = (currentIndex + 1) % messages.length;
-      container.textContent = messages[currentIndex];
-      container.style.opacity = 1;
-    }, 400);
-  }, 4500);
+  // Infinite scroll marquee is fully managed via hardware-accelerated CSS animations in index.css
 }
 
 // 12. SEARCH MODAL TRIGGERS & HANDLING
