@@ -95,9 +95,10 @@
           </div>
         </li>
         <li class="nav-item"><a href="#shop" class="nav-link nav-trigger filter-trigger" data-view="shop" data-filter="new-arrivals">New Arrivals</a></li>
-        <li class="nav-item"><a href="#home" class="nav-link nav-trigger scroll-to" data-view="home" data-target="brand-statement-section">About</a></li>
+        <li class="nav-item"><a href="#story" class="nav-link nav-trigger" data-view="story">Our Story</a></li>
         <li class="nav-item"><a href="#community" class="nav-link nav-trigger" data-view="community">Community</a></li>
-        <li class="nav-item"><a href="#home" class="nav-link nav-trigger scroll-to" data-view="home" data-target="newsletter-section">Contact</a></li>
+        <li class="nav-item"><a href="#journal" class="nav-link nav-trigger" data-view="journal">Journal</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link nav-trigger" data-view="contact">Contact</a></li>
       </ul>
     </nav>
     
@@ -877,70 +878,150 @@
       </div>
     </section>
 
-    <!-- 4. COMMUNITY HUB VIEW -->
-    <section id="community-view" class="view-section">
-      <div class="section-padding community-page">
-        <div class="community-hero">
-          <p class="section-subtitle">Ruven Studio Collective</p>
-          <h1 class="editorial-title" style="font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: var(--spacing-sm);">The Fellowship Studio</h1>
-          <p style="color: var(--color-text-muted);">A creative sanctuary connecting youth across India. Post your prayer requests, read weekly faith devotionals, and share how you start conversations about Christ in your college or church.</p>
+    <!-- 4. OUR STORY VIEW -->
+    <section id="story-view" class="view-section">
+      <div class="brand-story-hero">
+        <div class="story-hero-content">
+          <p class="section-subtitle">Ruven Studio Narrative</p>
+          <h1 class="editorial-title">Formed in Faith.<br>Tailored for Purpose.</h1>
+          <p class="story-hero-desc">We do not design clothing to conform to modern patterns; we craft garments that act as open invitations to share the hope of Christ.</p>
         </div>
-        
-        <div class="community-grid">
-          <!-- Prayer Wall Left Column -->
-          <div class="prayer-wall-section">
+      </div>
+
+      <div class="pdp-wrapper-container">
+        <!-- Timeline of Ruven Studio -->
+        <div class="story-timeline-section" id="story-timeline-target"></div>
+
+        <!-- Founder Vision Letter -->
+        <div class="story-founder-section" id="story-founder-target"></div>
+
+        <!-- Mission, Vision & Core Values -->
+        <div class="story-mission-section" id="story-mission-target"></div>
+
+        <!-- Core Beliefs Statement -->
+        <div class="story-beliefs-section" id="story-beliefs-target"></div>
+      </div>
+    </section>
+
+    <!-- 5. COMMUNITY HUB VIEW -->
+    <section id="community-view" class="view-section">
+      <div class="community-hero-wrap">
+        <div class="community-hero-content">
+          <p class="section-subtitle">Ruven Studio Collective</p>
+          <h1 class="editorial-title">The Fellowship Circle</h1>
+          <p class="community-hero-desc">A creative sanctuary connecting youth across India. Share your prayer requests, explore testimonies, and find resources for church partnerships.</p>
+        </div>
+      </div>
+
+      <div class="pdp-wrapper-container">
+        <!-- Impact Counter Stats Section -->
+        <div class="community-impact-section" id="community-impact-target"></div>
+
+        <div class="community-grid-layout">
+          <!-- Left Column: Prayer Wall Form & Feed -->
+          <div class="community-left-col">
             <div class="prayer-form-container">
               <h3>Share a Prayer Request</h3>
-              <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Need prayer for college, exams, church work, or personal growth? Submit anonymously or with your initials, and our studio community will stand with you.</p>
-              <form class="prayer-form" id="prayer-request-form">
+              <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Need prayer for exams, college, family, or spiritual growth? Submit anonymously or with your initials, and our community will stand with you.</p>
+              <form class="prayer-form" id="prayer-request-form-v3">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
-                  <input type="text" id="prayer-author" placeholder="Your Name or Initials (e.g. S. R.)" required>
-                  <input type="text" id="prayer-location" placeholder="City (e.g. Bengaluru)" required>
+                  <input type="text" id="prayer-author-v3" placeholder="Name or Initials (e.g. S. R.)" required>
+                  <input type="text" id="prayer-location-v3" placeholder="City (e.g. Bengaluru)" required>
                 </div>
-                <textarea id="prayer-message" placeholder="Type your prayer request..." required></textarea>
+                <textarea id="prayer-message-v3" placeholder="Type your prayer request..." required></textarea>
                 <button type="submit" class="cta-button cta-button-primary" style="padding: 0.8rem; font-size: 0.8rem; margin-top: var(--spacing-xs);">Submit to Prayer Wall</button>
               </form>
             </div>
             
-            <h2 class="editorial-title" style="font-size: 1.8rem; margin-bottom: var(--spacing-lg);">The Active Prayer Wall</h2>
-            <div class="prayer-wall-feed" id="prayer-wall-feed">
-              <!-- Populated Dynamically via JS -->
-            </div>
+            <h2 class="editorial-title" style="font-size: 1.8rem; margin: var(--spacing-lg) 0 var(--spacing-md);">The Active Prayer Wall</h2>
+            <div class="prayer-wall-feed" id="prayer-wall-feed-v3"></div>
           </div>
-          
-          <!-- Devotional & Scripture Right Column -->
-          <div class="community-sidebar">
-            <div class="sidebar-widget">
-              <h4>Verse of the Week</h4>
-              <div class="verse-week-card">
-                <p class="verse-week-quote">"The light shines in the darkness, and the darkness has not overcome it."</p>
-                <p class="bible-reference" style="margin-top: 4px;">John 1:5</p>
-              </div>
-            </div>
+
+          <!-- Right Column: Interactive Gallery & Church Widget -->
+          <div class="community-right-col">
+            <div class="community-gallery-widget" id="community-gallery-target"></div>
             
-            <div class="sidebar-widget">
-              <h4>Faith Journal & Devotionals</h4>
-              <div class="devotional-post">
-                <span class="devotional-date">June 22, 2026 • Streetwear & Ministry</span>
-                <a href="#community" class="devotional-title">How Graphic Tees Become Open Doors for Faith Conversations</a>
-              </div>
-              <div class="devotional-post">
-                <span class="devotional-date">June 15, 2026 • Christian Youth</span>
-                <a href="#community" class="devotional-title">Finding Peace in the Rush: A Gen Z Devotional on Stillness</a>
-              </div>
-              <div class="devotional-post">
-                <span class="devotional-date">June 08, 2026 • Studio Process</span>
-                <a href="#community" class="devotional-title">The Art of Hand-Screen Printing: Why We Choose French Terry</a>
-              </div>
-            </div>
-            
-            <div class="sidebar-widget" style="background-color: var(--color-bg-card); text-align: center;">
-              <h4 style="border-bottom: none; margin-bottom: var(--spacing-xs);">Join our Church Group</h4>
-              <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Get updates on monthly studio fellowships, scripture reading circles, and new clothing drops.</p>
-              <a href="#" class="cta-button cta-button-primary" style="padding: 0.6rem 1.2rem; font-size: 0.75rem; width: 100%;">Connect on WhatsApp</a>
+            <div class="sidebar-widget" style="background-color: var(--color-bg-card); text-align: center; border-radius: var(--border-radius-md); border: 1px solid var(--color-border); padding: var(--spacing-md); margin-top: var(--spacing-md);">
+              <h4 style="border-bottom: none; margin-bottom: var(--spacing-xs); font-size: 1.05rem; font-weight:700; text-transform:uppercase;">Join our Fellowship</h4>
+              <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Get updates on weekly scripture readings, local fellowships, and drop launch events.</p>
+              <a href="https://wa.me/919999999999" target="_blank" class="cta-button cta-button-primary" style="padding: 0.6rem 1.2rem; font-size: 0.75rem; width: 100%; display: block; text-align:center;">Connect on WhatsApp</a>
             </div>
           </div>
         </div>
+
+        <!-- Customer Stories Testimony Grid -->
+        <div class="community-testimonies-section" id="community-testimonies-target"></div>
+      </div>
+    </section>
+
+    <!-- 6. FAITH JOURNAL VIEW -->
+    <section id="journal-view" class="view-section">
+      <div class="journal-hero-wrap">
+        <div class="journal-hero-content">
+          <p class="section-subtitle">Ruven Editorial Journal</p>
+          <h1 class="editorial-title">Reflections & Stillness</h1>
+          <p class="journal-hero-desc">Explore weekly devotionals on spiritual renewal, design blueprints, and narratives on modern Christian living.</p>
+        </div>
+      </div>
+
+      <div class="pdp-wrapper-container">
+        <!-- Verse of the Week High Impact Card -->
+        <div class="journal-votw-section" id="journal-votw-target"></div>
+
+        <!-- Journal Categories Filter Row -->
+        <div class="journal-filters-row" id="journal-filters-target"></div>
+
+        <!-- Journal Grid Target -->
+        <div class="journal-articles-grid" id="journal-articles-target"></div>
+      </div>
+
+      <!-- Journal Article Reading Mode Overlay Modal -->
+      <div class="pdp-modal" id="pdp-journal-modal">
+        <div class="pdp-modal-overlay"></div>
+        <div class="pdp-modal-content" style="max-width: 800px; height: 90vh; display: flex; flex-direction: column;">
+          <button class="pdp-modal-close" id="pdp-journal-close-btn" aria-label="Close article"><i data-lucide="x"></i></button>
+          
+          <!-- Reading Progress Bar -->
+          <div class="journal-reading-progress-wrap" style="height: 4px; background: var(--color-border); width: 100%; margin-top: 15px;">
+            <div id="journal-reading-progress-bar" style="height: 100%; background: var(--color-brand-burgundy); width: 0%;"></div>
+          </div>
+
+          <div class="pdp-modal-body" id="pdp-journal-modal-body" style="overflow-y: auto; flex-grow: 1; padding: var(--spacing-md) 0;">
+            <!-- Dynamic article content -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CONTACT & FAQ VIEW -->
+    <section id="contact-view" class="view-section">
+      <div class="contact-hero-wrap">
+        <div class="contact-hero-content">
+          <p class="section-subtitle">Ruven Client Services</p>
+          <h1 class="editorial-title">Reach Out to Our Studio</h1>
+          <p class="contact-hero-desc">Whether you have sizing questions, need prayer support, or want to establish a church group partnership, we're here to help.</p>
+        </div>
+      </div>
+
+      <div class="pdp-wrapper-container">
+        <div class="contact-grid-layout">
+          <!-- Left Column: Office coordinates -->
+          <div class="contact-info-column" id="contact-info-target"></div>
+
+          <!-- Right Column: Interactive Tabbed Form -->
+          <div class="contact-forms-column">
+            <div class="contact-form-tabs">
+              <button class="contact-tab-btn active" data-form="general">General Help</button>
+              <button class="contact-tab-btn" data-form="prayer">Submit Prayer</button>
+              <button class="contact-tab-btn" data-form="church">Church Partnership</button>
+            </div>
+            
+            <div class="contact-forms-container" id="contact-forms-target"></div>
+          </div>
+        </div>
+
+        <!-- FAQ Grouped Accordions -->
+        <div class="contact-faq-section" id="contact-faq-target"></div>
       </div>
     </section>
   </main>
@@ -1091,6 +1172,12 @@
       </div>
     </div>
   </footer>
+
+  <!-- Dynamic Success Toast Notifications -->
+  <div class="success-toast" id="success-toast">
+    <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+    <span id="toast-message">Submission successful!</span>
+  </div>
 
   <!-- Application Logic JavaScript -->
   <script type="module" src="/main.js"></script>
