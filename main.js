@@ -18,7 +18,74 @@ const PRODUCTS = [
     verseRef: "Romans 13:12",
     verseMeaning: "Designed to encourage believers to walk in spiritual clarity, strength, and integrity. The linear shield represents faith acting as a protective barrier in modern environments.",
     fabricDetails: "100% premium ring-spun organic cotton. 240 GSM heavy French Terry structure. Custom oversized boxy cut, ribbed crew neck collar, double-needle stitched cuffs, pre-shrunk to prevent sizing changes.",
-    designStory: "This design marks Ruven Studio's commitment to visual ministry. The clean shield illustration merges modern minimalism with historic faith symbolism, acting as an open doorway for conversation on campus or in the creative office."
+    designStory: "This design marks Ruven Studio's commitment to visual ministry. The clean shield illustration merges modern minimalism with historic faith symbolism, acting as an open doorway for conversation on campus or in the creative office.",
+    colors: [
+      { name: "Vintage Black", hex: "#1c1b1b" },
+      { name: "Slate Grey", hex: "#4e5256" }
+    ],
+    modelInfo: "Model is 6'0\" / 183cm and wears size M for a relaxed boxy fit.",
+    gallery: [
+      "/oversized_tee_product.png",
+      "/brand_story_lifestyle.png",
+      "/hero_lifestyle.png"
+    ],
+    detailsList: [
+      { label: "Fabric", value: "100% Organic Ring-Spun Cotton" },
+      { label: "Weight", value: "240 GSM Extra Heavy Knit" },
+      { label: "Fit", value: "Oversized Boxy Silhouette with Drop Shoulders" },
+      { label: "Print", value: "Premium Hand-Screened Plastisol Print" },
+      { label: "Shrinkage", value: "Pre-shrunk to maintain shape over lifetime" },
+      { label: "Origin", value: "Ethically Knitted & Printed in India" }
+    ],
+    reviews: [
+      {
+        id: "rev-tee-1",
+        author: "Samuel K.",
+        rating: 5,
+        date: "2026-05-18",
+        title: "Incredible weight and message",
+        body: "The weight of this tee is unlike anything I've bought in India. Very boxy, heavy, but extremely breathable. I've had three conversations at my university campus about the Romans shield graphic already!",
+        verified: true,
+        helpfulCount: 14,
+        avatarColor: "#B5A48F"
+      },
+      {
+        id: "rev-tee-2",
+        author: "Priyan D.",
+        rating: 5,
+        date: "2026-06-02",
+        title: "Absolute premium streetwear",
+        body: "Fits exactly like high-end Scandinavian streetwear brands but with a purpose. Ribbed collar is tight and doesn't stretch out after multiple washes. Love it.",
+        verified: true,
+        helpfulCount: 8,
+        avatarColor: "#8D9A8D"
+      },
+      {
+        id: "rev-tee-3",
+        author: "Aaron J.",
+        rating: 4,
+        date: "2026-06-10",
+        title: "Very oversized, consider sizing down",
+        body: "Love the graphic and texture. It is quite oversized, so if you want a more standard fit, size down. Otherwise, the drape is incredible.",
+        verified: true,
+        helpfulCount: 3,
+        avatarColor: "#9BA2B5"
+      }
+    ],
+    faqs: [
+      {
+        question: "How should I wash the Armor of Light Tee?",
+        answer: "Wash inside out in cold water on a gentle cycle. Hang dry in shade to prevent any shrinkage and preserve the screen-printed graphic. Avoid ironing directly on the printed graphic."
+      },
+      {
+        question: "Is this tee suitable for hot Indian summers?",
+        answer: "Yes. Even though it is a heavyweight 240 GSM knit, we use organic ring-spun cotton which is naturally highly breathable, keeping you comfortable even on warmer days."
+      },
+      {
+        question: "Can I exchange if the size is too large?",
+        answer: "We offer free size exchanges within 7 days of delivery. Because this features an oversized boxy cut, we recommend checking our Size Guide or choosing your normal size for a baggy street look."
+      }
+    ]
   },
   {
     id: "hoodie-romans-12-2",
@@ -33,7 +100,74 @@ const PRODUCTS = [
     verseRef: "Romans 12:2",
     verseMeaning: "In a noisy, modern society pulling youth in various directions, this scripture serves as a quiet reminder to align our thoughts in Christ, creating a sanctuary of peace in the mind.",
     fabricDetails: "80% premium organic cotton, 20% polyester for durability. Ultra-heavy 380 GSM combed French Terry. Cozy loop-back lining, double-lined hood with no drawstrings for a clean Scandinavian silhouette, dropped shoulders.",
-    designStory: "The delicate embroidered olive branch on the chest signifies peace, renewal, and spiritual restoration. Built to last a lifetime, this hoodie represents comfort, stillness, and mindful living."
+    designStory: "The delicate embroidered olive branch on the chest signifies peace, renewal, and spiritual restoration. Built to last a lifetime, this hoodie represents comfort, stillness, and mindful living.",
+    colors: [
+      { name: "Sage Green", hex: "#5C6B5E" },
+      { name: "Oatmeal Melange", hex: "#E3DFD5" }
+    ],
+    modelInfo: "Model is 6'1\" / 185cm and wears size L for an authentic slouchy streetwear drape.",
+    gallery: [
+      "/faith_hoodie_product.png",
+      "/hero2.png",
+      "/brand_story_lifestyle.png"
+    ],
+    detailsList: [
+      { label: "Fabric", value: "80% Organic Cotton / 20% Durable Polyester" },
+      { label: "Weight", value: "380 GSM Ultra-Heavy combed French Terry" },
+      { label: "Fit", value: "Clean Scandinavian Silhouette, Dropped Shoulders" },
+      { label: "Hood", value: "Double-lined, Structured (No drawstrings)" },
+      { label: "Detailing", value: "High-density chest embroidery of peace olive branch" },
+      { label: "Origin", value: "Ethically Sourced & Embroidered in India" }
+    ],
+    reviews: [
+      {
+        id: "rev-hoodie-1",
+        author: "Devang P.",
+        rating: 5,
+        date: "2026-04-20",
+        title: "Best hoodie I own",
+        body: "The double-lined hood stands up perfectly without drawstrings. The embroidery is super clean, and the interior French Terry loops are very soft. Worth every rupee.",
+        verified: true,
+        helpfulCount: 22,
+        avatarColor: "#8D9A8D"
+      },
+      {
+        id: "rev-hoodie-2",
+        author: "Rohan S.",
+        rating: 5,
+        date: "2026-05-04",
+        title: "Perfect minimal aesthetic",
+        body: "Extremely warm and heavy. The Sage Green color looks even better in person—has a beautiful vintage pigment dye look. True to size for a premium fit.",
+        verified: true,
+        helpfulCount: 15,
+        avatarColor: "#B5A48F"
+      },
+      {
+        id: "rev-hoodie-3",
+        author: "Joel M.",
+        rating: 5,
+        date: "2026-06-05",
+        title: "Premium heavy cotton",
+        body: "Very solid drape. It feels thick, robust, and the scripture meaning is a beautiful talking point when wearing it around peers. High recommend.",
+        verified: true,
+        helpfulCount: 9,
+        avatarColor: "#9BA2B5"
+      }
+    ],
+    faqs: [
+      {
+        question: "Is this hoodie brushed fleece inside?",
+        answer: "No, it is premium French Terry with a loopback interior. This keeps the hoodie structured and heavyweight (380 GSM) while preventing lint-shedding and making it suitable for moderate to cool Indian climates."
+      },
+      {
+        question: "Does the hoodie have pocket storage?",
+        answer: "Yes, it features a clean double-entry kangaroo pocket integrated seamlessly into the side seams, preserving the sleek, minimal front aesthetic of the hoodie."
+      },
+      {
+        question: "What is the return policy?",
+        answer: "We offer 7-day hassle-free returns and exchanges for all unworn garments in their original packaging. Simply contact client services at care@ruvenstudio.in."
+      }
+    ]
   }
 ];
 
@@ -984,10 +1118,8 @@ function syncFilterCheckboxStates() {
 }
 
 // 6. PRODUCT DETAILS PAGE RENDERING & ZOOM
+// 6. PRODUCT DETAILS PAGE RENDERING & ZOOM
 function renderProductDetailPage() {
-  const wrapper = document.getElementById("product-detail-wrapper");
-  if (!wrapper) return;
-  
   const product = PRODUCTS.find(p => p.id === state.currentProductDetail);
   if (!product) return;
   
@@ -1003,202 +1135,985 @@ function renderProductDetailPage() {
     state.recentlyViewed.unshift(product.id);
     localStorage.setItem("ruven_recently_viewed", JSON.stringify(state.recentlyViewed));
   }
-  
-  const sizesHtml = product.sizes.map((size, idx) => `
-    <button class="details-size-btn ${idx === 0 ? 'selected' : ''}" data-size="${size}">${size}</button>
-  `).join("");
-  
-  wrapper.innerHTML = `
-    <div class="product-gallery-grid">
-      <div class="gallery-main-img" id="zoom-container">
-        <img src="${product.image}" id="zoom-img" alt="${product.title}">
-      </div>
-      <div class="gallery-thumbs">
-        <div class="gallery-thumb active"><img src="${product.image}" alt="Thumb 1"></div>
-        <div class="gallery-thumb"><img src="${product.image}" alt="Thumb 2" style="filter: opacity(0.8);"></div>
-        <div class="gallery-thumb"><img src="${product.image}" alt="Thumb 3" style="filter: brightness(0.9);"></div>
-        <div class="gallery-thumb"><img src="${product.image}" alt="Thumb 4" style="filter: contrast(1.1);"></div>
-      </div>
-    </div>
-    
-    <div class="product-details-content">
-      <div>
-        <p class="section-subtitle" style="margin-bottom: 4px;">Collection drop</p>
-        <h1 class="editorial-title" style="font-size: 2.2rem; font-weight: 300;">${product.title}</h1>
-      </div>
-      
-      <!-- Scriptural Narrative -->
-      <div class="details-verse-box">
-        <div class="details-verse-quote">"${product.verseQuote}"</div>
-        <div class="details-verse-ref">${product.verseRef}</div>
-      </div>
-      
-      <div class="details-price-row">
-        <span class="details-price">₹${product.price}</span>
-        <span class="details-original-price">₹${product.originalPrice}</span>
-      </div>
-      
-      <p style="color: var(--color-text-muted); font-size: 0.9rem;">
-        Tax included. Made with high quality materials. Built to start conversations about faith.
-      </p>
-      
-      <!-- Size Picker -->
-      <div class="details-size-picker">
-        <h5>Select Fit (Oversized Cut)</h5>
-        <div class="sizes">
-          ${sizesHtml}
-        </div>
-      </div>
-      
-      <!-- Qty and Add to Cart -->
-      <div class="details-actions">
-        <div class="qty-counter">
-          <button class="qty-btn" id="qty-minus"><i data-lucide="minus" style="width: 14px;"></i></button>
-          <input type="number" class="qty-input" id="qty-val" value="1" min="1" readonly>
-          <button class="qty-btn" id="qty-plus"><i data-lucide="plus" style="width: 14px;"></i></button>
-        </div>
-        <button class="cta-button cta-button-primary add-to-cart-submit" id="add-to-cart-btn">
-          Add to Studio Bag
-        </button>
-      </div>
-      
-      <!-- Expandable Accordion Tabs -->
-      <div class="accordion-details">
-        <div class="accordion-tab active">
-          <button class="accordion-header">
-            Scriptural Context & Meaning
-            <span class="accordion-icon"><i data-lucide="plus" style="width: 14px;"></i></span>
-          </button>
-          <div class="accordion-content" style="max-height: 200px; padding-bottom: var(--spacing-md);">
-            <p>${product.verseMeaning}</p>
-          </div>
-        </div>
-        <div class="accordion-tab">
-          <button class="accordion-header">
-            Fabric & Design Specs
-            <span class="accordion-icon"><i data-lucide="plus" style="width: 14px;"></i></span>
-          </button>
-          <div class="accordion-content">
-            <p>${product.fabricDetails}</p>
-          </div>
-        </div>
-        <div class="accordion-tab">
-          <button class="accordion-header">
-            Brand Story & Hand-screen Process
-            <span class="accordion-icon"><i data-lucide="plus" style="width: 14px;"></i></span>
-          </button>
-          <div class="accordion-content">
-            <p>${product.designStory}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  if (window.lucide) {
-    window.lucide.createIcons();
-  }
-  
-  // Attach Product Page Specific Events
-  attachProductDetailPageEvents();
-}
 
-function attachProductDetailPageEvents() {
-  const container = document.getElementById("zoom-container");
-  const img = document.getElementById("zoom-img");
-  
-  // 1. Image Zoom Micro-interaction
-  if (container && img) {
-    container.addEventListener("mousemove", (e) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const xPct = (x / rect.width) * 100;
-      const yPct = (y / rect.height) * 100;
-      
-      img.style.transformOrigin = `${xPct}% ${yPct}%`;
-      img.style.transform = "scale(1.5)";
+  // Inject SEO Schema Markup
+  injectSeoSchema(product);
+
+  // Set Breadcrumbs Title
+  const breadcrumbTitle = document.getElementById("pdp-breadcrumb-title");
+  if (breadcrumbTitle) breadcrumbTitle.textContent = product.title;
+
+  // Local state scoped variables
+  let currentImgIdx = 0;
+  let selectedSize = product.sizes[0];
+  let selectedQty = 1;
+  let activeColor = product.colors[0].name;
+  let pdpStarFilter = null;
+  let pdpSortOrder = "newest";
+  let activeSizeGuideTab = "measurements";
+
+  // Render 1. Gallery
+  const renderGallery = () => {
+    const galleryTarget = document.getElementById("pdp-gallery-target");
+    if (!galleryTarget) return;
+
+    const thumbsHtml = product.gallery.map((img, idx) => `
+      <button class="pdp-thumb-btn ${idx === currentImgIdx ? 'active' : ''}" data-idx="${idx}">
+        <img src="${img}" alt="${product.title} View ${idx + 1}">
+      </button>
+    `).join("");
+
+    galleryTarget.innerHTML = `
+      <div class="pdp-gallery-grid">
+        <div class="pdp-thumbnails-wrap">
+          ${thumbsHtml}
+        </div>
+        <div class="pdp-main-image-wrap" id="zoom-container">
+          <img src="${product.gallery[currentImgIdx]}" id="zoom-img" alt="${product.title}">
+        </div>
+      </div>
+    `;
+
+    // Hook thumbnail event listeners
+    galleryTarget.querySelectorAll(".pdp-thumb-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentImgIdx = parseInt(btn.getAttribute("data-idx"));
+        renderGallery();
+        bindZoomEvents();
+      });
     });
-    
-    container.addEventListener("mouseleave", () => {
-      img.style.transform = "scale(1)";
-    });
-  }
-  
-  // 2. Thumbnails Switch
-  document.querySelectorAll(".gallery-thumb").forEach(thumb => {
-    thumb.addEventListener("click", () => {
-      document.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("active"));
-      thumb.classList.add("active");
-      const clickedImg = thumb.querySelector("img").src;
-      if (img) img.src = clickedImg;
-    });
-  });
-  
-  // 3. Sizing Selection
-  const sizeBtns = document.querySelectorAll(".details-size-btn");
-  sizeBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      sizeBtns.forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-    });
-  });
-  
-  // 4. Quantity Adjuster
-  const qtyMinus = document.getElementById("qty-minus");
-  const qtyPlus = document.getElementById("qty-plus");
-  const qtyInput = document.getElementById("qty-val");
-  
-  if (qtyMinus && qtyPlus && qtyInput) {
-    qtyMinus.addEventListener("click", () => {
-      let val = parseInt(qtyInput.value);
-      if (val > 1) {
-        qtyInput.value = val - 1;
-      }
-    });
-    
-    qtyPlus.addEventListener("click", () => {
-      let val = parseInt(qtyInput.value);
-      qtyInput.value = val + 1;
-    });
-  }
-  
-  // 5. Add to Cart Button Action
-  const addToCartBtn = document.getElementById("add-to-cart-btn");
-  if (addToCartBtn) {
-    addToCartBtn.addEventListener("click", () => {
-      const product = PRODUCTS.find(p => p.id === state.currentProductDetail);
-      const selectedSize = document.querySelector(".details-size-btn.selected")?.getAttribute("data-size") || "M";
-      const quantity = parseInt(qtyInput?.value || 1);
-      
-      addToCart(product.id, selectedSize, quantity);
-      
-      // Trigger cart drawer open as a confirmation micro-interaction
-      openDrawer("cart");
-    });
-  }
-  
-  // 6. Accordion Tabs Collapse/Expand
-  document.querySelectorAll(".accordion-tab").forEach(tab => {
-    const header = tab.querySelector(".accordion-header");
-    header.addEventListener("click", () => {
-      const isActive = tab.classList.contains("active");
-      
-      // Close all accordions
-      document.querySelectorAll(".accordion-tab").forEach(t => {
-        t.classList.remove("active");
-        t.querySelector(".accordion-content").style.maxHeight = null;
-        t.querySelector(".accordion-content").style.paddingBottom = null;
+  };
+
+  const bindZoomEvents = () => {
+    const container = document.getElementById("zoom-container");
+    const img = document.getElementById("zoom-img");
+    if (container && img) {
+      container.addEventListener("mousemove", (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xPct = (x / rect.width) * 100;
+        const yPct = (y / rect.height) * 100;
+        
+        img.style.transformOrigin = `${xPct}% ${yPct}%`;
+        img.style.transform = "scale(1.5)";
       });
       
-      if (!isActive) {
-        tab.classList.add("active");
-        const content = tab.querySelector(".accordion-content");
-        content.style.maxHeight = content.scrollHeight + "px";
-        content.style.paddingBottom = "var(--spacing-md)";
-      }
+      container.addEventListener("mouseleave", () => {
+        img.style.transform = "scale(1)";
+      });
+    }
+  };
+
+  // Render 2. Info details
+  const renderInfo = () => {
+    const infoTarget = document.getElementById("pdp-info-target");
+    if (!infoTarget) return;
+
+    const swatchesHtml = product.colors.map(color => {
+      const isSel = color.name === activeColor ? "selected" : "";
+      return `
+        <button class="pdp-swatch-btn ${isSel}" data-color-name="${color.name}">
+          <div class="pdp-swatch-color" style="background-color: ${color.hex};"></div>
+        </button>
+      `;
+    }).join("");
+
+    const sizesHtml = product.sizes.map(size => {
+      // Recommend 'L' for both Tee and Hoodie as the signature silhouette
+      const isRec = size === "L" ? "recommended" : "";
+      const isSel = size === selectedSize ? "selected" : "";
+      return `<button class="pdp-size-btn ${isSel} ${isRec}" data-size="${size}">${size}</button>`;
+    }).join("");
+
+    const isWishlisted = state.wishlist.includes(product.id);
+
+    infoTarget.innerHTML = `
+      <div class="pdp-info-sticky">
+        <div>
+          <p class="pdp-collection-name">Sovereign Drop</p>
+          <h1 class="pdp-product-title">${product.title}</h1>
+          <div class="pdp-verse-ref-badge" style="margin-top: 8px;">
+            <i data-lucide="book-open" style="width: 12px; height: 12px;"></i>
+            <span>Inspired by ${product.verseRef}</span>
+          </div>
+        </div>
+
+        <div class="pdp-price-row">
+          <span class="pdp-price">₹${product.price}</span>
+          <span class="pdp-original-price">₹${product.originalPrice}</span>
+        </div>
+
+        <p class="pdp-short-desc">${product.verseMeaning}</p>
+
+        <!-- Color Selection -->
+        <div class="pdp-color-picker">
+          <h5>Color: <span id="pdp-active-color">${activeColor}</span></h5>
+          <div class="pdp-color-swatches">
+            ${swatchesHtml}
+          </div>
+        </div>
+
+        <!-- Size Selection -->
+        <div>
+          <div class="pdp-size-picker-header">
+            <h5>Select Size (Intended Oversized Cut)</h5>
+            <button class="pdp-size-guide-trigger" id="pdp-size-modal-trigger">
+              <i data-lucide="ruler" style="width: 14px; height: 14px;"></i> Size Details
+            </button>
+          </div>
+          <div class="pdp-sizes-grid">
+            ${sizesHtml}
+          </div>
+          <p class="pdp-model-height-info" style="margin-top: 8px;">
+            ${product.modelInfo}
+          </p>
+        </div>
+
+        <!-- Stock Indicator -->
+        <div class="pdp-stock-status">
+          <div class="pdp-stock-dot"></div>
+          <span>Limited Drop. Only 7 items left in stock.</span>
+        </div>
+
+        <!-- Actions Row -->
+        <div class="pdp-actions-row">
+          <div class="pdp-qty-wrap">
+            <button class="pdp-qty-btn" id="pdp-qty-minus"><i data-lucide="minus" style="width: 14px; height: 14px;"></i></button>
+            <input type="number" class="pdp-qty-input" id="pdp-qty-val" value="${selectedQty}" min="1" readonly>
+            <button class="pdp-qty-btn" id="pdp-qty-plus"><i data-lucide="plus" style="width: 14px; height: 14px;"></i></button>
+          </div>
+          <button class="pdp-add-to-bag-btn" id="pdp-add-btn">
+            <i data-lucide="shopping-bag" style="width: 16px; height: 16px;"></i>
+            <span id="pdp-add-btn-text">Add to bag</span>
+          </button>
+          <button class="pdp-wishlist-toggle-btn ${isWishlisted ? 'active' : ''}" id="pdp-wish-btn" data-id="${product.id}">
+            <i data-lucide="heart" style="width: 18px; height: 18px; fill: ${isWishlisted ? 'var(--color-brand-burgundy)' : 'none'};"></i>
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="pdp-trust-indicators-grid">
+          <div class="pdp-trust-item">
+            <i class="pdp-trust-icon" data-lucide="award" style="width: 18px; height: 18px;"></i>
+            <span class="pdp-trust-text">Organic Knit</span>
+          </div>
+          <div class="pdp-trust-item">
+            <i class="pdp-trust-icon" data-lucide="sparkles" style="width: 18px; height: 18px;"></i>
+            <span class="pdp-trust-text">Faith Graphic</span>
+          </div>
+          <div class="pdp-trust-item">
+            <i class="pdp-trust-icon" data-lucide="shield-check" style="width: 18px; height: 18px;"></i>
+            <span class="pdp-trust-text">Easy Exchange</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Color Swatches Trigger
+    infoTarget.querySelectorAll(".pdp-swatch-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeColor = btn.getAttribute("data-color-name");
+        renderInfo();
+        syncMobileStickyBar();
+      });
     });
-  });
+
+    // Size Selector Trigger
+    infoTarget.querySelectorAll(".pdp-size-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        selectedSize = btn.getAttribute("data-size");
+        renderInfo();
+        syncMobileStickyBar();
+      });
+    });
+
+    // Sizing Modal Trigger
+    const modalTrigger = document.getElementById("pdp-size-modal-trigger");
+    if (modalTrigger) {
+      modalTrigger.addEventListener("click", openSizingModal);
+    }
+
+    // Qty Adjusters
+    const minus = document.getElementById("pdp-qty-minus");
+    const plus = document.getElementById("pdp-qty-plus");
+    if (minus) {
+      minus.addEventListener("click", () => {
+        if (selectedQty > 1) {
+          selectedQty--;
+          document.getElementById("pdp-qty-val").value = selectedQty;
+        }
+      });
+    }
+    if (plus) {
+      plus.addEventListener("click", () => {
+        selectedQty++;
+        document.getElementById("pdp-qty-val").value = selectedQty;
+      });
+    }
+
+    // Add to Cart
+    const addBtn = document.getElementById("pdp-add-btn");
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        addToCart(product.id, selectedSize, selectedQty);
+        
+        // Success feedback
+        addBtn.classList.add("success");
+        const btnText = document.getElementById("pdp-add-btn-text");
+        if (btnText) btnText.textContent = "Added to Bag!";
+        
+        setTimeout(() => {
+          addBtn.classList.remove("success");
+          if (btnText) btnText.textContent = "Add to bag";
+        }, 1500);
+
+        openDrawer("cart");
+      });
+    }
+
+    // Wishlist Toggle
+    const wishBtn = document.getElementById("pdp-wish-btn");
+    if (wishBtn) {
+      wishBtn.addEventListener("click", () => {
+        toggleWishlist(product.id);
+        renderInfo();
+        renderHomepageGrids(); // Keep other views in sync
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  // Render 3. Verse Highlight
+  const renderVerse = () => {
+    const verseTarget = document.getElementById("pdp-verse-target");
+    if (!verseTarget) return;
+    verseTarget.innerHTML = `
+      <div class="pdp-verse-watermark">${product.verseRef.split(" ")[0]}</div>
+      <div class="pdp-verse-inner">
+        <p class="pdp-collection-name">Scriptural Context</p>
+        <div class="pdp-verse-quote-box">"${product.verseQuote}"</div>
+        <div class="pdp-verse-separator"></div>
+        <div class="pdp-verse-ref-author">${product.verseRef}</div>
+        <p class="pdp-verse-meaning-desc">${product.verseMeaning}</p>
+      </div>
+    `;
+  };
+
+  // Render 4. Story Behind Design
+  const renderStory = () => {
+    const storyTarget = document.getElementById("pdp-story-target");
+    if (!storyTarget) return;
+    storyTarget.innerHTML = `
+      <div class="pdp-story-layout">
+        <div class="pdp-story-content">
+          <p class="pdp-story-tagline">Visual Ministry</p>
+          <h2 class="pdp-story-heading">Every Thread a Message</h2>
+          <p class="pdp-story-desc">${product.designStory}</p>
+          <div class="pdp-story-quote">"We design clothing not to conform to modern patterns, but to be an open invitation to share faith in your creative workspaces."</div>
+          <p class="pdp-story-desc">Crafted in collaboration with young designers across India, merging premium Scandinavian minimal styles with deeply rooted, conversational spiritual symbols.</p>
+        </div>
+        <div class="pdp-story-image-wrap">
+          <img src="/brand_story_lifestyle.png" alt="Sovereign Collection design story lifestyle photo">
+        </div>
+      </div>
+    `;
+  };
+
+  // Render 5. Fabric & Craftsmanship
+  const renderFabricCraft = () => {
+    const craftTarget = document.getElementById("pdp-craft-target");
+    if (!craftTarget) return;
+
+    const cardsHtml = product.detailsList.map(detail => {
+      let icon = "info";
+      if (detail.label.toLowerCase().includes("fabric")) icon = "scissors";
+      if (detail.label.toLowerCase().includes("weight")) icon = "weight";
+      if (detail.label.toLowerCase().includes("fit")) icon = "shirt";
+      if (detail.label.toLowerCase().includes("print")) icon = "printer";
+      if (detail.label.toLowerCase().includes("shrink")) icon = "shield-alert";
+      if (detail.label.toLowerCase().includes("origin")) icon = "globe";
+      
+      return `
+        <div class="pdp-craft-card">
+          <div class="pdp-craft-card-icon"><i data-lucide="${icon}" style="width: 20px; height: 20px;"></i></div>
+          <div class="pdp-craft-card-label">${detail.label}</div>
+          <div class="pdp-craft-card-value">${detail.value}</div>
+        </div>
+      `;
+    }).join("");
+
+    craftTarget.innerHTML = `
+      <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 300;">Fabric & Specification Blueprint</h2>
+      <div class="pdp-craft-grid">
+        ${cardsHtml}
+      </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  // Render 6. Lifestyle Spread
+  const renderLifestyle = () => {
+    const lifestyleTarget = document.getElementById("pdp-lifestyle-target");
+    if (!lifestyleTarget) return;
+    lifestyleTarget.innerHTML = `
+      <div class="pdp-lifestyle-spread">
+        <img src="/hero_lifestyle.png" alt="Ruven Sovereign lifestyle lookbook">
+        <div class="pdp-lifestyle-overlay">
+          <div class="pdp-lifestyle-content">
+            <span class="pdp-lifestyle-tag">Lookbook Vol 02</span>
+            <h2 class="pdp-lifestyle-title">Faith in Motion</h2>
+            <p class="pdp-lifestyle-desc">Our garments are engineered to transition seamlessly from academic lecture halls to worship sessions, from quiet library studies to active community campaigns.</p>
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  // Render 7. Sizing Guide Interactive Panel
+  const renderSizeGuide = () => {
+    const sizeguideTarget = document.getElementById("pdp-sizeguide-target");
+    if (!sizeguideTarget) return;
+
+    sizeguideTarget.innerHTML = `
+      <div class="pdp-sizeguide-layout">
+        <div class="pdp-sizeguide-info">
+          <h3>Interactive Sizing Guide</h3>
+          <p>This drop features a signature Scandinavian oversized cut. It is designed to drape naturally off the shoulders. Choose your regular size for the intended fit, or size down for a more standard appearance.</p>
+          
+          <div class="pdp-sizeguide-tabs">
+            <button class="pdp-sizeguide-tab-btn ${activeSizeGuideTab === 'measurements' ? 'active' : ''}" data-tab="measurements">Measurements (CM)</button>
+            <button class="pdp-sizeguide-tab-btn ${activeSizeGuideTab === 'recommendations' ? 'active' : ''}" data-tab="recommendations">Model Recommendations</button>
+          </div>
+          
+          <div id="pdp-sizeguide-tab-content">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+        
+        <div class="pdp-sizeguide-illustration">
+          <svg class="pdp-size-sketch" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 20 L35 12 L42 18 L58 18 L65 12 L80 20 L75 35 L68 32 L68 90 L32 90 L32 32 L25 35 Z" stroke="var(--color-text-primary)"/>
+            <line x1="32" y1="40" x2="68" y2="40" stroke="var(--color-brand-gold)" stroke-dasharray="2 2"/>
+            <text x="50" y="38" fill="var(--color-brand-gold)" font-size="5" text-anchor="middle">A. CHEST</text>
+            <line x1="50" y1="18" x2="50" y2="90" stroke="var(--color-brand-gold)" stroke-dasharray="2 2"/>
+            <text x="52" y="55" fill="var(--color-brand-gold)" font-size="5" text-anchor="start">B. LENGTH</text>
+          </svg>
+          <p class="pdp-sketch-desc">Measurements are in centimeters. Width measured across chest, length from collar seam to hem.</p>
+        </div>
+      </div>
+    `;
+
+    const tabContent = document.getElementById("pdp-sizeguide-tab-content");
+    if (tabContent) {
+      if (activeSizeGuideTab === "measurements") {
+        if (product.category === "oversized-tees") {
+          tabContent.innerHTML = `
+            <table class="pdp-sizeguide-table">
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Chest Width (cm)</th>
+                  <th>Body Length (cm)</th>
+                  <th>Sleeve Length (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>S</td><td>56</td><td>70</td><td>22</td></tr>
+                <tr><td>M</td><td>59</td><td>72</td><td>23</td></tr>
+                <tr><td>L</td><td>62</td><td>74</td><td>24</td></tr>
+                <tr><td>XL</td><td>65</td><td>76</td><td>25</td></tr>
+              </tbody>
+            </table>
+          `;
+        } else {
+          tabContent.innerHTML = `
+            <table class="pdp-sizeguide-table">
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Chest Width (cm)</th>
+                  <th>Body Length (cm)</th>
+                  <th>Sleeve Length (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>M</td><td>61</td><td>71</td><td>63</td></tr>
+                <tr><td>L</td><td>64</td><td>73</td><td>64</td></tr>
+                <tr><td>XL</td><td>67</td><td>75</td><td>65</td></tr>
+              </tbody>
+            </table>
+          `;
+        }
+      } else {
+        tabContent.innerHTML = `
+          <div class="pdp-size-recommendations" style="display: flex; flex-direction: column; gap: var(--spacing-xs); margin-top: 10px;">
+            <div style="background: var(--color-white); padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 2px;">Standard Fit (Relaxed)</h4>
+              <p style="font-size: 0.8rem; color: var(--color-text-muted);">Choose one size smaller than your standard size if you prefer a traditional, closer-to-body look.</p>
+            </div>
+            <div style="background: var(--color-white); padding: 12px; border-radius: var(--border-radius-sm); border: 1px solid var(--color-border);">
+              <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 2px;">Oversized Look (Intended)</h4>
+              <p style="font-size: 0.8rem; color: var(--color-text-muted);">Choose your normal size. The shoulders are dropped, and chest is broad to create a modern slouchy shape.</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Sizing guide tabs click triggers
+    sizeguideTarget.querySelectorAll(".pdp-sizeguide-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeSizeGuideTab = btn.getAttribute("data-tab");
+        renderSizeGuide();
+      });
+    });
+  };
+
+  // Render 8. Accordions
+  const renderSupportAccordions = () => {
+    const supportTarget = document.getElementById("pdp-support-target");
+    if (!supportTarget) return;
+
+    const faqsHtml = product.faqs.map((faq, idx) => `
+      <div class="pdp-accordion-item">
+        <button class="pdp-accordion-header" data-idx="${idx}">
+          <span>${faq.question}</span>
+          <span class="pdp-accordion-header-icon"><i data-lucide="plus" style="width: 16px; height: 16px;"></i></span>
+        </button>
+        <div class="pdp-accordion-content">
+          <div class="pdp-accordion-content-inner">
+            <p>${faq.answer}</p>
+          </div>
+        </div>
+      </div>
+    `).join("");
+    
+    const defaultFaqHtml = `
+      <div class="pdp-accordion-item">
+        <button class="pdp-accordion-header" data-idx="default-ship">
+          <span>What are your shipping rates and delivery times in India?</span>
+          <span class="pdp-accordion-header-icon"><i data-lucide="plus" style="width: 16px; height: 16px;"></i></span>
+        </button>
+        <div class="pdp-accordion-content">
+          <div class="pdp-accordion-content-inner">
+            <p>We provide free express shipping on all orders above ₹1,500. Delivery to metropolitan cities (Mumbai, Bengaluru, Delhi) takes 3-4 business days. For rest of India, it takes 5-7 business days.</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    supportTarget.innerHTML = `
+      <div class="pdp-support-layout">
+        <h2 class="pdp-support-title editorial-title" style="font-size: 1.8rem; font-weight: 300; text-align: center; margin-bottom: var(--spacing-xl);">Care, Shipping & Support</h2>
+        <div class="pdp-accordions-container" style="border-top: 1px solid var(--color-border);">
+          ${faqsHtml}
+          ${defaultFaqHtml}
+        </div>
+      </div>
+    `;
+
+    // Accordions expand click triggers
+    supportTarget.querySelectorAll(".pdp-accordion-header").forEach(header => {
+      header.addEventListener("click", () => {
+        const item = header.parentElement;
+        const content = item.querySelector(".pdp-accordion-content");
+        const isActive = header.classList.contains("active");
+
+        // Close all other accordions first
+        supportTarget.querySelectorAll(".pdp-accordion-header").forEach(h => {
+          h.classList.remove("active");
+          h.parentElement.querySelector(".pdp-accordion-content").style.maxHeight = null;
+        });
+
+        if (!isActive) {
+          header.classList.add("active");
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  // Render 9. Customer Reviews Panel
+  const renderReviews = () => {
+    const reviewsTarget = document.getElementById("pdp-reviews-target");
+    if (!reviewsTarget) return;
+
+    // Filter reviews
+    let filteredReviews = [...product.reviews];
+    if (pdpStarFilter !== null) {
+      filteredReviews = filteredReviews.filter(r => r.rating === pdpStarFilter);
+    }
+
+    // Sort reviews
+    if (pdpSortOrder === "newest") {
+      filteredReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      filteredReviews.sort((a, b) => b.helpfulCount - a.helpfulCount);
+    }
+
+    const totalReviews = product.reviews.length;
+    const avgRating = totalReviews > 0 
+      ? (product.reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(1)
+      : "5.0";
+
+    const ratingBars = [5, 4, 3, 2, 1].map(stars => {
+      const count = product.reviews.filter(r => r.rating === stars).length;
+      const pct = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+      const isActive = pdpStarFilter === stars ? "active" : "";
+      return `
+        <div class="pdp-distribution-row ${isActive}" data-stars="${stars}">
+          <span>${stars} star</span>
+          <div class="pdp-dist-bar-bg">
+            <div class="pdp-dist-bar-fill" style="width: ${pct}%;"></div>
+          </div>
+          <span style="text-align: right; color: var(--color-text-muted);">${count}</span>
+        </div>
+      `;
+    }).join("");
+
+    const getStarsHtml = (rating) => {
+      let stars = "";
+      for (let i = 1; i <= 5; i++) {
+        const isFilled = i <= rating ? "currentColor" : "none";
+        stars += `<i data-lucide="star" style="width: 14px; height: 14px; fill: ${isFilled};"></i>`;
+      }
+      return stars;
+    };
+
+    const reviewCardsHtml = filteredReviews.map(rev => `
+      <div class="pdp-review-card">
+        <div class="pdp-review-meta">
+          <div class="pdp-review-stars">
+            ${getStarsHtml(rev.rating)}
+          </div>
+          <span class="pdp-review-date">${rev.date}</span>
+        </div>
+        <div class="pdp-review-author-row">
+          <div class="pdp-review-avatar" style="background-color: ${rev.avatarColor};">${rev.author.charAt(0)}</div>
+          <span class="pdp-review-author">${rev.author}</span>
+          ${rev.verified ? `
+            <span class="pdp-review-verified">
+              <i data-lucide="check-circle" style="width: 12px; height: 12px;"></i> Verified Purchase
+            </span>
+          ` : ""}
+        </div>
+        <h4 class="pdp-review-title">${rev.title}</h4>
+        <p class="pdp-review-body">${rev.body}</p>
+        <div class="pdp-review-helpful">
+          <span>Was this review helpful?</span>
+          <button class="pdp-review-helpful-btn" data-rev-id="${rev.id}">
+            <i data-lucide="thumbs-up" style="width: 12px; height: 12px;"></i>
+            <span>(${rev.helpfulCount})</span>
+          </button>
+        </div>
+      </div>
+    `).join("");
+
+    reviewsTarget.innerHTML = `
+      <div style="max-width: var(--max-width-site); margin: 0 auto;">
+        <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 300; text-align: center; margin-bottom: var(--spacing-xl);">Customer Reflections</h2>
+        
+        <div class="pdp-reviews-grid">
+          <!-- Summary card left -->
+          <div class="pdp-reviews-summary-card">
+            <span class="pdp-reviews-score">${avgRating}</span>
+            <div class="pdp-reviews-stars-wrap">
+              ${getStarsHtml(Math.round(parseFloat(avgRating)))}
+            </div>
+            <span class="pdp-reviews-total-text">Based on ${totalReviews} verified reviews</span>
+            <div class="pdp-reviews-distribution">
+              ${ratingBars}
+            </div>
+            ${pdpStarFilter !== null ? `
+              <button class="plp-compare-clear-btn" id="pdp-clear-review-filter" style="margin-top: 10px;">Clear Filter</button>
+            ` : ""}
+          </div>
+          
+          <!-- Reviews list right -->
+          <div>
+            <div class="pdp-reviews-toolbar">
+              <span class="pdp-reviews-toolbar-title">${filteredReviews.length} Reflections</span>
+              <div style="display: flex; gap: var(--spacing-sm); align-items: center;">
+                <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-muted);">Sort By:</label>
+                <select class="plp-sort-dropdown" id="pdp-review-sort" style="padding: 6px 12px; font-size: 0.8rem;">
+                  <option value="newest" ${pdpSortOrder === "newest" ? "selected" : ""}>Newest First</option>
+                  <option value="helpful" ${pdpSortOrder === "helpful" ? "selected" : ""}>Most Helpful</option>
+                </select>
+              </div>
+            </div>
+            <div class="pdp-reviews-list-container">
+              ${filteredReviews.length > 0 ? reviewCardsHtml : `
+                <p style="text-align: center; color: var(--color-text-muted); padding: 40px 0;">No reviews matching selected rating.</p>
+              `}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Click triggers for Rating distribution rows
+    reviewsTarget.querySelectorAll(".pdp-distribution-row").forEach(row => {
+      row.addEventListener("click", () => {
+        const star = parseInt(row.getAttribute("data-stars"));
+        pdpStarFilter = pdpStarFilter === star ? null : star; // Toggle filter
+        renderReviews();
+      });
+    });
+
+    // Clear filter trigger
+    const clearReviewFilter = document.getElementById("pdp-clear-review-filter");
+    if (clearReviewFilter) {
+      clearReviewFilter.addEventListener("click", () => {
+        pdpStarFilter = null;
+        renderReviews();
+      });
+    }
+
+    // Sort order dropdown trigger
+    const sortDropdown = document.getElementById("pdp-review-sort");
+    if (sortDropdown) {
+      sortDropdown.addEventListener("change", (e) => {
+        pdpSortOrder = e.target.value;
+        renderReviews();
+      });
+    }
+
+    // Helpfulness clicks
+    reviewsTarget.querySelectorAll(".pdp-review-helpful-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const revId = btn.getAttribute("data-rev-id");
+        const review = product.reviews.find(r => r.id === revId);
+        if (review) {
+          review.helpfulCount++;
+          renderReviews();
+        }
+      });
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  // Render 10. Related Products
+  const renderRelated = () => {
+    const relatedTarget = document.getElementById("pdp-related-target");
+    if (!relatedTarget) return;
+
+    // Recommend the other product
+    const relatedProducts = PRODUCTS.filter(p => p.id !== product.id);
+
+    const relatedCardsHtml = relatedProducts.map(p => `
+      <div class="product-card" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-white);">
+        <a href="#product/${p.id}" class="nav-trigger" data-view="product" style="display: block; aspect-ratio: 4/5; overflow: hidden; position: relative;">
+          <img src="${p.image}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover;">
+          <div class="plp-card-action-overlay">
+            <span class="plp-card-quick-add-btn" style="text-align: center; display: block; font-size: 0.72rem; padding: 10px;">Explore Drop</span>
+          </div>
+        </a>
+        <div class="plp-card-info" style="padding: 15px;">
+          <div class="plp-card-meta">
+            <span class="plp-card-verse-ref">${p.verseRef}</span>
+          </div>
+          <h4 class="plp-card-title" style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">${p.title}</h4>
+          <div class="plp-card-price-row">
+            <span class="plp-card-price">₹${p.price}</span>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    relatedTarget.innerHTML = `
+      <div class="pdp-related-header">
+        <p class="pdp-collection-name">Complete the Look</p>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Styled with Purpose</h2>
+      </div>
+      <div class="pdp-related-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
+        ${relatedCardsHtml}
+      </div>
+    `;
+
+    // Hook card navigations
+    relatedTarget.querySelectorAll(".nav-trigger").forEach(link => {
+      link.addEventListener("click", (e) => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      });
+    });
+  };
+
+  // Render 11. Recently Viewed
+  const renderRecentlyViewed = () => {
+    const recentTarget = document.getElementById("pdp-recent-section");
+    if (!recentTarget) return;
+
+    // Filter viewed items to exclude the current one
+    const viewedIds = state.recentlyViewed.filter(id => id !== product.id);
+
+    if (viewedIds.length === 0) {
+      recentTarget.style.display = "none";
+      return;
+    }
+    recentTarget.style.display = "block";
+
+    const viewedProducts = viewedIds.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+
+    const cardsHtml = viewedProducts.map(p => `
+      <div class="pdp-recent-card" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); overflow: hidden; background: var(--color-white);">
+        <a href="#product/${p.id}" class="nav-trigger" data-view="product" style="display: block; aspect-ratio: 4/5; overflow: hidden; position: relative;">
+          <img src="${p.image}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover;">
+        </a>
+        <div style="padding: 12px;">
+          <span style="font-size: 0.65rem; font-weight: 700; color: var(--color-brand-gold); text-transform: uppercase;">${p.verseRef}</span>
+          <h4 style="font-size: 0.88rem; font-weight: 700; margin: 4px 0 6px;">${p.title}</h4>
+          <span style="font-weight: 700; font-size: 0.88rem; color: var(--color-text-primary);">₹${p.price}</span>
+        </div>
+      </div>
+    `).join("");
+
+    recentTarget.innerHTML = `
+      <div style="margin-bottom: var(--spacing-lg);">
+        <p class="pdp-collection-name">Continue Browsing</p>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Recently Explored</h2>
+      </div>
+      <div class="pdp-recent-carousel">
+        ${cardsHtml}
+      </div>
+    `;
+
+    // Hook navigations
+    recentTarget.querySelectorAll(".nav-trigger").forEach(link => {
+      link.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      });
+    });
+  };
+
+  // Render 12. Community UGC Gallery
+  const renderCommunityInspiration = () => {
+    const commTarget = document.getElementById("pdp-community-target");
+    if (!commTarget) return;
+
+    // Static community lookbook items matching local assets
+    const ugcItems = [
+      { img: "/brand_story_lifestyle.png", handle: "@amit_k12", caption: "Walking into college with purpose. Shield of Light Tee." },
+      { img: "/hero_lifestyle.png", handle: "@christina_sharma", caption: "Renewed in mind, focused on fellowship. Love the Sage green tone." },
+      { img: "/hero2.png", handle: "@sarah.m", caption: "Double lined hood structure is perfect. Romans 12:2." },
+      { img: "/oversized_tee_product.png", handle: "@joel_mercy", caption: "Conversation starter indeed. Built heavy, worn with pride." }
+    ];
+
+    const cardsHtml = ugcItems.map(item => `
+      <div class="pdp-community-card">
+        <img src="${item.img}" alt="Community lookbook post by ${item.handle}">
+        <div class="pdp-community-hover-overlay">
+          <div class="pdp-community-handle">${item.handle}</div>
+          <p class="pdp-community-caption">"${item.caption}"</p>
+          <div style="margin-top: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--color-brand-gold);">@ruven.studio</div>
+        </div>
+      </div>
+    `).join("");
+
+    commTarget.innerHTML = `
+      <div class="pdp-related-header">
+        <p class="pdp-collection-name">Fellowship Inspiration</p>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Worn in Community</h2>
+      </div>
+      <div class="pdp-community-grid">
+        ${cardsHtml}
+      </div>
+    `;
+  };
+
+  // Render 13. Mobile Sticky Purchase Bar
+  const renderMobileStickyBar = () => {
+    const stickyBar = document.getElementById("pdp-mobile-sticky-bar");
+    if (!stickyBar) return;
+
+    stickyBar.innerHTML = `
+      <div class="pdp-mobile-bar-summary">
+        <h4 style="font-size: 0.88rem; font-weight:700; margin-bottom:2px;">${product.title}</h4>
+        <p style="font-size: 0.75rem; color: var(--color-text-muted);">₹${product.price} • Selected: <span id="pdp-mobile-selected-size" style="font-weight:700; color:var(--color-brand-burgundy);">${selectedSize}</span></p>
+      </div>
+      <div class="pdp-mobile-bar-actions">
+        <button class="pdp-mobile-add-btn" id="pdp-mobile-add-btn-act">Add to Bag</button>
+      </div>
+    `;
+
+    // Hook sticky button action
+    const stickyAdd = document.getElementById("pdp-mobile-add-btn-act");
+    if (stickyAdd) {
+      stickyAdd.addEventListener("click", () => {
+        addToCart(product.id, selectedSize, selectedQty);
+        
+        stickyAdd.textContent = "Added!";
+        stickyAdd.style.backgroundColor = "var(--color-brand-sage)";
+        setTimeout(() => {
+          stickyAdd.textContent = "Add to Bag";
+          stickyAdd.style.backgroundColor = "var(--color-brand-burgundy)";
+        }, 1500);
+
+        openDrawer("cart");
+      });
+    }
+  };
+
+  const syncMobileStickyBar = () => {
+    const el = document.getElementById("pdp-mobile-selected-size");
+    if (el) el.textContent = selectedSize;
+  };
+
+  // Render Sizing Modal content
+  const openSizingModal = () => {
+    const modal = document.getElementById("pdp-size-modal");
+    const modalBody = document.getElementById("pdp-modal-body");
+    if (!modal || !modalBody) return;
+
+    let chartHtml = "";
+    if (product.category === "oversized-tees") {
+      chartHtml = `
+        <table class="pdp-sizeguide-table" style="margin-top: 15px;">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest Width (cm)</th>
+              <th>Body Length (cm)</th>
+              <th>Sleeve Length (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>S</td><td>56</td><td>70</td><td>22</td></tr>
+            <tr><td>M</td><td>59</td><td>72</td><td>23</td></tr>
+            <tr><td>L</td><td>62</td><td>74</td><td>24</td></tr>
+            <tr><td>XL</td><td>65</td><td>76</td><td>25</td></tr>
+          </tbody>
+        </table>
+      `;
+    } else {
+      chartHtml = `
+        <table class="pdp-sizeguide-table" style="margin-top: 15px;">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest Width (cm)</th>
+              <th>Body Length (cm)</th>
+              <th>Sleeve Length (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>M</td><td>61</td><td>71</td><td>63</td></tr>
+            <tr><td>L</td><td>64</td><td>73</td><td>64</td></tr>
+            <tr><td>XL</td><td>67</td><td>75</td><td>65</td></tr>
+          </tbody>
+        </table>
+      `;
+    }
+
+    modalBody.innerHTML = `
+      <h3 class="editorial-title" style="font-size: 1.5rem; font-weight: 300; margin-bottom: var(--spacing-sm);">${product.title} Dimension Chart</h3>
+      <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5;">This drops features dropped shoulders, extended sleeves, and a generous boxy chest cut. If you prefer a fitted look, select one size down from your usual size.</p>
+      ${chartHtml}
+      <div style="margin-top: 20px; text-align: center;">
+        <button class="cta-button cta-button-primary" id="pdp-modal-close-action" style="padding: 10px 24px; font-size: 0.8rem;">Close Sizing Table</button>
+      </div>
+    `;
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden"; // Disable scroll behind modal
+
+    // Close listeners
+    const closeBtn = document.getElementById("pdp-modal-close-btn");
+    const closeAct = document.getElementById("pdp-modal-close-action");
+    const overlay = modal.querySelector(".pdp-modal-overlay");
+
+    const closeHandler = () => {
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+    };
+
+    if (closeBtn) closeBtn.addEventListener("click", closeHandler);
+    if (closeAct) closeAct.addEventListener("click", closeHandler);
+    if (overlay) overlay.addEventListener("click", closeHandler);
+  };
+
+  // Set Observer for Mobile Sticky Purchase Bar
+  const setupMobileStickyBarObserver = () => {
+    const targetBtn = document.getElementById("pdp-add-btn");
+    const stickyBar = document.getElementById("pdp-mobile-sticky-bar");
+    
+    if (targetBtn && stickyBar && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // Show on mobile when the main CTA is out of view
+          if (!entry.isIntersecting && window.innerWidth <= 768) {
+            stickyBar.classList.add("active");
+          } else {
+            stickyBar.classList.remove("active");
+          }
+        });
+      }, { threshold: 0 });
+      
+      observer.observe(targetBtn);
+    }
+  };
+
+  // Execute all renders
+  renderGallery();
+  bindZoomEvents();
+  renderInfo();
+  renderVerse();
+  renderStory();
+  renderFabricCraft();
+  renderLifestyle();
+  renderSizeGuide();
+  renderSupportAccordions();
+  renderReviews();
+  renderRelated();
+  renderRecentlyViewed();
+  renderCommunityInspiration();
+  renderMobileStickyBar();
+  setupMobileStickyBarObserver();
+}
+
+function injectSeoSchema(product) {
+  let schemaEl = document.getElementById("pdp-seo-schema");
+  if (!schemaEl) {
+    schemaEl = document.createElement("script");
+    schemaEl.type = "application/ld+json";
+    schemaEl.id = "pdp-seo-schema";
+    document.head.appendChild(schemaEl);
+  }
+  
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.title,
+    "image": [
+      window.location.origin + product.image
+    ],
+    "description": product.fabricDetails,
+    "sku": product.id,
+    "brand": {
+      "@type": "Brand",
+      "name": "Ruven Studio"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": window.location.href,
+      "priceCurrency": "INR",
+      "price": product.price,
+      "priceValidUntil": "2027-01-01",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": product.reviews.length.toString()
+    }
+  };
+  
+  schemaEl.textContent = JSON.stringify(productSchema);
 }
 
 // 7. CART DRAWER STATE & RENDERING

@@ -813,11 +813,66 @@
 
     <!-- 3. PRODUCT DETAILS VIEW -->
     <section id="product-view" class="view-section">
-      <div class="section-padding product-detail-page">
-        <a href="#shop" class="nav-trigger" data-view="shop" style="display: inline-flex; align-items: center; gap: var(--spacing-xs); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; margin-bottom: var(--spacing-xl); color: var(--color-text-muted);"><i data-lucide="arrow-left" style="width: 14px;"></i> Back to collections</a>
-        
-        <div class="product-detail-container" id="product-detail-wrapper">
-          <!-- Populated Dynamically via JS (Gallery Left, Info Right) -->
+      <!-- Breadcrumbs & Back Bar -->
+      <div class="pdp-breadcrumbs-bar">
+        <div class="pdp-breadcrumbs-container">
+          <a href="#shop" class="nav-trigger pdp-back-link" data-view="shop">
+            <i data-lucide="arrow-left" style="width: 14px;"></i> Back to collections
+          </a>
+          <span class="pdp-breadcrumb-separator">/</span>
+          <span class="pdp-breadcrumb-current" id="pdp-breadcrumb-title">Product Details</span>
+        </div>
+      </div>
+
+      <div class="pdp-wrapper-container">
+        <div class="pdp-primary-grid">
+          <!-- Left: Immersive Product Gallery (Dynamic) -->
+          <div class="pdp-gallery-column" id="pdp-gallery-target"></div>
+          
+          <!-- Right: Product Purchase Info (Dynamic & Sticky) -->
+          <div class="pdp-info-column" id="pdp-info-target"></div>
+        </div>
+
+        <!-- Verse Highlight (Full Width Editorial) -->
+        <section class="pdp-section pdp-verse-section" id="pdp-verse-target"></section>
+
+        <!-- Story Behind the Design (Asymmetric Columns) -->
+        <section class="pdp-section pdp-story-section" id="pdp-story-target"></section>
+
+        <!-- Fabric & Craftsmanship Specs -->
+        <section class="pdp-section pdp-craft-section" id="pdp-craft-target"></section>
+
+        <!-- Lifestyle Campaign Spread -->
+        <section class="pdp-section pdp-lifestyle-section" id="pdp-lifestyle-target"></section>
+
+        <!-- Sizing Guide Interactive Panel -->
+        <section class="pdp-section pdp-sizeguide-section" id="pdp-sizeguide-target"></section>
+
+        <!-- FAQ & Support Accordion Details -->
+        <section class="pdp-section pdp-support-section" id="pdp-support-target"></section>
+
+        <!-- Complete the Look / Related Products -->
+        <section class="pdp-section pdp-related-section" id="pdp-related-target"></section>
+
+        <!-- Customer Reviews -->
+        <section class="pdp-section pdp-reviews-section" id="pdp-reviews-target"></section>
+
+        <!-- Recently Viewed Carousel -->
+        <section class="pdp-section pdp-recent-section" id="pdp-recent-target"></section>
+
+        <!-- Community Inspiration UGC -->
+        <section class="pdp-section pdp-community-section" id="pdp-community-target"></section>
+      </div>
+
+      <!-- Mobile Sticky Add-To-Cart Bar -->
+      <div class="pdp-mobile-sticky-bar" id="pdp-mobile-sticky-bar"></div>
+      
+      <!-- Sizing/Specs Modal Overlay -->
+      <div class="pdp-modal" id="pdp-size-modal">
+        <div class="pdp-modal-overlay"></div>
+        <div class="pdp-modal-content">
+          <button class="pdp-modal-close" id="pdp-modal-close-btn" aria-label="Close Sizing Table"><i data-lucide="x"></i></button>
+          <div class="pdp-modal-body" id="pdp-modal-body"></div>
         </div>
       </div>
     </section>
