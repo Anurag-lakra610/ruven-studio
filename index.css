@@ -27,16 +27,16 @@
   --font-accent: 'Bricolage Grotesque', sans-serif;
   --font-sans: 'Inter', sans-serif;
   
-  /* Spacing Scale (Cinematic Spacing) */
-  --spacing-2xs: 0.25rem;
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 5rem;
-  --spacing-4xl: 8rem;
+  /* Spacing Scale (Cinematic Spacing - Evolved V2) */
+  --spacing-2xs: 0.35rem;
+  --spacing-xs: 0.7rem;
+  --spacing-sm: 1.1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4.5rem;
+  --spacing-3xl: 7rem;
+  --spacing-4xl: 11rem;
   
   /* Layout Metrics */
   --header-height: 80px;
@@ -77,8 +77,9 @@ body {
   background-color: var(--color-bg-warm);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
+  padding-top: var(--header-height);
 }
 
 /* Custom Scrollbar */
@@ -156,20 +157,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .bible-verse {
   font-family: var(--font-editorial);
-  font-size: 1.35rem;
-  line-height: 1.6;
+  font-size: 1.55rem;
+  line-height: 1.65;
   color: var(--color-brand-burgundy);
   font-style: italic;
   text-align: center;
   position: relative;
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .bible-reference {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--color-text-muted);
@@ -181,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2.5rem;
+  padding: 1.1rem 2.8rem;
   border-radius: var(--border-radius-full);
   font-size: 0.9rem;
   font-weight: 500;
@@ -229,16 +230,14 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--spacing-3xl);
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-subtle);
   transition: all var(--transition-medium);
-  border-bottom: 1px solid transparent;
 }
 
 .header.scrolled {
-  background-color: rgba(250, 249, 246, 0.85);
-  backdrop-filter: blur(15px);
   height: 70px;
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-subtle);
 }
 
 /* Official Brand Logo Image */
@@ -483,14 +482,16 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 .hero {
   position: relative;
-  height: 100vh;
-  width: 100%;
+  height: 82vh;
+  margin: var(--spacing-sm) var(--spacing-3xl) var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-white);
   text-align: center;
   overflow: hidden;
+  box-shadow: var(--shadow-premium);
 }
 
 .hero-bg {
@@ -856,6 +857,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .mission-text {
   padding-left: var(--spacing-3xl);
+}
+
+.stat-card {
+  transition: all var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-brand-burgundy) !important;
+  box-shadow: var(--shadow-subtle);
 }
 
 .mission-media {
