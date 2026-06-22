@@ -73,6 +73,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -81,10 +83,12 @@ body {
   font-family: var(--font-sans);
   line-height: 1.65;
   padding-top: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 #main-content {
-  overflow-x: hidden;
+  /* Let content flow naturally to prevent secondary scrollbar triggers */
 }
 
 /* Custom Scrollbar */
