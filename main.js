@@ -396,15 +396,11 @@ function handleHashRoute() {
       renderProductDetailPage();
       switchView("product");
     }
-  } else if (["home", "shop", "community", "story", "journal", "contact", "cart", "checkout", "confirmation", "tracking", "account"].includes(route)) {
+  } else if (["home", "shop", "community", "story", "cart", "checkout", "confirmation", "tracking", "account"].includes(route)) {
     if (route === "story") {
       renderStoryPage();
     } else if (route === "community") {
       renderCommunityPage();
-    } else if (route === "journal") {
-      renderJournalPage();
-    } else if (route === "contact") {
-      renderContactPage();
     } else if (route === "cart") {
       renderCartPage();
     } else if (route === "checkout") {
@@ -1558,7 +1554,7 @@ function renderProductDetailPage() {
     }).join("");
 
     craftTarget.innerHTML = `
-      <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 300;">Fabric & Specification Blueprint</h2>
+      <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 700;">Fabric & Specification Blueprint</h2>
       <div class="pdp-craft-grid">
         ${cardsHtml}
       </div>
@@ -1719,7 +1715,7 @@ function renderProductDetailPage() {
 
     supportTarget.innerHTML = `
       <div class="pdp-support-layout">
-        <h2 class="pdp-support-title editorial-title" style="font-size: 1.8rem; font-weight: 300; text-align: center; margin-bottom: var(--spacing-xl);">Care, Shipping & Support</h2>
+        <h2 class="pdp-support-title editorial-title" style="font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: var(--spacing-xl);">Care, Shipping & Support</h2>
         <div class="pdp-accordions-container" style="border-top: 1px solid var(--color-border);">
           ${faqsHtml}
           ${defaultFaqHtml}
@@ -1828,7 +1824,7 @@ function renderProductDetailPage() {
 
     reviewsTarget.innerHTML = `
       <div style="max-width: var(--max-width-site); margin: 0 auto;">
-        <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 300; text-align: center; margin-bottom: var(--spacing-xl);">Customer Reflections</h2>
+        <h2 class="pdp-craft-title editorial-title" style="font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: var(--spacing-xl);">Customer Reflections</h2>
         
         <div class="pdp-reviews-grid">
           <!-- Summary card left -->
@@ -1941,7 +1937,7 @@ function renderProductDetailPage() {
     relatedTarget.innerHTML = `
       <div class="pdp-related-header">
         <p class="pdp-collection-name">Complete the Look</p>
-        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Styled with Purpose</h2>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 700;">Styled with Purpose</h2>
       </div>
       <div class="pdp-related-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
         ${relatedCardsHtml}
@@ -1988,7 +1984,7 @@ function renderProductDetailPage() {
     recentTarget.innerHTML = `
       <div style="margin-bottom: var(--spacing-lg);">
         <p class="pdp-collection-name">Continue Browsing</p>
-        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Recently Explored</h2>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 700;">Recently Explored</h2>
       </div>
       <div class="pdp-recent-carousel">
         ${cardsHtml}
@@ -2030,7 +2026,7 @@ function renderProductDetailPage() {
     commTarget.innerHTML = `
       <div class="pdp-related-header">
         <p class="pdp-collection-name">Fellowship Inspiration</p>
-        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300;">Worn in Community</h2>
+        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 700;">Worn in Community</h2>
       </div>
       <div class="pdp-community-grid">
         ${cardsHtml}
@@ -2123,7 +2119,7 @@ function renderProductDetailPage() {
     }
 
     modalBody.innerHTML = `
-      <h3 class="editorial-title" style="font-size: 1.5rem; font-weight: 300; margin-bottom: var(--spacing-sm);">${product.title} Dimension Chart</h3>
+      <h3 class="editorial-title" style="font-size: 1.5rem; font-weight: 700; margin-bottom: var(--spacing-sm);">${product.title} Dimension Chart</h3>
       <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5;">This drops features dropped shoulders, extended sleeves, and a generous boxy chest cut. If you prefer a fitted look, select one size down from your usual size.</p>
       ${chartHtml}
       <div style="margin-top: 20px; text-align: center;">
@@ -2776,67 +2772,6 @@ const CUSTOMER_TESTIMONIES = [
   { author: "Priyan J.", location: "Mumbai Creative Office", text: "The weight and stitch quality match premium high-end Scandinavian streetwear. Plus, the message and ministry behind it align with what I stand for.", verse: "John 1:5", product: "Armor of Light Tee", avatarColor: "#9BA2B5" }
 ];
 
-const JOURNAL_ARTICLES = [
-  {
-    id: "art-1",
-    category: "Faith & Fashion",
-    readTime: "5 min read",
-    date: "June 22, 2026",
-    author: "Abhishek J.",
-    title: "How Graphic Tees Become Open Doors for Faith Conversations",
-    excerpt: "In a busy campus or creative office, what we wear speaks. Learn how minimal graphic symbols act as natural conversational bridges.",
-    body: `
-      <p>For decades, expressing faith publicly has felt like a choice between two extremes: aggressive street preaching or total silence. At Ruven Studio, we believe there is a third, more inviting way: <strong>Visual Ministry</strong>.</p>
-      <p>Our designs are built around minimal historic faith symbols. A clean linear shield. A simple olive branch. In modern workspaces, these don't feel preachy—they look intriguing.</p>
-      <p>We've received stories from college students across India who had peers approach them asking: <em>'Hey, what does that graphic stand for?'</em> Just like that, a simple tee opens a door to talk about hope, peace, and Romans 13:12.</p>
-    `,
-    cover: "/brand_story_lifestyle.png"
-  },
-  {
-    id: "art-2",
-    category: "Christian Living",
-    readTime: "6 min read",
-    date: "June 15, 2026",
-    author: "Devang P.",
-    title: "Finding Peace in the Rush: A Gen Z Devotional on Stillness",
-    excerpt: "Gen Z is the most connected, yet loneliest generation in history. Read our devotional reflection on finding stillness in Romans 12:2.",
-    body: `
-      <p>We live in a culture that treats speed as a metric of success. If you're not moving, sorting, or studying, you're falling behind. Yet, the scriptures call us to a different rhythm: <em>'Be still, and know that I am God.'</em></p>
-      <p>Stillness is not laziness; it is trust. It's the quiet renewal of mind that reminds us our identity is secure in Christ, not our output. When we align our thoughts, we create a sanctuary of peace.</p>
-      <p>Next time you put on your Renewal of Mind hoodie, treat it as a cozy reminder to slow down, take a deep breath, and renew your spirit in quiet prayer.</p>
-    `,
-    cover: "/hero_lifestyle.png"
-  },
-  {
-    id: "art-3",
-    category: "Behind the Designs",
-    readTime: "4 min read",
-    date: "June 08, 2026",
-    author: "Amit K.",
-    title: "The Art of Hand-Screen Printing: Why We Choose French Terry",
-    excerpt: "Go behind the scenes of our Bengaluru printing studio to see how our heavy organic cotton drops are manufactured.",
-    body: `
-      <p>Quality matters in ministry. If we are representing the Creator, our craftsmanship should reflect excellence. That's why we don't buy cheap blanks.</p>
-      <p>Every single Ruven garment is custom manufactured in India using premium ring-spun organic cotton. For our hoodies, we use combed French Terry loops (380 GSM) to ensure they hang beautifully and stay soft for years.</p>
-      <p>Our graphics are manually hand-screen printed using premium plastisol inks. This ensures that even after dozens of wash cycles, your conversation starter stays crisp, structured, and ready to print a message.</p>
-    `,
-    cover: "/hero.png"
-  }
-];
-
-const FAQS_DATA = [
-  { category: "sizing", q: "What is your sizing philosophy?", a: "Ruven Studio uses a custom Scandinavian oversized boxy cut. Drop shoulders, broad chest widths, and structured collars. We recommend buying your normal size for the intended street drape, or sizing down if you prefer a standard fit." },
-  { category: "shipping", q: "What are your delivery timelines?", a: "We ship free express pan-India on all orders above ₹1,500. Metropolitan delivery takes 3-4 days. Other locations take 5-7 business days." },
-  { category: "returns", q: "What is your returns policy?", a: "We offer hassle-free size exchanges and returns within 7 days of delivery. The item must be unworn and in its original packaging. Contact client services at care@ruvenstudio.in." },
-  { category: "materials", q: "Are your garments organic?", a: "Yes. Our Tees use 100% GOTS certified organic cotton (240 GSM) and our Hoodies use 80% organic cotton blended with 20% polyester (380 GSM) for durability and premium loopback texture." },
-  { category: "faith", q: "Are you connected to a specific church?", a: "No. Ruven Studio is a welcoming, non-denominational creative ministry. We align with positive Christian values, promoting grace, hope, and love through scripture, and serving all believers across India." },
-  { category: "partnerships", q: "Do you offer custom church team apparel?", a: "Yes! We partner with youth leadership groups, worship circles, and church conferences to design custom bulk streetwear drops. Contact us through our partnership form for details." }
-];
-
-// Active global state helpers
-let activeJournalFilter = "All";
-let activeContactTab = "general";
-let activeFaqTab = "all";
 
 function showToast(message) {
   const toast = document.getElementById("success-toast");
@@ -2871,7 +2806,7 @@ function renderStoryPage() {
     `).join("");
 
     timelineTarget.innerHTML = `
-      <h2 class="timeline-title editorial-title" style="font-size: 1.8rem; font-weight: 300;">Our Journey</h2>
+      <h2 class="timeline-title editorial-title" style="font-size: 1.8rem; font-weight: 700;">Our Journey</h2>
       <div class="timeline-container">
         <div class="timeline-line"></div>
         ${itemsHtml}
@@ -2916,7 +2851,7 @@ function renderStoryPage() {
     `).join("");
 
     missionTarget.innerHTML = `
-      <h2 class="mission-title editorial-title" style="font-size: 1.8rem; font-weight: 300;">Core Values</h2>
+      <h2 class="mission-title editorial-title" style="font-size: 1.8rem; font-weight: 700;">Core Values</h2>
       <div class="mission-values-grid">
         ${valuesHtml}
       </div>
@@ -3015,7 +2950,7 @@ function renderCommunityPage() {
     `).join("");
 
     testimoniesTarget.innerHTML = `
-      <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 300; text-align: center; margin-bottom: var(--spacing-xl);">Fellowship Stories</h2>
+      <h2 class="editorial-title" style="font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: var(--spacing-xl);">Fellowship Stories</h2>
       <div class="testimonies-grid">
         ${cardsHtml}
       </div>
@@ -3106,403 +3041,7 @@ function renderCommunityPage() {
   if (window.lucide) window.lucide.createIcons();
 }
 
-// 3. FAITH JOURNAL RENDERER
-function renderJournalPage() {
-  const votwTarget = document.getElementById("journal-votw-target");
-  const filtersTarget = document.getElementById("journal-filters-target");
-  const gridTarget = document.getElementById("journal-articles-target");
 
-  // Verse of the Week
-  if (votwTarget) {
-    votwTarget.innerHTML = `
-      <div class="votw-card">
-        <p class="section-subtitle">Verse of the Week</p>
-        <div class="votw-quote">"Do not conform to the pattern of this world, but be transformed by the renewing of your mind."</div>
-        <div class="votw-separator"></div>
-        <div class="votw-ref">Romans 12:2</div>
-        <p class="votw-meaning">In a fast, anxious Gen Z culture constantly telling us how to think, act, and style, this verse remains a sanctuary. Stillness in Christ transforms us, guarding our hearts and renewing our perspective.</p>
-        <span class="votw-prompt">Reflection Prompt: In what area of your life are you currently letting cultural pressures shape you?</span>
-        <div class="votw-actions-row">
-          <button class="votw-btn" id="votw-share-btn"><i data-lucide="share" style="width: 14px; height: 14px;"></i> Share Link</button>
-          <button class="votw-btn" id="votw-save-btn"><i data-lucide="bookmark" style="width: 14px; height: 14px;"></i> Save Reflection</button>
-        </div>
-      </div>
-    `;
-
-    document.getElementById("votw-share-btn").addEventListener("click", () => {
-      navigator.clipboard.writeText(window.location.origin + "#journal");
-      showToast("Verse link copied to clipboard!");
-    });
-
-    document.getElementById("votw-save-btn").addEventListener("click", () => {
-      showToast("Saved to your bookmarks repository.");
-    });
-  }
-
-  // Filter Pills
-  if (filtersTarget) {
-    const categories = ["All", "Devotionals", "Behind the Designs", "Christian Living", "Faith & Fashion"];
-    filtersTarget.innerHTML = categories.map(cat => {
-      const activeClass = cat === activeJournalFilter ? "active" : "";
-      return `<button class="journal-filter-btn ${activeClass}" data-filter="${cat}">${cat}</button>`;
-    }).join("");
-
-    filtersTarget.querySelectorAll(".journal-filter-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        activeJournalFilter = btn.getAttribute("data-filter");
-        renderJournalPage();
-      });
-    });
-  }
-
-  // Articles Grid
-  if (gridTarget) {
-    const filtered = activeJournalFilter === "All"
-      ? JOURNAL_ARTICLES
-      : JOURNAL_ARTICLES.filter(a => a.category === activeJournalFilter);
-
-    gridTarget.innerHTML = filtered.map(art => `
-      <div class="journal-card">
-        <div class="journal-card-img-wrap">
-          <img src="${art.cover}" alt="${art.title}">
-        </div>
-        <div class="journal-card-content">
-          <span class="journal-card-category">${art.category}</span>
-          <h3 class="journal-card-title" data-art-id="${art.id}">${art.title}</h3>
-          <p class="journal-card-excerpt">${art.excerpt}</p>
-          <div class="journal-card-footer">
-            <span class="journal-card-author">By ${art.author}</span>
-            <span class="journal-card-readtime">${art.readTime}</span>
-          </div>
-        </div>
-      </div>
-    `).join("");
-
-    // Click triggers to open reading mode modal
-    gridTarget.querySelectorAll(".journal-card-title").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.getAttribute("data-art-id");
-        openArticleModal(id);
-      });
-    });
-  }
-
-  if (window.lucide) window.lucide.createIcons();
-}
-
-function openArticleModal(artId) {
-  const article = JOURNAL_ARTICLES.find(a => a.id === artId);
-  const modal = document.getElementById("pdp-journal-modal");
-  const modalBody = document.getElementById("pdp-journal-modal-body");
-  const progress = document.getElementById("journal-reading-progress-bar");
-
-  if (!article || !modal || !modalBody) return;
-
-  modalBody.innerHTML = `
-    <div style="max-width: 650px; margin: 0 auto; padding: 20px 0;">
-      <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--color-brand-gold); letter-spacing: 0.05em;">${article.category} • ${article.date}</span>
-      <h1 class="editorial-title" style="font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 8px 0 16px; line-height: 1.3;">${article.title}</h1>
-      <div style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--color-text-muted); border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); margin-bottom: var(--spacing-md);">
-        <span style="font-weight: 700; color: var(--color-text-primary);">Written by ${article.author}</span>
-        <span>•</span>
-        <span>${article.readTime} reading time</span>
-      </div>
-      <div style="aspect-ratio: 16/9; border-radius: var(--border-radius-md); overflow: hidden; margin-bottom: var(--spacing-md); border: 1px solid var(--color-border);">
-        <img src="${article.cover}" alt="${article.title}" style="width:100%; height:100%; object-fit:cover;">
-      </div>
-      <div class="details-verse-box" style="margin-bottom: 20px;">
-        <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.5; font-style: italic;">"${article.excerpt}"</p>
-      </div>
-      <div style="font-size: 1rem; line-height: 1.7; color: var(--color-text-primary); display: flex; flex-direction: column; gap: var(--spacing-sm);">
-        ${article.body}
-      </div>
-      <div style="border-top: 1px solid var(--color-border); margin-top: var(--spacing-xl); padding-top: var(--spacing-md); text-align: center;">
-        <button class="cta-button cta-button-primary" id="pdp-journal-close-btn-act" style="padding: 10px 24px; font-size: 0.8rem;">Finish Reading</button>
-      </div>
-    </div>
-  `;
-
-  modal.classList.add("active");
-  document.body.style.overflow = "hidden"; // Disable scroll behind modal
-
-  // Reading progress bar calculator
-  const modalScrollArea = document.getElementById("pdp-journal-modal-body");
-  if (modalScrollArea && progress) {
-    progress.style.width = "0%";
-    modalScrollArea.addEventListener("scroll", () => {
-      const scrollHeight = modalScrollArea.scrollHeight - modalScrollArea.clientHeight;
-      const pct = (modalScrollArea.scrollTop / scrollHeight) * 100;
-      progress.style.width = `${pct}%`;
-    });
-  }
-
-  // Close triggers
-  const closeBtn = document.getElementById("pdp-journal-close-btn");
-  const closeAct = document.getElementById("pdp-journal-close-btn-act");
-  const overlay = modal.querySelector(".pdp-modal-overlay");
-
-  const closeHandler = () => {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-  };
-
-  if (closeBtn) closeBtn.addEventListener("click", closeHandler);
-  if (closeAct) closeAct.addEventListener("click", closeHandler);
-  if (overlay) overlay.addEventListener("click", closeHandler);
-
-  if (window.lucide) window.lucide.createIcons();
-}
-
-// 4. CONTACT & FAQ PAGE RENDERER
-function renderContactPage() {
-  const infoTarget = document.getElementById("contact-info-target");
-  const formsTarget = document.getElementById("contact-forms-target");
-  const faqTarget = document.getElementById("contact-faq-target");
-
-  // Office details
-  if (infoTarget) {
-    infoTarget.innerHTML = `
-      <div class="contact-info-widget">
-        <span class="contact-info-title">Studio Headquarters</span>
-        <p class="contact-info-text">Bengaluru Creative District, Karnataka</p>
-      </div>
-      
-      <div class="contact-info-widget">
-        <span class="contact-info-title">WhatsApp & Phone Support</span>
-        <p class="contact-info-text">+91 99999 99999</p>
-      </div>
-
-      <div class="contact-info-widget">
-        <span class="contact-info-title">Client Services Email</span>
-        <p class="contact-info-text">care@ruvenstudio.in</p>
-      </div>
-
-      <div class="contact-info-widget">
-        <span class="contact-info-title">Response Rate</span>
-        <p class="contact-info-text">We read every message. Typical response window is within 2-4 hours.</p>
-      </div>
-
-      <div class="contact-info-widget">
-        <span class="contact-info-title">Fellowship Socials</span>
-        <div class="contact-social-icons">
-          <a href="https://instagram.com/ruven.studio" target="_blank" class="contact-social-btn" aria-label="Instagram"><i data-lucide="instagram" style="width: 16px;"></i></a>
-          <a href="#" class="contact-social-btn" aria-label="WhatsApp Link"><i data-lucide="message-circle" style="width: 16px;"></i></a>
-          <a href="#" class="contact-social-btn" aria-label="Twitter"><i data-lucide="chrome" style="width: 16px;"></i></a>
-        </div>
-      </div>
-    `;
-  }
-
-  // Render Form based on Active Tab
-  const renderTabbedForm = () => {
-    if (!formsTarget) return;
-
-    if (activeContactTab === "general") {
-      formsTarget.innerHTML = `
-        <form class="contact-form-card" id="contact-form-gen">
-          <div class="contact-form-group">
-            <label for="gen-name">Full Name</label>
-            <input type="text" id="gen-name" class="contact-input" placeholder="Your Name" required>
-          </div>
-          <div class="contact-form-group">
-            <label for="gen-email">Email Address</label>
-            <input type="email" id="gen-email" class="contact-input" placeholder="you@example.com" required>
-          </div>
-          <div class="contact-form-group">
-            <label for="gen-topic">Inquiry Topic</label>
-            <select class="plp-sort-dropdown contact-input" id="gen-topic" style="padding: 10px;">
-              <option value="sizing">Sizing & Sizing Guidelines</option>
-              <option value="shipping">Delivery & Shipping Queries</option>
-              <option value="returns">7-Day Return/Exchange</option>
-              <option value="general">General Support</option>
-            </select>
-          </div>
-          <div class="contact-form-group">
-            <label for="gen-message">Message</label>
-            <textarea id="gen-message" class="contact-textarea" placeholder="Type your message..." required></textarea>
-          </div>
-          <button type="submit" class="cta-button cta-button-primary" style="padding: 12px; font-size: 0.8rem; margin-top: 4px;">Submit Support Request</button>
-        </form>
-      `;
-    } else if (activeContactTab === "prayer") {
-      formsTarget.innerHTML = `
-        <form class="contact-form-card" id="contact-form-pray">
-          <div class="contact-form-group">
-            <label for="pray-name">Name or Initials</label>
-            <input type="text" id="pray-name" class="contact-input" placeholder="e.g. Samuel K." required>
-          </div>
-          <div class="contact-form-group">
-            <label for="pray-city">City</label>
-            <input type="text" id="pray-city" class="contact-input" placeholder="e.g. Bengaluru" required>
-          </div>
-          <div class="contact-form-group">
-            <label for="pray-msg">Prayer Request Details</label>
-            <textarea id="pray-msg" class="contact-textarea" placeholder="Describe your prayer request so our studio can pray for you..." required></textarea>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center; margin-top: 4px;">
-            <input type="checkbox" id="pray-anon" style="cursor:pointer;">
-            <label for="pray-anon" style="font-size: 0.78rem; text-transform:none; color:var(--color-text-muted); cursor:pointer;">Submit anonymously on the public Prayer Wall</label>
-          </div>
-          <button type="submit" class="cta-button cta-button-primary" style="padding: 12px; font-size: 0.8rem; margin-top: var(--spacing-xs);">Submit to Fellowship Prayer Wall</button>
-        </form>
-      `;
-    } else {
-      formsTarget.innerHTML = `
-        <form class="contact-form-card" id="contact-form-church">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
-            <div class="contact-form-group">
-              <label for="church-org">Church / Youth Group</label>
-              <input type="text" id="church-org" class="contact-input" placeholder="Group Name" required>
-            </div>
-            <div class="contact-form-group">
-              <label for="church-leader">Representative Name</label>
-              <input type="text" id="church-leader" class="contact-input" placeholder="Leader Name" required>
-            </div>
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
-            <div class="contact-form-group">
-              <label for="church-email">Email</label>
-              <input type="email" id="church-email" class="contact-input" placeholder="you@church.org" required>
-            </div>
-            <div class="contact-form-group">
-              <label for="church-phone">WhatsApp Number</label>
-              <input type="text" id="church-phone" class="contact-input" placeholder="+91 99999 99999" required>
-            </div>
-          </div>
-          <div class="contact-form-group">
-            <label for="church-qty">Estimated Quantity (Minimum 20 items)</label>
-            <select class="plp-sort-dropdown contact-input" id="church-qty" style="padding: 10px;">
-              <option value="20-50">20 - 50 items (Small Youth Circle)</option>
-              <option value="51-100">51 - 100 items (Mid Conference)</option>
-              <option value="100+">100+ items (Large Congregation Drop)</option>
-            </select>
-          </div>
-          <div class="contact-form-group">
-            <label for="church-details">Custom Design / Event Details</label>
-            <textarea id="church-details" class="contact-textarea" placeholder="Detail your event goals, custom artwork ideas, or collections needed..." required></textarea>
-          </div>
-          <button type="submit" class="cta-button cta-button-primary" style="padding: 12px; font-size: 0.8rem; margin-top: 4px;">Submit Partnership Proposal</button>
-        </form>
-      `;
-    }
-
-    // Attach form submit hooks
-    const activeFormEl = formsTarget.querySelector("form");
-    if (activeFormEl) {
-      activeFormEl.addEventListener("submit", (e) => {
-        e.preventDefault();
-        
-        let successMsg = "Help request submitted! Our team will respond shortly.";
-        if (activeContactTab === "prayer") {
-          const nameVal = document.getElementById("pray-name").value;
-          const cityVal = document.getElementById("pray-city").value;
-          const msgVal = document.getElementById("pray-msg").value;
-          const isAnon = document.getElementById("pray-anon").checked;
-
-          const newPrayer = {
-            id: Date.now(),
-            author: isAnon ? "Anonymous" : nameVal,
-            location: cityVal,
-            message: msgVal,
-            count: 1,
-            voted: true
-          };
-
-          state.prayers.unshift(newPrayer);
-          localStorage.setItem("ruven_prayers", JSON.stringify(state.prayers));
-          successMsg = "Prayer submitted! Standing with you on the wall.";
-        } else if (activeContactTab === "church") {
-          successMsg = "Partnership proposal logged. Our team will WhatsApp you within 24 hours.";
-        }
-
-        activeFormEl.reset();
-        showToast(successMsg);
-      });
-    }
-  };
-
-  renderTabbedForm();
-
-  // Tab switcher click handlers
-  const tabContainer = document.querySelector(".contact-form-tabs");
-  if (tabContainer) {
-    tabContainer.querySelectorAll(".contact-tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        tabContainer.querySelectorAll(".contact-tab-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeContactTab = btn.getAttribute("data-form");
-        renderTabbedForm();
-      });
-    });
-  }
-
-  // Render FAQ Grouped List
-  if (faqTarget) {
-    const faqTabs = ["All", "Sizing", "Shipping", "Materials", "Faith", "Partnerships"];
-    const activeTabFaqs = activeFaqTab === "all"
-      ? FAQS_DATA
-      : FAQS_DATA.filter(f => f.category === activeFaqTab);
-
-    const faqItemsHtml = activeTabFaqs.map((faq, idx) => `
-      <div class="pdp-accordion-item">
-        <button class="pdp-accordion-header" data-idx="faq-${idx}">
-          <span>${faq.q}</span>
-          <span class="pdp-accordion-header-icon"><i data-lucide="plus" style="width: 16px; height: 16px;"></i></span>
-        </button>
-        <div class="pdp-accordion-content">
-          <div class="pdp-accordion-content-inner">
-            <p>${faq.a}</p>
-          </div>
-        </div>
-      </div>
-    `).join("");
-
-    faqTarget.innerHTML = `
-      <div class="contact-faq-container">
-        <h2 class="editorial-title" style="font-size: 1.8rem; font-weight:300; text-align: center; margin-bottom: var(--spacing-md);">Grouped Questions Repository</h2>
-        
-        <div class="contact-faq-tabs">
-          ${faqTabs.map(tab => {
-            const activeClass = tab.toLowerCase() === activeFaqTab ? "active" : "";
-            return `<button class="contact-faq-tab-btn ${activeClass}" data-category="${tab.toLowerCase()}">${tab}</button>`;
-          }).join("")}
-        </div>
-
-        <div class="pdp-accordions-container" style="border-top: 1px solid var(--color-border);">
-          ${faqItemsHtml}
-        </div>
-      </div>
-    `;
-
-    // FAQ category tabs trigger click
-    faqTarget.querySelectorAll(".contact-faq-tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        activeFaqTab = btn.getAttribute("data-category");
-        renderContactPage();
-      });
-    });
-
-    // faq accordion togglers
-    faqTarget.querySelectorAll(".pdp-accordion-header").forEach(header => {
-      header.addEventListener("click", () => {
-        const content = header.parentElement.querySelector(".pdp-accordion-content");
-        const isActive = header.classList.contains("active");
-
-        faqTarget.querySelectorAll(".pdp-accordion-header").forEach(h => {
-          h.classList.remove("active");
-          h.parentElement.querySelector(".pdp-accordion-content").style.maxHeight = null;
-        });
-
-        if (!isActive) {
-          header.classList.add("active");
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    });
-  }
-
-  if (window.lucide) window.lucide.createIcons();
-}
 
 // ==========================================================================
 // Phase 7 SPA Page Renderers & Event Handlers
@@ -4259,7 +3798,7 @@ function renderAccountPage() {
     if (activeAccountTab === "profile") {
       panelTarget.innerHTML = `
         <div class="account-panel-card">
-          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Profile Settings</h2>
+          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Profile Settings</h2>
           <form id="account-profile-form" style="display:flex; flex-direction:column; gap: var(--spacing-sm);">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--spacing-sm);">
               <div class="contact-form-group">
@@ -4351,7 +3890,7 @@ function renderAccountPage() {
 
         panelTarget.innerHTML = `
           <div class="account-panel-card">
-            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Order History</h2>
+            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Order History</h2>
             ${ordersHtml}
           </div>
         `;
@@ -4410,7 +3949,7 @@ function renderAccountPage() {
         panelTarget.innerHTML = `
           <div class="account-panel-card">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:var(--spacing-md);">
-              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin:0;">Wishlist Manager</h2>
+              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin:0;">Wishlist Manager</h2>
               <button id="acc-wishlist-share" class="cart-page-action-link" style="font-weight:700;"><i data-lucide="share" style="width:12px; vertical-align:middle; margin-right:3px;"></i> Share List</button>
             </div>
             
@@ -4478,12 +4017,12 @@ function renderAccountPage() {
 
       panelTarget.innerHTML = `
         <div class="account-panel-card">
-          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Saved Address Register</h2>
+          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Saved Address Register</h2>
           <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:var(--spacing-md);">
             ${addressesHtml}
           </div>
           
-          <h3 style="font-family:var(--font-editorial); font-size:1.15rem; font-weight:300; margin-bottom:var(--spacing-xs);">Add New Address</h3>
+          <h3 style="font-family:var(--font-editorial); font-size:1.15rem; font-weight:700; margin-bottom:var(--spacing-xs);">Add New Address</h3>
           <form id="account-add-address-form" style="display:flex; flex-direction:column; gap:8px; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); background: var(--color-bg-warm);">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
               <input type="text" id="add-addr-fn" class="contact-input" placeholder="First Name" required style="padding:8px;">
@@ -4558,7 +4097,7 @@ function renderAccountPage() {
         
         panelTarget.innerHTML = `
           <div class="account-panel-card">
-            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Returns & Exchanges Center</h2>
+            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Returns & Exchanges Center</h2>
             <form id="account-returns-form" style="display:flex; flex-direction:column; gap: var(--spacing-sm);">
               <div class="contact-form-group">
                 <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Select Order</label>
@@ -4674,7 +4213,7 @@ function renderAccountPage() {
         <div class="account-panel-card">
           <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:var(--spacing-md); flex-wrap:wrap; gap:8px;">
             <div>
-              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin:0;">Ruven Circle Fellowship</h2>
+              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:700; margin:0;">Ruven Circle Fellowship</h2>
               <p style="font-size:0.72rem; color:var(--color-text-muted); margin:2px 0 0;">Join the movement. Every order and challenge builds points that convert to checkout cash.</p>
             </div>
             <div style="text-align:center;">
@@ -4686,7 +4225,7 @@ function renderAccountPage() {
             </div>
           </div>
 
-          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:300; margin-bottom:var(--spacing-sm);">Milestone Badges</h3>
+          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:700; margin-bottom:var(--spacing-sm);">Milestone Badges</h3>
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; text-align:center; margin-bottom:var(--spacing-md);">
             <div style="border:1px solid var(--color-border); padding:8px; border-radius: var(--border-radius-sm); background: var(--color-bg-warm);">
               <i data-lucide="sun" style="width:24px; color:var(--color-brand-gold); stroke-width:1.5px; margin: 0 auto 4px;"></i>
@@ -4705,7 +4244,7 @@ function renderAccountPage() {
             </div>
           </div>
 
-          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:300; margin-bottom:var(--spacing-sm);">Daily Faith Challenges</h3>
+          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:700; margin-bottom:var(--spacing-sm);">Daily Faith Challenges</h3>
           <div style="background:var(--color-bg-warm); padding:var(--spacing-sm); border-radius: var(--border-radius-md); border:1px solid var(--color-border);">
             ${chalHtml}
           </div>

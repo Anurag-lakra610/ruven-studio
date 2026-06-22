@@ -193,8 +193,7 @@
         <li class="nav-item"><a href="#shop" class="nav-link nav-trigger filter-trigger" data-view="shop" data-filter="new-arrivals">New Arrivals</a></li>
         <li class="nav-item"><a href="#story" class="nav-link nav-trigger" data-view="story">Our Story</a></li>
         <li class="nav-item"><a href="#community" class="nav-link nav-trigger" data-view="community">Community</a></li>
-        <li class="nav-item"><a href="#journal" class="nav-link nav-trigger" data-view="journal">Journal</a></li>
-        <li class="nav-item"><a href="#contact" class="nav-link nav-trigger" data-view="contact">Contact</a></li>
+        <li class="nav-item"><a href="#site-footer" class="nav-link nav-trigger" data-view="home" data-target="site-footer">Contact</a></li>
         <li class="nav-item nav-mobile-only"><a href="#account" class="nav-link nav-trigger" data-view="account">My Account</a></li>
       </ul>
     </nav>
@@ -1051,82 +1050,13 @@
       </div>
     </section>
 
-    <!-- 6. FAITH JOURNAL VIEW -->
-    <section id="journal-view" class="view-section">
-      <div class="journal-hero-wrap">
-        <div class="journal-hero-content">
-          <p class="section-subtitle">Ruven Editorial Journal</p>
-          <h1 class="editorial-title">Reflections & Stillness</h1>
-          <p class="journal-hero-desc">Explore weekly devotionals on spiritual renewal, design blueprints, and narratives on modern Christian living.</p>
-        </div>
-      </div>
 
-      <div class="pdp-wrapper-container">
-        <!-- Verse of the Week High Impact Card -->
-        <div class="journal-votw-section" id="journal-votw-target"></div>
-
-        <!-- Journal Categories Filter Row -->
-        <div class="journal-filters-row" id="journal-filters-target"></div>
-
-        <!-- Journal Grid Target -->
-        <div class="journal-articles-grid" id="journal-articles-target"></div>
-      </div>
-
-      <!-- Journal Article Reading Mode Overlay Modal -->
-      <div class="pdp-modal" id="pdp-journal-modal">
-        <div class="pdp-modal-overlay"></div>
-        <div class="pdp-modal-content" style="max-width: 800px; height: 90vh; display: flex; flex-direction: column;">
-          <button class="pdp-modal-close" id="pdp-journal-close-btn" aria-label="Close article"><i data-lucide="x"></i></button>
-          
-          <!-- Reading Progress Bar -->
-          <div class="journal-reading-progress-wrap" style="height: 4px; background: var(--color-border); width: 100%; margin-top: 15px;">
-            <div id="journal-reading-progress-bar" style="height: 100%; background: var(--color-brand-burgundy); width: 0%;"></div>
-          </div>
-
-          <div class="pdp-modal-body" id="pdp-journal-modal-body" style="overflow-y: auto; flex-grow: 1; padding: var(--spacing-md) 0;">
-            <!-- Dynamic article content -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. CONTACT & FAQ VIEW -->
-    <section id="contact-view" class="view-section">
-      <div class="contact-hero-wrap">
-        <div class="contact-hero-content">
-          <p class="section-subtitle">Ruven Client Services</p>
-          <h1 class="editorial-title">Reach Out to Our Studio</h1>
-          <p class="contact-hero-desc">Whether you have sizing questions, need prayer support, or want to establish a church group partnership, we're here to help.</p>
-        </div>
-      </div>
-
-      <div class="pdp-wrapper-container">
-        <div class="contact-grid-layout">
-          <!-- Left Column: Office coordinates -->
-          <div class="contact-info-column" id="contact-info-target"></div>
-
-          <!-- Right Column: Interactive Tabbed Form -->
-          <div class="contact-forms-column">
-            <div class="contact-form-tabs">
-              <button class="contact-tab-btn active" data-form="general">General Help</button>
-              <button class="contact-tab-btn" data-form="prayer">Submit Prayer</button>
-              <button class="contact-tab-btn" data-form="church">Church Partnership</button>
-            </div>
-            
-            <div class="contact-forms-container" id="contact-forms-target"></div>
-          </div>
-        </div>
-
-        <!-- FAQ Grouped Accordions -->
-        <div class="contact-faq-section" id="contact-faq-target"></div>
-      </div>
-    </section>
 
     <!-- 8. SHOPPING CART VIEW -->
     <section id="cart-view" class="view-section">
       <div class="cart-page-header text-center" style="margin-bottom: var(--spacing-xl); padding-top: var(--spacing-lg); text-align: center;">
         <p class="section-subtitle">Your Selection</p>
-        <h1 class="editorial-title" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; margin-top: 4px;">Shopping Bag</h1>
+        <h1 class="editorial-title" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-top: 4px;">Shopping Bag</h1>
       </div>
       <div class="pdp-wrapper-container">
         <div class="cart-page-layout">
@@ -1151,7 +1081,7 @@
           <!-- Right Column: Order Summary & Coupon -->
           <div class="cart-page-sidebar">
             <div class="order-summary-card" style="background: var(--color-bg-warm); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); position: sticky; top: calc(var(--header-height) + 20px);">
-              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 300; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Summary</h3>
+              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Summary</h3>
               <div class="summary-rows" id="cart-page-summary-rows">
                 <!-- Subtotal, Shipping, Tax, Coupon adjustments -->
               </div>
@@ -1214,7 +1144,7 @@
           <div class="checkout-forms-panel" style="flex-grow: 1;">
             <!-- Step 1: Shipping Address -->
             <div class="checkout-step-container active" id="checkout-step-shipping-panel">
-              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 300; margin-bottom: var(--spacing-md);">Shipping Address</h2>
+              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 700; margin-bottom: var(--spacing-md);">Shipping Address</h2>
               <form id="checkout-shipping-form">
                 <div class="checkout-form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
                   <div class="contact-form-group floating-group" style="position: relative;">
@@ -1255,7 +1185,7 @@
                   </div>
                 </div>
                 
-                <h3 class="checkout-sub-title" style="font-family: var(--font-editorial); font-size: 1.25rem; font-weight: 300; margin: var(--spacing-md) 0 var(--spacing-sm); border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">Delivery Options</h3>
+                <h3 class="checkout-sub-title" style="font-family: var(--font-editorial); font-size: 1.25rem; font-weight: 700; margin: var(--spacing-md) 0 var(--spacing-sm); border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">Delivery Options</h3>
                 <div class="delivery-methods-group" style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
                   <label class="delivery-method-label selected" style="border: 1px solid var(--color-brand-burgundy); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer; background: var(--color-white);">
                     <input type="radio" name="chk-shipping-method" value="standard" checked style="cursor: pointer;">
@@ -1281,7 +1211,7 @@
             
             <!-- Step 2: Payment & Review -->
             <div class="checkout-step-container" id="checkout-step-payment-panel" style="display: none;">
-              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 300; margin-bottom: var(--spacing-md);">Payment Method</h2>
+              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 700; margin-bottom: var(--spacing-md);">Payment Method</h2>
               <form id="checkout-payment-form">
                 <div class="payment-tabs" style="display: flex; gap: var(--spacing-xs); margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">
                   <button type="button" class="payment-tab-btn active" data-pay="card" style="padding: 8px 16px; border: 1px solid var(--color-border); border-bottom: none; background: var(--color-white); font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 4px; border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0; cursor: pointer;"><i data-lucide="credit-card" style="width: 14px;"></i> Card</button>
@@ -1311,7 +1241,7 @@
           <!-- Right Column: Sticky Summary -->
           <div class="checkout-summary-panel" style="width: 350px; flex-shrink: 0;">
             <div class="checkout-summary-card" style="background: var(--color-bg-warm); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); position: sticky; top: 20px;">
-              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 300; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Details</h3>
+              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 700; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Details</h3>
               <div class="checkout-summary-items" id="checkout-summary-items-target" style="display: flex; flex-direction: column; gap: var(--spacing-sm); max-height: 250px; overflow-y: auto; margin-bottom: var(--spacing-sm);">
                 <!-- Dynamically filled -->
               </div>
@@ -1331,7 +1261,7 @@
           <i data-lucide="check-circle" style="width: 60px; height: 60px; color: var(--color-brand-sage); stroke-width: 1.25px;"></i>
         </div>
         <p class="section-subtitle">Thank You For Your Support</p>
-        <h1 class="editorial-title" style="font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 300; margin-top: 4px;">Order Confirmed</h1>
+        <h1 class="editorial-title" style="font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 700; margin-top: 4px;">Order Confirmed</h1>
         
         <div class="confirmation-details-box" style="background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); margin: var(--spacing-md) 0; text-align: left; font-size: 0.88rem;">
           <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-border); padding-bottom: 8px; margin-bottom: 8px;">
@@ -1377,7 +1307,7 @@
     <section id="tracking-view" class="view-section">
       <div class="cart-page-header text-center" style="margin-bottom: var(--spacing-lg); padding-top: var(--spacing-md); text-align: center;">
         <p class="section-subtitle">Real-time Logistics</p>
-        <h1 class="editorial-title" style="font-size: 2rem; font-weight: 300; margin-top: 4px;">Order Tracking</h1>
+        <h1 class="editorial-title" style="font-size: 2rem; font-weight: 700; margin-top: 4px;">Order Tracking</h1>
       </div>
       <div class="pdp-wrapper-container" style="max-width: 650px; margin: 0 auto;">
         <!-- tracking status card -->
@@ -1526,7 +1456,7 @@
     </div>
   </section>
 
-  <footer class="footer-v2">
+  <footer class="footer-v2" id="site-footer">
     <div class="footer-grid-v2">
       <div class="footer-brand-v2">
         <a href="#home" class="brand-logo nav-trigger" data-view="home" style="margin-bottom: var(--spacing-md); display: inline-block; background-color: var(--color-white); padding: var(--spacing-xs) var(--spacing-md); border-radius: var(--border-radius-sm); width: max-content;">
@@ -1535,10 +1465,20 @@
         <p class="footer-statement-v2">
           An independent Christian lifestyle fashion label crafting heavy-weight apparel designed to start quiet, meaningful conversations about faith, renewal, and identity.
         </p>
-        <div class="footer-social-row">
+        <div class="footer-social-row" style="margin-bottom: var(--spacing-sm);">
           <a href="https://instagram.com/ruven.studio" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i data-lucide="instagram"></i></a>
           <a href="#" aria-label="WhatsApp Group"><i data-lucide="message-circle"></i></a>
           <a href="#" aria-label="Pinterest"><i data-lucide="chrome"></i></a>
+        </div>
+        <div class="footer-contact-details" style="font-size: 0.8rem; line-height: 1.6; color: var(--color-text-muted); margin-top: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <i data-lucide="mail" style="width: 14px; height: 14px; color: var(--color-brand-gold);"></i>
+            <a href="mailto:hello@ruvenstudio.in" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" class="hover-opacity">hello@ruvenstudio.in</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i data-lucide="phone" style="width: 14px; height: 14px; color: var(--color-brand-gold);"></i>
+            <a href="tel:+919876543210" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" class="hover-opacity">+91 98765 43210</a>
+          </div>
         </div>
       </div>
       

@@ -149,9 +149,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .editorial-title {
   font-family: var(--font-editorial);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.02em;
 }
 
 .accent-title {
@@ -263,8 +263,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header.scrolled {
-  height: 70px;
-  box-shadow: var(--shadow-premium);
+  height: var(--header-height);
+  box-shadow: var(--shadow-subtle);
 }
 
 /* Dark Mode Navigation Adjustments - Removed background override to keep solid white navbar matching logo background */
@@ -1068,8 +1068,8 @@ h1, h2, h3, h4, h5, h6 {
 .section-title {
   font-family: var(--font-editorial);
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 700;
+  font-style: normal;
   line-height: 1.2;
 }
 
@@ -1606,8 +1606,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .prayer-form-container h3 {
   font-family: var(--font-editorial);
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 700;
+  font-style: normal;
   font-size: 1.5rem;
   margin-bottom: var(--spacing-xs);
 }
@@ -1795,8 +1795,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .drawer-header h3 {
   font-family: var(--font-editorial);
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 700;
+  font-style: normal;
   font-size: 1.5rem;
 }
 
@@ -1963,8 +1963,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .newsletter-section h2 {
   font-family: var(--font-editorial);
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 700;
+  font-style: normal;
   font-size: clamp(2rem, 4vw, 3rem);
 }
 
@@ -2019,8 +2019,8 @@ h1, h2, h3, h4, h5, h6 {
    12. Newsletter-v2 & Footer-v2 Redesign
    ========================================================================== */
 .newsletter-section-v2 {
-  background-color: var(--color-bg-warm);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-brand-burgundy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
 }
 
@@ -2045,14 +2045,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 700;
   line-height: 1.25;
-  color: var(--color-text-primary);
+  color: var(--color-bg-warm);
   letter-spacing: -0.01em;
 }
 
 .newsletter-description {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -2063,7 +2063,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .newsletter-input-group {
   display: flex;
-  border-bottom: 2px solid var(--color-text-primary);
+  border-bottom: 2px solid var(--color-bg-warm);
   padding-bottom: 4px;
 }
 
@@ -2073,13 +2073,12 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent;
   padding: var(--spacing-2xs) 0;
   font-size: 1rem;
-  color: var(--color-text-primary);
+  color: var(--color-bg-warm);
   outline: none;
 }
 
 .newsletter-input-group input::placeholder {
-  color: var(--color-text-muted);
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .newsletter-submit-btn {
@@ -2089,14 +2088,15 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-text-primary);
+  color: var(--color-brand-gold);
   cursor: pointer;
   padding: 0 var(--spacing-xs);
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), opacity var(--transition-fast);
 }
 
 .newsletter-submit-btn:hover {
-  color: var(--color-brand-burgundy);
+  color: var(--color-bg-warm);
+  opacity: 0.95;
 }
 
 .newsletter-benefits {
@@ -2108,14 +2108,14 @@ h1, h2, h3, h4, h5, h6 {
 .benefit-tag {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.85);
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 .benefit-tag i {
-  color: var(--color-brand-sage);
+  color: var(--color-brand-gold);
 }
 
 .footer-v2 {
@@ -7281,12 +7281,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Header glassmorphism scroll blur */
+/* Header static sticky white navbar (no transparent or blur transitions on scroll) */
 .header.scrolled {
-  background-color: rgba(250, 249, 246, 0.85) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  background-color: var(--color-white) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: var(--shadow-subtle) !important;
 }
 
 /* Micro button pressed state */
