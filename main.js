@@ -306,15 +306,23 @@ document.addEventListener("DOMContentLoaded", () => {
   handleHashRoute();
   window.addEventListener("hashchange", handleHashRoute);
   
-  // Header Scroll Effect
+  // Header Scroll Effect (Throttled with requestAnimationFrame)
+  let scrollRAF;
   window.addEventListener("scroll", () => {
-    const header = document.getElementById("site-header");
-    if (window.scrollY > 30) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
+    if (!scrollRAF) {
+      scrollRAF = window.requestAnimationFrame(() => {
+        const header = document.getElementById("site-header");
+        if (header) {
+          if (window.scrollY > 30) {
+            header.classList.add("scrolled");
+          } else {
+            header.classList.remove("scrolled");
+          }
+        }
+        scrollRAF = null;
+      });
     }
-  });
+  }, { passive: true });
 });
 
 // 4. SPA ROUTER & NAVIGATION
@@ -2722,19 +2730,21 @@ function setupHeroParallax() {
 function setupScrollReveal() {
   const revealElements = document.querySelectorAll(".reveal-on-scroll");
   
-  const revealOnScroll = () => {
-    const triggerBottom = window.innerHeight * 0.9;
-    revealElements.forEach(el => {
-      const boxTop = el.getBoundingClientRect().top;
-      if (boxTop < triggerBottom) {
-        el.classList.add("active");
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+        obs.unobserve(entry.target);
       }
     });
-  };
-  
-  window.addEventListener("scroll", revealOnScroll);
-  // Run once on load
-  revealOnScroll();
+  }, {
+    threshold: 0.1,
+    rootMargin: "0px 0px -5% 0px"
+  });
+
+  revealElements.forEach(el => {
+    observer.observe(el);
+  });
 }
 
 // ==========================================================================

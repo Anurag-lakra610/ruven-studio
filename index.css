@@ -7250,4 +7250,127 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ==========================================================================
+   SECTION 19: Premium Polish, Motion & Micro-interactions (Phase 8)
+   ========================================================================== */
+
+/* Visible Keyboard Focus Outlines */
+:focus-visible {
+  outline: 2px solid var(--color-brand-burgundy) !important;
+  outline-offset: 3px !important;
+}
+
+/* Page transitions */
+.view-section {
+  display: none;
+  opacity: 0;
+}
+.view-section.active {
+  display: block;
+  opacity: 0;
+  animation: fadeInView 300ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes fadeInView {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header glassmorphism scroll blur */
+.header.scrolled {
+  background-color: rgba(250, 249, 246, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Micro button pressed state */
+.cta-button {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.cta-button:active {
+  transform: scale(0.97) !important;
+}
+
+/* Card hover scaling and transition adjustments */
+.product-card,
+.testimony-card,
+.journal-card,
+.mission-value-card {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(28, 28, 28, 0.06);
+}
+.testimony-card:hover,
+.journal-card:hover,
+.mission-value-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(28, 28, 28, 0.04);
+}
+
+/* Custom Luxury Scrollbar for Desktop */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-warm);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-brand-gold);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-burgundy);
+  }
+}
+
+/* Form validation styling states */
+.floating-input {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.floating-input.valid {
+  border-color: var(--color-brand-sage) !important;
+  box-shadow: 0 0 0 1px var(--color-brand-sage);
+}
+.floating-input.invalid {
+  border-color: var(--color-brand-burgundy) !important;
+  box-shadow: 0 0 0 1px var(--color-brand-burgundy);
+}
+
+/* Shimmer load states */
+.shimmer-loader {
+  background: linear-gradient(90deg, var(--color-bg-card) 25%, var(--color-border) 37%, var(--color-bg-card) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Prefers Reduced Motion System Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .view-section.active {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
 
