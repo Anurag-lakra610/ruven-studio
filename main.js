@@ -200,6 +200,39 @@ const INITIAL_PRAYERS = [
 ];
 
 // 2. STATE MANAGEMENT
+const MOCK_ORDERS = [
+  {
+    id: "RV-2026-89104",
+    date: "2026-05-14",
+    status: "Delivered",
+    items: [
+      { id: "tee-romans-13-12", size: "L", qty: 1, price: 1999 }
+    ],
+    subtotal: 1999,
+    shipping: 0,
+    tax: 239.88,
+    discount: 0,
+    total: 2238.88,
+    address: {
+      firstName: "Samuel",
+      lastName: "Ruven",
+      email: "samuel@ruvenstudio.in",
+      phone: "+91 99999 99999",
+      address: "12, Creative District, Indiranagar",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560038"
+    },
+    tracking: [
+      { status: "Ordered", date: "May 14, 2026", time: "10:30 AM", log: "Order registered under God's protection." },
+      { status: "Packed", date: "May 14, 2026", time: "02:15 PM", log: "Garment hand-inspected and custom packed." },
+      { status: "Shipped", date: "May 15, 2026", time: "09:00 AM", log: "Handed over to BlueDart courier services." },
+      { status: "Out for Delivery", date: "May 17, 2026", time: "11:00 AM", log: "Out for delivery with courier agent." },
+      { status: "Delivered", date: "May 17, 2026", time: "03:45 PM", log: "Delivered with joy to recipient." }
+    ]
+  }
+];
+
 let state = {
   activeView: "home",
   activeFilter: "all",
@@ -219,7 +252,28 @@ let state = {
     category: "all"
   },
   compareList: [],
-  recentlyViewed: JSON.parse(localStorage.getItem("ruven_recently_viewed")) || []
+  recentlyViewed: JSON.parse(localStorage.getItem("ruven_recently_viewed")) || [],
+  
+  // Phase 7 State additions
+  savedForLater: JSON.parse(localStorage.getItem("ruven_saved_for_later")) || [],
+  orders: JSON.parse(localStorage.getItem("ruven_orders")) || MOCK_ORDERS,
+  addresses: JSON.parse(localStorage.getItem("ruven_addresses")) || [
+    {
+      firstName: "Samuel",
+      lastName: "Ruven",
+      email: "samuel@ruvenstudio.in",
+      phone: "+91 99999 99999",
+      address: "12, Creative District, Indiranagar",
+      city: "Bengaluru",
+      state: "Karnataka",
+      zip: "560038",
+      isDefault: true
+    }
+  ],
+  loyaltyPoints: parseInt(localStorage.getItem("ruven_loyalty_points")) || 250,
+  currentCoupon: 0,
+  giftWrap: false,
+  currentOrderTrackingId: "RV-2026-89104"
 };
 
 // 3. INITIALIZATION
@@ -299,6 +353,8 @@ function setupNavigation() {
       
       // Close mobile menu if open
       closeMobileMenu();
+      closeDrawer("cart");
+      closeDrawer("wishlist");
     }
   });
   
@@ -306,6 +362,16 @@ function setupNavigation() {
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+  }
+
+  // Account Button Trigger
+  const accountBtn = document.getElementById("account-btn");
+  if (accountBtn) {
+    accountBtn.addEventListener("click", () => {
+      closeDrawer("cart");
+      closeDrawer("wishlist");
+      window.location.hash = "#account";
+    });
   }
 }
 
@@ -321,7 +387,7 @@ function handleHashRoute() {
       renderProductDetailPage();
       switchView("product");
     }
-  } else if (["home", "shop", "community", "story", "journal", "contact"].includes(route)) {
+  } else if (["home", "shop", "community", "story", "journal", "contact", "cart", "checkout", "confirmation", "tracking", "account"].includes(route)) {
     if (route === "story") {
       renderStoryPage();
     } else if (route === "community") {
@@ -330,6 +396,16 @@ function handleHashRoute() {
       renderJournalPage();
     } else if (route === "contact") {
       renderContactPage();
+    } else if (route === "cart") {
+      renderCartPage();
+    } else if (route === "checkout") {
+      renderCheckoutPage();
+    } else if (route === "confirmation") {
+      renderConfirmationPage();
+    } else if (route === "tracking") {
+      renderTrackingPage();
+    } else if (route === "account") {
+      renderAccountPage();
     }
     switchView(route);
   }
@@ -353,6 +429,25 @@ function switchView(viewName) {
     activeSec.classList.add("active");
     window.scrollTo({ top: 0, behavior: "instant" });
   }
+
+  // Distraction-Free Layout Check (hide header/footer on checkout)
+  const header = document.getElementById("site-header");
+  const newsletter = document.getElementById("newsletter-section");
+  const footer = document.querySelector("footer");
+  
+  if (viewName === "checkout") {
+    if (header) header.style.display = "none";
+    if (newsletter) newsletter.style.display = "none";
+    if (footer) footer.style.display = "none";
+  } else {
+    if (header) header.style.display = "";
+    if (newsletter) newsletter.style.display = "";
+    if (footer) footer.style.display = "";
+  }
+
+  // Ensure drawers are closed
+  closeDrawer("cart");
+  closeDrawer("wishlist");
 }
 
 function toggleMobileMenu() {
@@ -2140,17 +2235,14 @@ function setupCartDrawer() {
     closeDrawer("wishlist");
   });
   
-  const checkoutAction = () => {
+  const checkoutAction = (e) => {
     if (state.cart.length === 0) {
-      alert("Your studio bag is empty!");
+      if (e) e.preventDefault();
+      showToast("Your studio bag is empty!");
       return;
     }
-    alert("Proceeding to secure checkout under God's protection. Thank you for supporting Ruven Studio!");
-    // Clear cart as placeholder order placement
-    state.cart = [];
-    saveCartState();
-    renderCart();
     closeDrawer("cart");
+    window.location.hash = "#checkout";
   };
 
   if (checkoutBtn) checkoutBtn.addEventListener("click", checkoutAction);
@@ -2222,6 +2314,9 @@ function renderCart() {
   }
   
   if (state.cart.length === 0) {
+    const progressWrap = document.getElementById("drawer-shipping-progress-wrap");
+    if (progressWrap) progressWrap.style.display = "none";
+
     cartContent.innerHTML = `
       <div class="cart-empty">
         <i data-lucide="shopping-bag" class="cart-empty-icon"></i>
@@ -2237,8 +2332,31 @@ function renderCart() {
     return;
   }
   
-  document.getElementById("cart-drawer-footer").style.display = "block";
+  // Calculate Subtotal & Shipping Progress
   let subtotal = 0;
+  state.cart.forEach(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (product) subtotal += product.price * item.qty;
+  });
+
+  const progressWrap = document.getElementById("drawer-shipping-progress-wrap");
+  const progressText = document.getElementById("drawer-shipping-progress-needed");
+  const progressBar = document.getElementById("drawer-shipping-progress-bar");
+  
+  if (progressWrap) {
+    progressWrap.style.display = "block";
+    const threshold = 3000;
+    if (subtotal >= threshold) {
+      if (progressText) progressText.innerHTML = `<span style="color:var(--color-brand-sage); font-weight:700;">Free Shipping Achieved!</span>`;
+      if (progressBar) progressBar.style.width = "100%";
+    } else {
+      const diff = threshold - subtotal;
+      if (progressText) progressText.innerHTML = `You're <strong>₹${diff}</strong> away from Free Shipping`;
+      if (progressBar) progressBar.style.width = `${(subtotal / threshold) * 100}%`;
+    }
+  }
+
+  document.getElementById("cart-drawer-footer").style.display = "block";
   
   const cartListMarkup = state.cart.map(item => {
     const product = PRODUCTS.find(p => p.id === item.id);
@@ -3371,6 +3489,1244 @@ function renderContactPage() {
       });
     });
   }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// ==========================================================================
+// Phase 7 SPA Page Renderers & Event Handlers
+// ==========================================================================
+
+let activeAccountTab = "profile";
+let activePaymentMethod = "card";
+let checkoutShippingDetails = {};
+let userCompletedChallenges = [];
+
+// 1. SHOPPING CART PAGE RENDERER
+function renderCartPage() {
+  const shippingTarget = document.getElementById("cart-page-shipping-container");
+  const itemsTarget = document.getElementById("cart-page-items-target");
+  const savedTarget = document.getElementById("cart-page-saved-target");
+  const rowsTarget = document.getElementById("cart-page-summary-rows");
+  const totalValTarget = document.getElementById("cart-page-total-val");
+  const upsellTarget = document.getElementById("cart-upsell-target");
+  const giftCheck = document.getElementById("cart-gift-wrap-check");
+
+  if (!itemsTarget) return;
+
+  // Calculate subtotal
+  let subtotal = 0;
+  state.cart.forEach(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (product) subtotal += product.price * item.qty;
+  });
+
+  // Calculate discount
+  let discountAmount = Math.round(subtotal * (state.currentCoupon / 100));
+
+  // Gift wrap cost
+  let giftWrapCost = state.giftWrap ? 100 : 0;
+
+  // Shipping cost
+  const threshold = 3000;
+  let shippingCost = 0;
+  if (subtotal > 0) {
+    shippingCost = subtotal >= threshold ? 0 : 150;
+  }
+
+  let grandTotal = subtotal - discountAmount + shippingCost + giftWrapCost;
+
+  // Free shipping progress rendering
+  if (shippingTarget) {
+    if (subtotal === 0) {
+      shippingTarget.style.display = "none";
+    } else {
+      shippingTarget.style.display = "block";
+      if (subtotal >= threshold) {
+        shippingTarget.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-size: 0.8rem; font-weight:700; text-transform:uppercase; margin-bottom: 6px; color: var(--color-brand-sage);">
+            <span>Free Shipping Unlocked!</span>
+            <span>100% Achieved</span>
+          </div>
+          <div style="height: 6px; background: var(--color-border); border-radius: var(--border-radius-full); overflow: hidden;">
+            <div style="height: 100%; background: var(--color-brand-sage); width: 100%;"></div>
+          </div>
+        `;
+      } else {
+        const diff = threshold - subtotal;
+        const pct = (subtotal / threshold) * 100;
+        shippingTarget.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-size: 0.8rem; font-weight:700; text-transform:uppercase; margin-bottom: 6px;">
+            <span>Standard Shipping</span>
+            <span>You're ₹${diff} away from Free Shipping</span>
+          </div>
+          <div style="height: 6px; background: var(--color-border); border-radius: var(--border-radius-full); overflow: hidden;">
+            <div style="height: 100%; background: var(--color-brand-gold); width: ${pct}%;"></div>
+          </div>
+        `;
+      }
+    }
+  }
+
+  // Render items list
+  if (state.cart.length === 0) {
+    itemsTarget.innerHTML = `
+      <div style="text-align: center; padding: var(--spacing-xl) 0;">
+        <i data-lucide="shopping-bag" style="width: 48px; height: 48px; stroke-width: 1px; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);"></i>
+        <p style="font-family: var(--font-editorial); font-style: italic; font-size: 1.3rem; margin-bottom: var(--spacing-xs);">Your Shopping Bag is empty</p>
+        <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Add GOTS certified apparel crafted with positive scriptural reminders.</p>
+        <a href="#shop" class="cta-button cta-button-primary nav-trigger" data-view="shop" style="padding: 10px 24px; font-size: 0.75rem;">Browse Collection</a>
+      </div>
+    `;
+    if (rowsTarget) rowsTarget.innerHTML = "";
+    if (totalValTarget) totalValTarget.textContent = "₹0.00";
+    if (upsellTarget) upsellTarget.style.display = "none";
+  } else {
+    itemsTarget.innerHTML = state.cart.map(item => {
+      const product = PRODUCTS.find(p => p.id === item.id);
+      if (!product) return "";
+      const itemTotal = product.price * item.qty;
+      return `
+        <div class="cart-page-item">
+          <div class="cart-page-item-img">
+            <img src="${product.image}" alt="${product.title}">
+          </div>
+          <div class="cart-page-item-info">
+            <h4 class="cart-page-item-title">${product.title}</h4>
+            <div class="cart-page-item-meta">
+              <span>Size: ${item.size}</span>
+              <span>Price: ₹${product.price}</span>
+            </div>
+            <div class="cart-page-item-qty">
+              <button class="cart-page-item-qty-btn chg-page-qty" data-id="${product.id}" data-size="${item.size}" data-chg="-1"><i data-lucide="minus" style="width: 10px;"></i></button>
+              <span class="cart-page-item-qty-val">${item.qty}</span>
+              <button class="cart-page-item-qty-btn chg-page-qty" data-id="${product.id}" data-size="${item.size}" data-chg="1"><i data-lucide="plus" style="width: 10px;"></i></button>
+            </div>
+          </div>
+          <div class="cart-page-item-actions">
+            <span class="cart-page-item-price">₹${itemTotal}</span>
+            <button class="cart-page-action-link page-remove-item" data-id="${product.id}" data-size="${item.size}">Remove</button>
+            <button class="cart-page-action-link page-save-later" data-id="${product.id}" data-size="${item.size}">Save for Later</button>
+            <button class="cart-page-action-link page-add-wishlist" data-id="${product.id}">Add to Wishlist</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Summary pricing rows
+    if (rowsTarget) {
+      let rowsHtml = `
+        <div class="summary-row" style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--color-text-muted); margin-bottom:6px;"><span>Subtotal</span><span>₹${subtotal}</span></div>
+        <div class="summary-row" style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--color-text-muted); margin-bottom:6px;"><span>Estimated GST (12%)</span><span>₹${Math.round(subtotal * 0.12)}</span></div>
+      `;
+      if (state.currentCoupon > 0) {
+        rowsHtml += `
+          <div class="summary-row discount-row" style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--color-brand-sage); font-weight:700; margin-bottom:6px;">
+            <span>Coupon Applied (${state.currentCoupon}%)</span>
+            <span>-₹${discountAmount}</span>
+          </div>
+        `;
+      }
+      rowsHtml += `
+        <div class="summary-row" style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--color-text-muted); margin-bottom:6px;">
+          <span>Standard Shipping</span>
+          <span>${shippingCost === 0 ? "Free" : "₹" + shippingCost}</span>
+        </div>
+      `;
+      if (state.giftWrap) {
+        rowsHtml += `<div class="summary-row" style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--color-text-muted); margin-bottom:6px;"><span>Premium Gift Wrap</span><span>₹100</span></div>`;
+      }
+      rowsTarget.innerHTML = rowsHtml;
+    }
+
+    if (totalValTarget) {
+      totalValTarget.textContent = `₹${grandTotal}`;
+    }
+
+    // Recommended upsell card list
+    if (upsellTarget) {
+      upsellTarget.style.display = "block";
+      const notInCart = PRODUCTS.filter(p => !state.cart.some(item => item.id === p.id)).slice(0, 2);
+      if (notInCart.length > 0) {
+        const upsellItems = notInCart.map(prod => `
+          <div style="display:flex; gap: var(--spacing-md); align-items:center; background: var(--color-white); border: 1px solid var(--color-border); padding:var(--spacing-sm); border-radius: var(--border-radius-sm);">
+            <img src="${prod.image}" alt="${prod.title}" style="width: 50px; height: 60px; object-fit: cover; border-radius: var(--border-radius-sm);">
+            <div style="flex-grow:1;">
+              <h5 style="margin:0; font-size:0.82rem; font-weight:700;">${prod.title}</h5>
+              <span style="font-size:0.72rem; color:var(--color-text-muted);">₹${prod.price}</span>
+            </div>
+            <button class="cta-button cta-button-primary page-upsell-add-btn" data-id="${prod.id}" style="padding: 6px 12px; font-size: 0.65rem; width: auto; margin:0;">Quick Add</button>
+          </div>
+        `).join("");
+
+        upsellTarget.innerHTML = `
+          <h3 class="cart-save-later-title" style="font-size: 1.15rem; margin-bottom: var(--spacing-sm);">Complete the Look</h3>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:var(--spacing-sm);">
+            ${upsellItems}
+          </div>
+        `;
+
+        upsellTarget.querySelectorAll(".page-upsell-add-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            const prod = PRODUCTS.find(p => p.id === id);
+            addToCart(id, prod.sizes[0], 1);
+            showToast("Added matching item to your bag!");
+            renderCartPage();
+            renderCart();
+          });
+        });
+      } else {
+        upsellTarget.style.display = "none";
+      }
+    }
+  }
+
+  // Render Saved For Later products
+  if (savedTarget) {
+    if (state.savedForLater.length === 0) {
+      savedTarget.style.display = "none";
+    } else {
+      savedTarget.style.display = "block";
+      const savedList = state.savedForLater.map(item => {
+        const product = PRODUCTS.find(p => p.id === item.id);
+        if (!product) return "";
+        return `
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding: 12px 0;">
+            <div style="display:flex; gap:var(--spacing-sm); align-items:center;">
+              <img src="${product.image}" alt="${product.title}" style="width: 50px; height: 60px; object-fit: cover; border-radius: var(--border-radius-sm); border:1px solid var(--color-border);">
+              <div>
+                <h5 style="margin:0; font-size:0.85rem; font-weight:700;">${product.title}</h5>
+                <span style="font-size:0.75rem; color:var(--color-text-muted);">Size: ${item.size} • ₹${product.price}</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; align-items:center;">
+              <button class="cart-page-action-link saved-move-to-cart" data-id="${item.id}" data-size="${item.size}">Move to Bag</button>
+              <button class="cart-page-action-link saved-remove" data-id="${item.id}" data-size="${item.size}">Remove</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      savedTarget.innerHTML = `
+        <h3 class="cart-save-later-title">Saved for Later</h3>
+        <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-sm) var(--spacing-md); background:var(--color-white);">
+          ${savedList}
+        </div>
+      `;
+
+      savedTarget.querySelectorAll(".saved-move-to-cart").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const size = btn.getAttribute("data-size");
+          addToCart(id, size, 1);
+          state.savedForLater = state.savedForLater.filter(i => !(i.id === id && i.size === size));
+          localStorage.setItem("ruven_saved_for_later", JSON.stringify(state.savedForLater));
+          showToast("Moved item back to bag.");
+          renderCartPage();
+          renderCart();
+        });
+      });
+
+      savedTarget.querySelectorAll(".saved-remove").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const size = btn.getAttribute("data-size");
+          state.savedForLater = state.savedForLater.filter(i => !(i.id === id && i.size === size));
+          localStorage.setItem("ruven_saved_for_later", JSON.stringify(state.savedForLater));
+          showToast("Removed from saved list.");
+          renderCartPage();
+        });
+      });
+    }
+  }
+
+  // Setup Gift Wrap trigger
+  if (giftCheck) {
+    giftCheck.checked = state.giftWrap;
+    const clone = giftCheck.cloneNode(true);
+    giftCheck.parentNode.replaceChild(clone, giftCheck);
+    clone.addEventListener("change", (e) => {
+      state.giftWrap = e.target.checked;
+      renderCartPage();
+    });
+  }
+
+  // Setup Coupon trigger
+  const couponBtn = document.getElementById("cart-coupon-btn");
+  const couponInput = document.getElementById("cart-coupon-input");
+  const couponMsg = document.getElementById("coupon-message");
+  if (couponBtn && couponInput) {
+    if (state.currentCoupon > 0) {
+      couponInput.value = "FAITH10";
+      couponInput.disabled = true;
+      couponBtn.textContent = "Remove";
+      if (couponMsg) {
+        couponMsg.textContent = "Coupon FAITH10 applied successfully!";
+        couponMsg.style.color = "var(--color-brand-sage)";
+        couponMsg.style.display = "block";
+      }
+    } else {
+      couponInput.value = "";
+      couponInput.disabled = false;
+      couponBtn.textContent = "Apply";
+      if (couponMsg) couponMsg.style.display = "none";
+    }
+
+    const btnClone = couponBtn.cloneNode(true);
+    couponBtn.parentNode.replaceChild(btnClone, couponBtn);
+    btnClone.addEventListener("click", () => {
+      if (state.currentCoupon > 0) {
+        state.currentCoupon = 0;
+        showToast("Coupon removed.");
+        renderCartPage();
+      } else {
+        const val = couponInput.value.trim().toUpperCase();
+        if (val === "FAITH10") {
+          state.currentCoupon = 10;
+          showToast("Coupon applied! 10% discount subtracted.");
+          renderCartPage();
+        } else if (val === "") {
+          showToast("Please enter a coupon code.");
+        } else {
+          if (couponMsg) {
+            couponMsg.textContent = "Invalid code. Try FAITH10.";
+            couponMsg.style.color = "var(--color-brand-burgundy)";
+            couponMsg.style.display = "block";
+          }
+        }
+      }
+    });
+  }
+
+  // Listeners for page quantity buttons
+  itemsTarget.querySelectorAll(".chg-page-qty").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const size = btn.getAttribute("data-size");
+      const chg = parseInt(btn.getAttribute("data-chg"));
+      updateCartQty(id, size, chg);
+      renderCartPage();
+    });
+  });
+
+  itemsTarget.querySelectorAll(".page-remove-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const size = btn.getAttribute("data-size");
+      removeFromCart(id, size);
+      showToast("Removed item from bag.");
+      renderCartPage();
+    });
+  });
+
+  itemsTarget.querySelectorAll(".page-save-later").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const size = btn.getAttribute("data-size");
+      
+      const exists = state.savedForLater.some(i => i.id === id && i.size === size);
+      if (!exists) {
+        state.savedForLater.push({ id, size });
+        localStorage.setItem("ruven_saved_for_later", JSON.stringify(state.savedForLater));
+      }
+      
+      removeFromCart(id, size);
+      showToast("Saved item for later.");
+      renderCartPage();
+      renderCart();
+    });
+  });
+
+  itemsTarget.querySelectorAll(".page-add-wishlist").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      toggleWishlist(id);
+      showToast("Added item to wishlist.");
+    });
+  });
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// 2. CHECKOUT PAGE RENDERER
+function renderCheckoutPage() {
+  const shippingForm = document.getElementById("checkout-shipping-form");
+  const paymentForm = document.getElementById("checkout-payment-form");
+  const itemsTarget = document.getElementById("checkout-summary-items-target");
+  const totalsTarget = document.getElementById("checkout-summary-totals-target");
+  const paymentFields = document.getElementById("checkout-payment-fields");
+  const shippingPanel = document.getElementById("checkout-step-shipping-panel");
+  const paymentPanel = document.getElementById("checkout-step-payment-panel");
+
+  const indicatorShipping = document.getElementById("step-indicator-shipping");
+  const indicatorPayment = document.getElementById("step-indicator-payment");
+
+  if (!itemsTarget) return;
+
+  // Prefill default shipping address
+  const defaultAddr = state.addresses.find(a => a.isDefault) || state.addresses[0];
+  if (defaultAddr) {
+    document.getElementById("chk-first-name").value = defaultAddr.firstName || "";
+    document.getElementById("chk-last-name").value = defaultAddr.lastName || "";
+    document.getElementById("chk-email").value = defaultAddr.email || "";
+    document.getElementById("chk-phone").value = defaultAddr.phone || "";
+    document.getElementById("chk-address").value = defaultAddr.address || "";
+    document.getElementById("chk-city").value = defaultAddr.city || "";
+    document.getElementById("chk-state").value = defaultAddr.state || "";
+    document.getElementById("chk-zip").value = defaultAddr.zip || "";
+  }
+
+  // Pricing math
+  let subtotal = 0;
+  state.cart.forEach(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (product) subtotal += product.price * item.qty;
+  });
+
+  const shippingMethod = document.querySelector('input[name="chk-shipping-method"]:checked')?.value || "standard";
+  
+  let shippingCost = 0;
+  if (shippingMethod === "express") {
+    shippingCost = 250;
+  } else {
+    shippingCost = subtotal >= 3000 ? 0 : 150;
+  }
+
+  const stdPriceLabel = document.getElementById("chk-shipping-standard-price");
+  if (stdPriceLabel) {
+    stdPriceLabel.textContent = subtotal >= 3000 ? "Free" : "₹150";
+  }
+
+  let discountAmount = Math.round(subtotal * (state.currentCoupon / 100));
+  let giftWrapCost = state.giftWrap ? 100 : 0;
+  let taxCost = Math.round((subtotal - discountAmount) * 0.12);
+  let grandTotal = subtotal - discountAmount + shippingCost + giftWrapCost + taxCost;
+
+  // Render items summary (Right Column)
+  itemsTarget.innerHTML = state.cart.map(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    if (!product) return "";
+    return `
+      <div class="checkout-summary-item" style="display:flex; gap:12px; align-items:center; margin-bottom:12px;">
+        <div class="checkout-summary-item-img" style="width:50px; height:60px; overflow:hidden; border-radius:4px; border:1px solid var(--color-border); flex-shrink:0;">
+          <img src="${product.image}" alt="${product.title}" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="checkout-summary-item-info" style="flex-grow:1;">
+          <h5 style="margin:0; font-size:0.8rem; font-weight:700;">${product.title}</h5>
+          <span style="font-size:0.72rem; color:var(--color-text-muted);">Size: ${item.size} • Qty: ${item.qty}</span>
+        </div>
+        <span style="font-size:0.82rem; font-weight:700; flex-shrink:0;">₹${product.price * item.qty}</span>
+      </div>
+    `;
+  }).join("");
+
+  // Render totals breakdown (Right Column)
+  let totalsHtml = `
+    <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--color-text-muted); margin-bottom:6px;">
+      <span>Subtotal</span><span>₹${subtotal}</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--color-text-muted); margin-bottom:6px;">
+      <span>Estimated GST (12%)</span><span>₹${taxCost}</span>
+    </div>
+  `;
+  if (state.currentCoupon > 0) {
+    totalsHtml += `
+      <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--color-brand-sage); font-weight:700; margin-bottom:6px;">
+        <span>Coupon Discount (${state.currentCoupon}%)</span><span>-₹${discountAmount}</span>
+      </div>
+    `;
+  }
+  totalsHtml += `
+    <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--color-text-muted); margin-bottom:6px;">
+      <span>Shipping (${shippingMethod === "express" ? "Express" : "Standard"})</span>
+      <span>${shippingCost === 0 ? "Free" : "₹" + shippingCost}</span>
+    </div>
+  `;
+  if (state.giftWrap) {
+    totalsHtml += `
+      <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--color-text-muted); margin-bottom:6px;">
+        <span>Gift Wrapping Box</span><span>₹100</span>
+      </div>
+    `;
+  }
+  totalsHtml += `
+    <div style="display:flex; justify-content:space-between; font-size:1.05rem; font-weight:700; border-top:1px solid var(--color-border); padding-top:8px; margin-top:8px;">
+      <span>Grand Total</span><span>₹${grandTotal}</span>
+    </div>
+  `;
+  totalsTarget.innerHTML = totalsHtml;
+
+  const placeOrderBtn = document.getElementById("checkout-place-order-btn");
+  if (placeOrderBtn) {
+    placeOrderBtn.textContent = `Pay & Place Order (₹${grandTotal})`;
+  }
+
+  // Payment field tabs builder
+  const renderPaymentFields = () => {
+    if (!paymentFields) return;
+    if (activePaymentMethod === "card") {
+      paymentFields.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div class="contact-form-group floating-group" style="position:relative; margin-bottom:4px;">
+            <input type="text" id="chk-card-num" class="contact-input floating-input" placeholder=" " required minlength="16" maxlength="16" style="width:100%; padding:12px; border:1px solid var(--color-border); font-size:0.85rem; border-radius:var(--border-radius-sm);">
+            <label for="chk-card-num" class="floating-label" style="position:absolute; left:12px; top:12px; font-size:0.85rem; color:var(--color-text-muted); transition:all 0.2s ease; pointer-events:none;">Card Number (16-Digit)</label>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="contact-form-group floating-group" style="position:relative; margin:0;">
+              <input type="text" id="chk-card-expiry" class="contact-input floating-input" placeholder=" " required maxlength="5" style="width:100%; padding:12px; border:1px solid var(--color-border); font-size:0.85rem; border-radius:var(--border-radius-sm);">
+              <label for="chk-card-expiry" class="floating-label" style="position:absolute; left:12px; top:12px; font-size:0.85rem; color:var(--color-text-muted); transition:all 0.2s ease; pointer-events:none;">Expiry (MM/YY)</label>
+            </div>
+            <div class="contact-form-group floating-group" style="position:relative; margin:0;">
+              <input type="password" id="chk-card-cvv" class="contact-input floating-input" placeholder=" " required maxlength="3" style="width:100%; padding:12px; border:1px solid var(--color-border); font-size:0.85rem; border-radius:var(--border-radius-sm);">
+              <label for="chk-card-cvv" class="floating-label" style="position:absolute; left:12px; top:12px; font-size:0.85rem; color:var(--color-text-muted); transition:all 0.2s ease; pointer-events:none;">CVV Code</label>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activePaymentMethod === "upi") {
+      paymentFields.innerHTML = `
+        <div class="contact-form-group floating-group" style="position:relative; margin:0;">
+          <input type="text" id="chk-upi-vpa" class="contact-input floating-input" placeholder=" " required style="width:100%; padding:12px; border:1px solid var(--color-border); font-size:0.85rem; border-radius:var(--border-radius-sm);">
+          <label for="chk-upi-vpa" class="floating-label" style="position:absolute; left:12px; top:12px; font-size:0.85rem; color:var(--color-text-muted); transition:all 0.2s ease; pointer-events:none;">UPI ID (e.g. user@okaxis)</label>
+        </div>
+      `;
+    } else {
+      paymentFields.innerHTML = `
+        <div style="background:rgba(91,107,90,0.05); padding:12px; border-radius:4px; border:1px solid var(--color-border);">
+          <p style="font-size:0.82rem; margin:0; line-height:1.4; color:var(--color-text-primary);">
+            <strong>Cash on Delivery (COD) Selected.</strong> COD handling fee is completely waived as a blessing. Please keep exact cash ready upon delivery.
+          </p>
+        </div>
+      `;
+    }
+  };
+
+  renderPaymentFields();
+
+  // Attach Shipping Method toggle
+  document.querySelectorAll('input[name="chk-shipping-method"]').forEach(radio => {
+    const clone = radio.cloneNode(true);
+    radio.parentNode.replaceChild(clone, radio);
+    clone.addEventListener("change", (e) => {
+      document.querySelectorAll(".delivery-method-label").forEach(l => l.classList.remove("selected"));
+      e.target.parentElement.classList.add("selected");
+      renderCheckoutPage();
+    });
+  });
+
+  // Shipping form handler
+  if (shippingForm) {
+    const cloneForm = shippingForm.cloneNode(true);
+    shippingForm.parentNode.replaceChild(cloneForm, shippingForm);
+    cloneForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      checkoutShippingDetails = {
+        firstName: document.getElementById("chk-first-name").value,
+        lastName: document.getElementById("chk-last-name").value,
+        email: document.getElementById("chk-email").value,
+        phone: document.getElementById("chk-phone").value,
+        address: document.getElementById("chk-address").value,
+        city: document.getElementById("chk-city").value,
+        state: document.getElementById("chk-state").value,
+        zip: document.getElementById("chk-zip").value
+      };
+
+      const exists = state.addresses.some(a => a.address === checkoutShippingDetails.address && a.zip === checkoutShippingDetails.zip);
+      if (!exists) {
+        state.addresses.push({ ...checkoutShippingDetails, isDefault: false });
+        localStorage.setItem("ruven_addresses", JSON.stringify(state.addresses));
+      }
+
+      if (shippingPanel) shippingPanel.style.display = "none";
+      if (paymentPanel) paymentPanel.style.display = "block";
+      if (indicatorShipping) indicatorShipping.style.color = "var(--color-text-muted)";
+      if (indicatorPayment) indicatorPayment.style.color = "var(--color-brand-burgundy)";
+    });
+  }
+
+  // Payment tab triggers
+  document.querySelectorAll(".payment-tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".payment-tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activePaymentMethod = btn.getAttribute("data-pay");
+      renderPaymentFields();
+    });
+  });
+
+  // Back button trigger
+  const backBtn = document.getElementById("checkout-back-to-shipping");
+  if (backBtn) {
+    const cloneBack = backBtn.cloneNode(true);
+    backBtn.parentNode.replaceChild(cloneBack, backBtn);
+    cloneBack.addEventListener("click", () => {
+      if (shippingPanel) shippingPanel.style.display = "block";
+      if (paymentPanel) paymentPanel.style.display = "none";
+      if (indicatorShipping) indicatorShipping.style.color = "var(--color-brand-burgundy)";
+      if (indicatorPayment) indicatorPayment.style.color = "var(--color-text-muted)";
+    });
+  }
+
+  // Place Order handler
+  if (paymentForm) {
+    const clonePay = paymentForm.cloneNode(true);
+    paymentForm.parentNode.replaceChild(clonePay, paymentForm);
+    clonePay.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const orderId = "RV-2026-" + Math.floor(Math.random() * 90000 + 10000);
+      const today = new Date().toISOString().split("T")[0];
+      
+      const newOrder = {
+        id: orderId,
+        date: today,
+        status: "Ordered",
+        items: [...state.cart],
+        subtotal: subtotal,
+        shipping: shippingCost,
+        tax: taxCost,
+        discount: discountAmount,
+        total: grandTotal,
+        address: { ...checkoutShippingDetails },
+        tracking: [
+          { status: "Ordered", date: today, time: "08:15 PM", log: "Order placed. Preparing hand packaging." },
+          { status: "Packed", date: "Pending", time: "Pending", log: "Item awaiting custom inspection." },
+          { status: "Shipped", date: "Pending", time: "Pending", log: "BlueDart courier booking awaiting package dispatch." }
+        ]
+      };
+
+      state.orders.unshift(newOrder);
+      localStorage.setItem("ruven_orders", JSON.stringify(state.orders));
+
+      const pointsEarned = Math.round(grandTotal / 10);
+      state.loyaltyPoints += pointsEarned;
+      localStorage.setItem("ruven_loyalty_points", state.loyaltyPoints);
+
+      state.cart = [];
+      saveCartState();
+      renderCart();
+      state.currentCoupon = 0;
+      state.giftWrap = false;
+
+      state.currentOrderTrackingId = orderId;
+      showToast(`Order placed successfully! Earned ${pointsEarned} loyalty points.`);
+      
+      window.location.hash = "#confirmation";
+    });
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// 3. ORDER CONFIRMATION PAGE RENDERER
+function renderConfirmationPage() {
+  const order = state.orders[0] || MOCK_ORDERS[0];
+  const orderNumEl = document.getElementById("confirm-order-number");
+  const deliveryEl = document.getElementById("confirm-delivery-window");
+  
+  if (orderNumEl) orderNumEl.textContent = order.id;
+  
+  if (deliveryEl) {
+    const d = new Date(order.date);
+    const minD = new Date(d.setDate(d.getDate() + 3)).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const maxD = new Date(d.setDate(d.getDate() + 2)).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    deliveryEl.textContent = `${minD} - ${maxD}`;
+  }
+
+  const invoiceBtn = document.getElementById("confirm-invoice-btn");
+  if (invoiceBtn) {
+    const clone = invoiceBtn.cloneNode(true);
+    invoiceBtn.parentNode.replaceChild(clone, invoiceBtn);
+    clone.addEventListener("click", () => {
+      showToast("Invoice downloaded to your device storage.");
+    });
+  }
+
+  const trackBtn = document.getElementById("confirm-track-btn");
+  if (trackBtn) {
+    const clone = trackBtn.cloneNode(true);
+    trackBtn.parentNode.replaceChild(clone, trackBtn);
+    clone.addEventListener("click", () => {
+      state.currentOrderTrackingId = order.id;
+      window.location.hash = "#tracking";
+    });
+  }
+
+  const copyBtn = document.getElementById("chk-copy-referral-btn");
+  if (copyBtn) {
+    const clone = copyBtn.cloneNode(true);
+    copyBtn.parentNode.replaceChild(clone, copyBtn);
+    clone.addEventListener("click", () => {
+      const code = document.getElementById("chk-referral-code").value;
+      navigator.clipboard.writeText(code);
+      showToast("Referral link copied! Share to earn credits.");
+    });
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// 4. ORDER TRACKING PAGE RENDERER
+function renderTrackingPage() {
+  const summaryTarget = document.getElementById("tracking-summary-target");
+  const timelineTarget = document.getElementById("tracking-timeline-target");
+  
+  const orderId = state.currentOrderTrackingId || (state.orders[0]?.id) || MOCK_ORDERS[0].id;
+  const order = state.orders.find(o => o.id === orderId) || state.orders[0] || MOCK_ORDERS[0];
+
+  if (!summaryTarget || !timelineTarget) return;
+
+  summaryTarget.innerHTML = `
+    <div style="background:var(--color-bg-warm); border:1.5px dashed var(--color-brand-gold); padding: var(--spacing-md); border-radius: var(--border-radius-md); text-align: left; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h4 style="margin:0; font-size:0.75rem; text-transform:uppercase; color:var(--color-text-muted);">Tracking Shipment</h4>
+        <span style="font-size:1.15rem; font-weight:700; color:var(--color-brand-burgundy);">${order.id}</span>
+      </div>
+      <div style="text-align:right;">
+        <span class="pdp-fit-label" style="background:var(--color-bg-card); color:var(--color-brand-sage); padding:4px 8px; border-radius:12px; font-weight:700; font-size:0.75rem;">${order.status}</span>
+        <p style="font-size:0.7rem; color:var(--color-text-muted); margin:4px 0 0;">Updated June 22, 2026</p>
+      </div>
+    </div>
+  `;
+
+  const stages = [
+    { label: "Ordered", icon: "clipboard", desc: "Order registered under God's protection." },
+    { label: "Packed", icon: "box", desc: "Garment hand-inspected and custom packed." },
+    { label: "Shipped", icon: "truck", desc: "Handed over to BlueDart courier services." },
+    { label: "Out for Delivery", icon: "navigation", desc: "Out for delivery with courier agent." },
+    { label: "Delivered", icon: "check-circle", desc: "Delivered with joy to recipient." }
+  ];
+
+  const statusIndexMap = { "Ordered": 0, "Packed": 1, "Shipped": 2, "Out for Delivery": 3, "Delivered": 4, "Return Requested": 2, "Exchange Pending": 2 };
+  const currentActiveIdx = statusIndexMap[order.status] ?? 0;
+
+  timelineTarget.innerHTML = stages.map((stg, idx) => {
+    const isActive = idx <= currentActiveIdx ? "active" : "";
+    const orderLog = order.tracking?.find(t => t.status === stg.label);
+    const dateStr = orderLog ? orderLog.date : (idx <= currentActiveIdx ? "June 22, 2026" : "Awaiting dispatch");
+    const timeStr = orderLog ? orderLog.time : (idx <= currentActiveIdx ? "08:15 PM" : "");
+    const descStr = orderLog ? orderLog.log : stg.desc;
+
+    return `
+      <div class="tracking-timeline-item ${isActive}">
+        <div class="tracking-dot">
+          <i data-lucide="${stg.icon}" style="width: 16px; height: 16px;"></i>
+        </div>
+        <div class="tracking-content">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h4 class="tracking-status" style="font-size:0.9rem; font-weight:700; margin:2px 0;">${stg.label}</h4>
+            <span class="tracking-time" style="font-size:0.72rem; color:var(--color-text-muted);">${dateStr} ${timeStr}</span>
+          </div>
+          <p class="tracking-log" style="font-size:0.78rem; color:var(--color-text-muted); margin:0;">${descStr}</p>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// 5. CUSTOMER ACCOUNT DASHBOARD RENDERER
+function renderAccountPage() {
+  const panelTarget = document.getElementById("account-panels-target");
+  const tabBtns = document.querySelectorAll(".account-nav-tab-btn");
+
+  if (!panelTarget) return;
+
+  // Active state styling
+  tabBtns.forEach(btn => {
+    if (btn.getAttribute("data-tab") === activeAccountTab) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  const renderActivePanel = () => {
+    if (activeAccountTab === "profile") {
+      panelTarget.innerHTML = `
+        <div class="account-panel-card">
+          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Profile Settings</h2>
+          <form id="account-profile-form" style="display:flex; flex-direction:column; gap: var(--spacing-sm);">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--spacing-sm);">
+              <div class="contact-form-group">
+                <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">First Name</label>
+                <input type="text" id="acc-first-name" class="contact-input" value="Samuel" required style="width:100%; padding:10px; border:1px solid var(--color-border); font-size:0.85rem;">
+              </div>
+              <div class="contact-form-group">
+                <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Last Name</label>
+                <input type="text" id="acc-last-name" class="contact-input" value="Ruven" required style="width:100%; padding:10px; border:1px solid var(--color-border); font-size:0.85rem;">
+              </div>
+            </div>
+            <div class="contact-form-group">
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Email Address</label>
+              <input type="email" id="acc-email" class="contact-input" value="samuel@ruvenstudio.in" required style="width:100%; padding:10px; border:1px solid var(--color-border); font-size:0.85rem;">
+            </div>
+            <div class="contact-form-group">
+              <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">WhatsApp Number</label>
+              <input type="text" id="acc-phone" class="contact-input" value="+91 99999 99999" required style="width:100%; padding:10px; border:1px solid var(--color-border); font-size:0.85rem;">
+            </div>
+            <button type="submit" class="cta-button cta-button-primary" style="padding:12px; font-size:0.8rem; width:max-content; margin-top:4px;">Save Settings</button>
+          </form>
+        </div>
+      `;
+
+      document.getElementById("account-profile-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const f = document.getElementById("acc-first-name").value;
+        const l = document.getElementById("acc-last-name").value;
+        const em = document.getElementById("acc-email").value;
+
+        document.getElementById("account-profile-display-name").textContent = `${f} ${l}`;
+        document.getElementById("account-profile-display-email").textContent = em;
+        document.getElementById("account-profile-avatar-char").textContent = f.charAt(0);
+
+        showToast("Profile settings saved successfully.");
+      });
+
+    } else if (activeAccountTab === "orders") {
+      if (state.orders.length === 0) {
+        panelTarget.innerHTML = `
+          <div class="account-panel-card" style="text-align:center; padding: var(--spacing-xl) 0;">
+            <i data-lucide="package" style="width:40px; height:40px; color:var(--color-text-muted); margin-bottom:var(--spacing-xs);"></i>
+            <h3 style="font-family:var(--font-editorial); font-style:italic; font-size:1.3rem; margin-bottom:4px;">No purchases logged yet</h3>
+            <p style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:var(--spacing-md);">Your orders will appear here once placed.</p>
+            <a href="#shop" class="cta-button cta-button-primary nav-trigger" data-view="shop" style="padding: 10px 24px; font-size:0.75rem;">Browse Shop</a>
+          </div>
+        `;
+      } else {
+        const ordersHtml = state.orders.map(order => {
+          const itemsListHtml = order.items.map(item => {
+            const product = PRODUCTS.find(p => p.id === item.id);
+            if (!product) return "";
+            return `
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding:8px 0;">
+                <div style="display:flex; gap:10px; align-items:center;">
+                  <img src="${product.image}" alt="${product.title}" style="width:40px; height:48px; object-fit:cover; border-radius:3px; border:1px solid var(--color-border);">
+                  <div>
+                    <h5 style="margin:0; font-size:0.8rem; font-weight:700;">${product.title}</h5>
+                    <span style="font-size:0.7rem; color:var(--color-text-muted);">Size: ${item.size} • Qty: ${item.qty}</span>
+                  </div>
+                </div>
+                <span style="font-size:0.8rem; font-weight:700;">₹${product.price * item.qty}</span>
+              </div>
+            `;
+          }).join("");
+
+          return `
+            <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); background:var(--color-white); margin-bottom:var(--spacing-sm); box-shadow:var(--shadow-subtle);">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <h4 style="margin:0; font-size:0.85rem; font-weight:700; color:var(--color-brand-burgundy);">${order.id}</h4>
+                  <span style="font-size:0.7rem; color:var(--color-text-muted);">Placed on ${order.date}</span>
+                </div>
+                <div style="text-align:right;">
+                  <span class="pdp-fit-label" style="background:var(--color-bg-card); color:var(--color-brand-sage); padding:3px 10px; border-radius:12px; font-weight:700; font-size:0.7rem;">${order.status}</span>
+                  <p style="font-size:0.8rem; font-weight:700; margin:4px 0 0;">Total: ₹${order.total}</p>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:8px;">
+                ${itemsListHtml}
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:8px; border-top:1px solid var(--color-border); padding-top:8px;">
+                <button class="cta-button chk-track-order-btn" data-id="${order.id}" style="padding:6px 12px; font-size:0.7rem; background:none; border:1px solid var(--color-border); width:auto; color:var(--color-text-primary);"><i data-lucide="map-pin" style="width:12px; vertical-align:middle; margin-right:3px;"></i> Track Delivery</button>
+                <button class="cta-button cta-button-primary chk-reorder-btn" data-idx="${order.id}" style="padding:6px 12px; font-size:0.7rem; width:auto; margin:0;"><i data-lucide="refresh-cw" style="width:12px; vertical-align:middle; margin-right:3px;"></i> Reorder Items</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        panelTarget.innerHTML = `
+          <div class="account-panel-card">
+            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Order History</h2>
+            ${ordersHtml}
+          </div>
+        `;
+
+        panelTarget.querySelectorAll(".chk-track-order-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            state.currentOrderTrackingId = btn.getAttribute("data-id");
+            window.location.hash = "#tracking";
+          });
+        });
+
+        panelTarget.querySelectorAll(".chk-reorder-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const orderId = btn.getAttribute("data-idx");
+            const orderObj = state.orders.find(o => o.id === orderId);
+            if (orderObj) {
+              orderObj.items.forEach(item => {
+                addToCart(item.id, item.size, item.qty);
+              });
+              showToast("Cloned items into your studio bag!");
+              openDrawer("cart");
+            }
+          });
+        });
+      }
+
+    } else if (activeAccountTab === "wishlist") {
+      if (state.wishlist.length === 0) {
+        panelTarget.innerHTML = `
+          <div class="account-panel-card" style="text-align:center; padding: var(--spacing-xl) 0;">
+            <i data-lucide="heart" style="width:40px; height:40px; color:var(--color-text-muted); margin-bottom:var(--spacing-xs);"></i>
+            <h3 style="font-family:var(--font-editorial); font-style:italic; font-size:1.3rem; margin-bottom:4px;">Wishlist is empty</h3>
+            <p style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:var(--spacing-md);">Browse GOTS products to add to your wishlist.</p>
+            <a href="#shop" class="cta-button cta-button-primary nav-trigger" data-view="shop" style="padding: 10px 24px; font-size:0.75rem;">Explore Drops</a>
+          </div>
+        `;
+      } else {
+        const itemsHtml = state.wishlist.map(pid => {
+          const product = PRODUCTS.find(p => p.id === pid);
+          if (!product) return "";
+          return `
+            <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding:var(--spacing-sm); display:flex; gap:12px; align-items:center; background:var(--color-white);">
+              <img src="${product.image}" alt="${product.title}" style="width:60px; height:70px; object-fit:cover; border-radius:var(--border-radius-sm); border:1px solid var(--color-border); flex-shrink:0;">
+              <div style="flex-grow:1;">
+                <h4 style="margin:0; font-size:0.88rem; font-weight:700;">${product.title}</h4>
+                <p style="font-size:0.75rem; color:var(--color-text-muted); margin:2px 0 4px;">₹${product.price}</p>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <button class="cta-button cta-button-primary acc-wish-move-btn" data-id="${product.id}" style="padding:4px 10px; font-size:0.65rem; width:auto; margin:0; border-radius:12px;">Move to Bag</button>
+                  <button class="cart-page-action-link acc-wish-remove-btn" data-id="${product.id}">Remove</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        panelTarget.innerHTML = `
+          <div class="account-panel-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:var(--spacing-md);">
+              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin:0;">Wishlist Manager</h2>
+              <button id="acc-wishlist-share" class="cart-page-action-link" style="font-weight:700;"><i data-lucide="share" style="width:12px; vertical-align:middle; margin-right:3px;"></i> Share List</button>
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--spacing-sm); margin-bottom:var(--spacing-md);">
+              ${itemsHtml}
+            </div>
+
+            <div style="background:var(--color-bg-warm); border:1px solid var(--color-border); border-radius:var(--border-radius-md); padding:var(--spacing-sm) var(--spacing-md); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h5 style="margin:0; font-size:0.85rem; font-weight:700;">Alert Notifications</h5>
+                <p style="font-size:0.72rem; color:var(--color-text-muted); margin:2px 0 0;">Notify me via email/WhatsApp on back-in-stock drops and price drops.</p>
+              </div>
+              <label style="position:relative; display:inline-block; width:44px; height:22px; cursor:pointer;">
+                <input type="checkbox" checked style="opacity:0; width:0; height:0;">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--color-brand-sage); transition:.4s; border-radius:34px;"></span>
+              </label>
+            </div>
+          </div>
+        `;
+
+        document.getElementById("acc-wishlist-share").addEventListener("click", () => {
+          navigator.clipboard.writeText(window.location.origin + "#shop");
+          showToast("Wishlist sharing link copied to clipboard!");
+        });
+
+        panelTarget.querySelectorAll(".acc-wish-move-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            const prod = PRODUCTS.find(p => p.id === id);
+            addToCart(id, prod.sizes[0], 1);
+            toggleWishlist(id);
+            showToast("Moved wishlist item to bag.");
+            renderAccountPage();
+            renderCart();
+          });
+        });
+
+        panelTarget.querySelectorAll(".acc-wish-remove-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            toggleWishlist(id);
+            showToast("Removed wishlist item.");
+            renderAccountPage();
+          });
+        });
+      }
+
+    } else if (activeAccountTab === "addresses") {
+      const addressesHtml = state.addresses.map((addr, index) => `
+        <div style="border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-sm) var(--spacing-md); background:var(--color-white); position:relative; margin-bottom:var(--spacing-xs);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="font-size:0.85rem;">${addr.firstName} ${addr.lastName}</strong>
+            ${addr.isDefault ? `<span style="font-size:0.65rem; color:var(--color-brand-sage); font-weight:700; text-transform:uppercase; border:1px solid var(--color-brand-sage); padding:2px 6px; border-radius:8px;">Default</span>` : ""}
+          </div>
+          <p style="font-size:0.8rem; color:var(--color-text-muted); line-height:1.4; margin:0;">
+            ${addr.address}, ${addr.city}, ${addr.state} - ${addr.zip}<br>
+            Phone: ${addr.phone}
+          </p>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px; border-top:1px solid var(--color-border); padding-top:6px;">
+            ${!addr.isDefault ? `<button class="cart-page-action-link addr-set-def" data-idx="${index}">Set Default</button>` : ""}
+            <button class="cart-page-action-link addr-del" data-idx="${index}" style="color:var(--color-brand-burgundy);">Delete Address</button>
+          </div>
+        </div>
+      `).join("");
+
+      panelTarget.innerHTML = `
+        <div class="account-panel-card">
+          <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Saved Address Register</h2>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:var(--spacing-md);">
+            ${addressesHtml}
+          </div>
+          
+          <h3 style="font-family:var(--font-editorial); font-size:1.15rem; font-weight:300; margin-bottom:var(--spacing-xs);">Add New Address</h3>
+          <form id="account-add-address-form" style="display:flex; flex-direction:column; gap:8px; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); background: var(--color-bg-warm);">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <input type="text" id="add-addr-fn" class="contact-input" placeholder="First Name" required style="padding:8px;">
+              <input type="text" id="add-addr-ln" class="contact-input" placeholder="Last Name" required style="padding:8px;">
+            </div>
+            <input type="text" id="add-addr-street" class="contact-input" placeholder="Street Address" required style="padding:8px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+              <input type="text" id="add-addr-city" class="contact-input" placeholder="City" required style="padding:8px;">
+              <input type="text" id="add-addr-state" class="contact-input" placeholder="State" required style="padding:8px;">
+              <input type="text" id="add-addr-zip" class="contact-input" placeholder="PIN Code" required style="padding:8px;">
+            </div>
+            <input type="tel" id="add-addr-phone" class="contact-input" placeholder="WhatsApp / Phone" required style="padding:8px;">
+            <button type="submit" class="cta-button cta-button-primary" style="padding:10px; font-size:0.75rem; width:max-content; margin-top:4px;">Add Address Record</button>
+          </form>
+        </div>
+      `;
+
+      panelTarget.querySelectorAll(".addr-set-def").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.getAttribute("data-idx"));
+          state.addresses.forEach((a, i) => a.isDefault = i === idx);
+          localStorage.setItem("ruven_addresses", JSON.stringify(state.addresses));
+          showToast("Default address updated.");
+          renderAccountPage();
+        });
+      });
+
+      panelTarget.querySelectorAll(".addr-del").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.getAttribute("data-idx"));
+          state.addresses.splice(idx, 1);
+          localStorage.setItem("ruven_addresses", JSON.stringify(state.addresses));
+          showToast("Address record removed.");
+          renderAccountPage();
+        });
+      });
+
+      document.getElementById("account-add-address-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newAddr = {
+          firstName: document.getElementById("add-addr-fn").value,
+          lastName: document.getElementById("add-addr-ln").value,
+          address: document.getElementById("add-addr-street").value,
+          city: document.getElementById("add-addr-city").value,
+          state: document.getElementById("add-addr-state").value,
+          zip: document.getElementById("add-addr-zip").value,
+          phone: document.getElementById("add-addr-phone").value,
+          email: "samuel@ruvenstudio.in",
+          isDefault: state.addresses.length === 0
+        };
+
+        state.addresses.push(newAddr);
+        localStorage.setItem("ruven_addresses", JSON.stringify(state.addresses));
+        showToast("New address added successfully.");
+        renderAccountPage();
+      });
+
+    } else if (activeAccountTab === "returns") {
+      const deliveredOrders = state.orders.filter(o => o.status === "Delivered");
+      
+      if (deliveredOrders.length === 0) {
+        panelTarget.innerHTML = `
+          <div class="account-panel-card" style="text-align:center; padding: var(--spacing-xl) 0;">
+            <i data-lucide="refresh-cw" style="width:40px; height:40px; color:var(--color-text-muted); margin-bottom:var(--spacing-xs);"></i>
+            <h3 style="font-family:var(--font-editorial); font-style:italic; font-size:1.3rem; margin-bottom:4px;">No returnable purchases</h3>
+            <p style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:var(--spacing-md);">Only orders with status "Delivered" can be returned or exchanged within 7 days.</p>
+            <a href="#shop" class="cta-button cta-button-primary nav-trigger" data-view="shop" style="padding: 10px 24px; font-size:0.75rem;">Browse Shop</a>
+          </div>
+        `;
+      } else {
+        const optionsHtml = deliveredOrders.map(o => `<option value="${o.id}">${o.id} - Total: ₹${o.total}</option>`).join("");
+        
+        panelTarget.innerHTML = `
+          <div class="account-panel-card">
+            <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin-bottom:var(--spacing-md); border-bottom:1px solid var(--color-border); padding-bottom:8px;">Returns & Exchanges Center</h2>
+            <form id="account-returns-form" style="display:flex; flex-direction:column; gap: var(--spacing-sm);">
+              <div class="contact-form-group">
+                <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Select Order</label>
+                <select id="ret-order-select" class="contact-input" style="padding:10px; width:100%; border:1px solid var(--color-border);">
+                  <option value="" disabled selected>Select an Order</option>
+                  ${optionsHtml}
+                </select>
+              </div>
+              <div id="ret-items-target" style="display:flex; flex-direction:column; gap:4px; margin-bottom:4px;">
+                <!-- Dynamically filled -->
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--spacing-sm);">
+                <div class="contact-form-group">
+                  <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Request Type</label>
+                  <select id="ret-type-select" class="contact-input" style="padding:10px; width:100%; border:1px solid var(--color-border);">
+                    <option value="exchange">Exchange for different size</option>
+                    <option value="return">Return for full refund</option>
+                  </select>
+                </div>
+                <div class="contact-form-group">
+                  <label style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Reason for Request</label>
+                  <select id="ret-reason-select" class="contact-input" style="padding:10px; width:100%; border:1px solid var(--color-border);">
+                    <option value="sizing">Size didn't fit (Too small/large)</option>
+                    <option value="quality">Fabric or stitch defect</option>
+                    <option value="expectation">Did not meet expectations</option>
+                    <option value="change">Changed mind</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" id="ret-submit-btn" class="cta-button cta-button-primary" style="padding:12px; font-size:0.8rem; width:100%; margin-top:4px;" disabled>Submit Request</button>
+            </form>
+          </div>
+        `;
+
+        const selectEl = document.getElementById("ret-order-select");
+        const itemsTarget = document.getElementById("ret-items-target");
+        const submitBtn = document.getElementById("ret-submit-btn");
+
+        selectEl.addEventListener("change", () => {
+          const ordId = selectEl.value;
+          const order = state.orders.find(o => o.id === ordId);
+          if (order) {
+            itemsTarget.innerHTML = `
+              <label style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted); margin-bottom:4px; display:block;">Select Item</label>
+              ${order.items.map((item, index) => {
+                const prod = PRODUCTS.find(p => p.id === item.id);
+                if (!prod) return "";
+                return `
+                  <label style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--color-border); border-radius:var(--border-radius-sm); padding:var(--spacing-sm); background:var(--color-bg-warm); cursor:pointer;">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                      <input type="radio" name="ret-item-radio" value="${prod.id}" checked style="cursor:pointer;">
+                      <img src="${prod.image}" alt="${prod.title}" style="width:30px; height:36px; object-fit:cover; border-radius:2px; flex-shrink:0;">
+                      <span style="font-size:0.8rem; font-weight:700;">${prod.title} (Size: ${item.size})</span>
+                    </div>
+                    <span style="font-size:0.8rem; font-weight:700; flex-shrink:0;">₹${prod.price}</span>
+                  </label>
+                `;
+              }).join("")}
+            `;
+            submitBtn.disabled = false;
+          }
+        });
+
+        document.getElementById("account-returns-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const ordId = selectEl.value;
+          const retType = document.getElementById("ret-type-select").value;
+          const reason = document.getElementById("ret-reason-select").value;
+          const itemId = document.querySelector('input[name="ret-item-radio"]:checked')?.value;
+          
+          const order = state.orders.find(o => o.id === ordId);
+          if (order) {
+            order.status = retType === "exchange" ? "Exchange Pending" : "Return Requested";
+            order.tracking.push({
+              status: order.status,
+              date: "June 22, 2026",
+              time: "08:30 PM",
+              log: `Self-service return request submitted. Reason: ${reason}. Pickup scheduled in 48 hours.`
+            });
+            localStorage.setItem("ruven_orders", JSON.stringify(state.orders));
+            showToast(`Request registered. Pick-up scheduled in 48 hours.`);
+            renderAccountPage();
+          }
+        });
+      }
+
+    } else if (activeAccountTab === "loyalty") {
+      const challenges = [
+        { id: "scripture", title: "Share daily scripture prompt to WhatsApp status", points: 30, desc: "Promote faith conversation within your friend circles." },
+        { id: "devotional", title: "Read weekly journal reflection devotional", points: 20, desc: "Spend five minutes in quiet devotion of the renew-your-mind series." },
+        { id: "review", title: "Review your recent clothing purchase on the store", points: 50, desc: "Help fellow believers discover standard drapes." }
+      ];
+
+      const chalHtml = challenges.map(ch => {
+        const isDone = userCompletedChallenges.includes(ch.id);
+        return `
+          <div style="background:var(--color-white); border:1px solid var(--color-border); border-radius:var(--border-radius-sm); padding:var(--spacing-sm) var(--spacing-md); display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--spacing-xs);">
+            <div style="padding-right: var(--spacing-sm);">
+              <h5 style="margin:0; font-size:0.82rem; font-weight:700;">${ch.title}</h5>
+              <p style="font-size:0.72rem; color:var(--color-text-muted); margin:2px 0 0;">${ch.desc}</p>
+            </div>
+            <div>
+              ${isDone 
+                ? `<span style="font-size:0.72rem; color:var(--color-brand-sage); font-weight:700; text-transform:uppercase;"><i data-lucide="check-circle" style="width:14px; vertical-align:middle; margin-right:2px;"></i> Claimed</span>`
+                : `<button class="cta-button cta-button-primary claim-points-btn" data-id="${ch.id}" data-pts="${ch.points}" style="padding:6px 12px; font-size:0.65rem; width:auto; margin:0; border-radius:12px;">+${ch.points} Pts</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      panelTarget.innerHTML = `
+        <div class="account-panel-card">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:var(--spacing-md); flex-wrap:wrap; gap:8px;">
+            <div>
+              <h2 style="font-family:var(--font-editorial); font-size:1.5rem; font-weight:300; margin:0;">Ruven Circle Fellowship</h2>
+              <p style="font-size:0.72rem; color:var(--color-text-muted); margin:2px 0 0;">Join the movement. Every order and challenge builds points that convert to checkout cash.</p>
+            </div>
+            <div style="text-align:center;">
+              <span style="font-size:0.65rem; text-transform:uppercase; font-weight:700; color:var(--color-text-muted);">Points Balance</span>
+              <div class="loyalty-points-circle" style="margin:4px 0 0; width:80px; height:80px;">
+                <span class="loyalty-points-number" style="font-size:1.3rem;">${state.loyaltyPoints}</span>
+                <span class="loyalty-points-label" style="font-size:0.5rem;">Points</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:300; margin-bottom:var(--spacing-sm);">Milestone Badges</h3>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; text-align:center; margin-bottom:var(--spacing-md);">
+            <div style="border:1px solid var(--color-border); padding:8px; border-radius: var(--border-radius-sm); background: var(--color-bg-warm);">
+              <i data-lucide="sun" style="width:24px; color:var(--color-brand-gold); stroke-width:1.5px; margin: 0 auto 4px;"></i>
+              <h5 style="margin:0; font-size:0.75rem; font-weight:700;">Seeker of Light</h5>
+              <span style="font-size:0.65rem; color:var(--color-brand-sage); font-weight:700;">Unlocked</span>
+            </div>
+            <div style="border:1px solid ${state.loyaltyPoints >= 200 ? 'var(--color-border)' : 'dashed var(--color-border)'}; padding:8px; border-radius: var(--border-radius-sm); background: ${state.loyaltyPoints >= 200 ? 'var(--color-bg-warm)' : 'none'}; opacity: ${state.loyaltyPoints >= 200 ? '1' : '0.5'};">
+              <i data-lucide="award" style="width:24px; color:var(--color-brand-gold); stroke-width:1.5px; margin: 0 auto 4px;"></i>
+              <h5 style="margin:0; font-size:0.75rem; font-weight:700;">Ambassador</h5>
+              <span style="font-size:0.65rem; color:${state.loyaltyPoints >= 200 ? 'var(--color-brand-sage)' : 'var(--color-text-muted)'}; font-weight:700;">${state.loyaltyPoints >= 200 ? 'Unlocked' : 'Need 200 pts'}</span>
+            </div>
+            <div style="border:1px dashed var(--color-border); padding:8px; border-radius: var(--border-radius-sm); opacity:0.5;">
+              <i data-lucide="shield" style="width:24px; color:var(--color-text-muted); stroke-width:1.5px; margin: 0 auto 4px;"></i>
+              <h5 style="margin:0; font-size:0.75rem; font-weight:700;">Faith Leader</h5>
+              <span style="font-size:0.65rem; color:var(--color-text-muted); font-weight:700;">Need 500 pts</span>
+            </div>
+          </div>
+
+          <h3 style="font-family:var(--font-editorial); font-size:1.2rem; font-weight:300; margin-bottom:var(--spacing-sm);">Daily Faith Challenges</h3>
+          <div style="background:var(--color-bg-warm); padding:var(--spacing-sm); border-radius: var(--border-radius-md); border:1px solid var(--color-border);">
+            ${chalHtml}
+          </div>
+        </div>
+      `;
+
+      panelTarget.querySelectorAll(".claim-points-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cid = btn.getAttribute("data-id");
+          const pts = parseInt(btn.getAttribute("data-pts"));
+          state.loyaltyPoints += pts;
+          localStorage.setItem("ruven_loyalty_points", state.loyaltyPoints);
+          userCompletedChallenges.push(cid);
+          showToast(`Challenge completed! Earned +${pts} points.`);
+          renderAccountPage();
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  };
+
+  renderActivePanel();
+
+  tabBtns.forEach(btn => {
+    const clone = btn.cloneNode(true);
+    btn.parentNode.replaceChild(clone, btn);
+    clone.addEventListener("click", () => {
+      activeAccountTab = clone.getAttribute("data-tab");
+      renderAccountPage();
+    });
+  });
 
   if (window.lucide) window.lucide.createIcons();
 }

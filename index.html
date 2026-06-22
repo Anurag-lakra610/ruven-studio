@@ -99,6 +99,7 @@
         <li class="nav-item"><a href="#community" class="nav-link nav-trigger" data-view="community">Community</a></li>
         <li class="nav-item"><a href="#journal" class="nav-link nav-trigger" data-view="journal">Journal</a></li>
         <li class="nav-item"><a href="#contact" class="nav-link nav-trigger" data-view="contact">Contact</a></li>
+        <li class="nav-item nav-mobile-only"><a href="#account" class="nav-link nav-trigger" data-view="account">My Account</a></li>
       </ul>
     </nav>
     
@@ -1024,6 +1025,306 @@
         <div class="contact-faq-section" id="contact-faq-target"></div>
       </div>
     </section>
+
+    <!-- 8. SHOPPING CART VIEW -->
+    <section id="cart-view" class="view-section">
+      <div class="cart-page-header text-center" style="margin-bottom: var(--spacing-xl); padding-top: var(--spacing-lg); text-align: center;">
+        <p class="section-subtitle">Your Selection</p>
+        <h1 class="editorial-title" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; margin-top: 4px;">Shopping Bag</h1>
+      </div>
+      <div class="pdp-wrapper-container">
+        <div class="cart-page-layout">
+          <!-- Left Column: Items list and Save for Later -->
+          <div class="cart-page-main">
+            <!-- Free Shipping Progress -->
+            <div class="cart-shipping-bar-container" id="cart-page-shipping-container" style="background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+              <!-- Rendered Dynamically via JS -->
+            </div>
+            
+            <!-- Items Grid -->
+            <div class="cart-page-items" id="cart-page-items-target">
+              <!-- Rendered Dynamically via JS -->
+            </div>
+            
+            <!-- Save For Later Shelf -->
+            <div class="cart-save-later-section" id="cart-page-saved-target" style="margin-top: var(--spacing-xl);">
+              <!-- Rendered Dynamically via JS -->
+            </div>
+          </div>
+          
+          <!-- Right Column: Order Summary & Coupon -->
+          <div class="cart-page-sidebar">
+            <div class="order-summary-card" style="background: var(--color-bg-warm); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); position: sticky; top: calc(var(--header-height) + 20px);">
+              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 300; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Summary</h3>
+              <div class="summary-rows" id="cart-page-summary-rows">
+                <!-- Subtotal, Shipping, Tax, Coupon adjustments -->
+              </div>
+              
+              <!-- Gift Wrap Checkbox -->
+              <div class="gift-wrap-container" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: var(--spacing-sm) 0; margin: var(--spacing-sm) 0;">
+                <label style="display: flex; gap: var(--spacing-xs); align-items: center; cursor: pointer; font-size: 0.82rem; text-transform: none; color: var(--color-text-primary);">
+                  <input type="checkbox" id="cart-gift-wrap-check" style="cursor: pointer;">
+                  Add Premium Gift Box wrapping (+₹100)
+                </label>
+              </div>
+
+              <!-- Coupon Code -->
+              <div class="coupon-apply-group" style="display: flex; gap: 8px; margin-top: var(--spacing-sm);">
+                <input type="text" id="cart-coupon-input" placeholder="Promo / Coupon Code" style="text-transform: uppercase; padding: 10px; border: 1px solid var(--color-border); font-size: 0.8rem; flex-grow: 1; background: var(--color-white); border-radius: var(--border-radius-sm);">
+                <button id="cart-coupon-btn" class="cta-button cta-button-primary" style="padding: 10px 16px; font-size: 0.8rem; margin: 0; min-width: auto; width: auto; border-radius: var(--border-radius-sm);">Apply</button>
+              </div>
+              <p id="coupon-message" style="font-size: 0.72rem; margin-top: 4px; display: none; font-weight: 700;"></p>
+              
+              <div class="summary-total-row" style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm); margin-top: var(--spacing-sm); display: flex; justify-content: space-between; font-weight: 700; font-size: 1.05rem;">
+                <span>Total</span>
+                <span id="cart-page-total-val">₹0.00</span>
+              </div>
+              
+              <a href="#checkout" class="cta-button cta-button-primary nav-trigger" data-view="checkout" style="display: block; text-align: center; margin-top: var(--spacing-md); padding: 12px; font-size: 0.8rem;">Proceed to Checkout</a>
+              
+              <!-- Trust Seals -->
+              <div class="secure-badges-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; margin-top: var(--spacing-md); border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm);">
+                <div style="font-size: 0.65rem; color: var(--color-text-muted);"><i data-lucide="lock" style="width: 14px; margin-bottom: 2px;"></i><br>Secure SSL</div>
+                <div style="font-size: 0.65rem; color: var(--color-text-muted);"><i data-lucide="shield-check" style="width: 14px; margin-bottom: 2px;"></i><br>Easy Return</div>
+                <div style="font-size: 0.65rem; color: var(--color-text-muted);"><i data-lucide="heart-handshake" style="width: 14px; margin-bottom: 2px;"></i><br>Made in Faith</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cart Upsells / Complete The Look -->
+        <div class="cart-upsell-section" id="cart-upsell-target" style="margin-top: var(--spacing-xl); border-top: 1px solid var(--color-border); padding-top: var(--spacing-lg);">
+          <!-- Rendered Dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. DISTRACTION-FREE CHECKOUT VIEW -->
+    <section id="checkout-view" class="view-section">
+      <!-- Checkout Header -->
+      <div class="checkout-brand-header" style="border-bottom: 1px solid var(--color-border); padding: var(--spacing-sm) var(--spacing-md); display: flex; justify-content: space-between; align-items: center; background: var(--color-bg-warm);">
+        <a href="#cart" class="checkout-back-link nav-trigger" data-view="cart" style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--color-text-primary); display: flex; align-items: center; gap: 4px;"><i data-lucide="arrow-left" style="width: 16px;"></i> Return to Bag</a>
+        <img src="/logo.png" alt="Ruven Logo" style="height: 24px; filter: grayscale(100%);">
+        <div class="checkout-step-indicators" style="display: flex; gap: var(--spacing-sm); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">
+          <span class="checkout-step active" id="step-indicator-shipping" style="color: var(--color-brand-burgundy);">1. Shipping</span>
+          <span class="checkout-step" id="step-indicator-payment" style="color: var(--color-text-muted);">2. Payment</span>
+          <span class="checkout-step" id="step-indicator-review" style="color: var(--color-text-muted);">3. Complete</span>
+        </div>
+      </div>
+      
+      <div class="pdp-wrapper-container" style="padding-top: var(--spacing-md);">
+        <div class="checkout-layout">
+          <!-- Left Column: Step Forms -->
+          <div class="checkout-forms-panel" style="flex-grow: 1;">
+            <!-- Step 1: Shipping Address -->
+            <div class="checkout-step-container active" id="checkout-step-shipping-panel">
+              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 300; margin-bottom: var(--spacing-md);">Shipping Address</h2>
+              <form id="checkout-shipping-form">
+                <div class="checkout-form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="text" id="chk-first-name" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-first-name" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">First Name</label>
+                  </div>
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="text" id="chk-last-name" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-last-name" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">Last Name</label>
+                  </div>
+                </div>
+                <div class="checkout-form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="email" id="chk-email" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-email" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">Email Address</label>
+                  </div>
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="tel" id="chk-phone" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-phone" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">WhatsApp/Phone Number</label>
+                  </div>
+                </div>
+                <div class="contact-form-group floating-group" style="position: relative; margin-bottom: var(--spacing-sm);">
+                  <input type="text" id="chk-address" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                  <label for="chk-address" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">Street Address / House No.</label>
+                </div>
+                <div class="checkout-form-row three-cols" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="text" id="chk-city" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-city" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">City</label>
+                  </div>
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="text" id="chk-state" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-state" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">State</label>
+                  </div>
+                  <div class="contact-form-group floating-group" style="position: relative;">
+                    <input type="text" id="chk-zip" class="contact-input floating-input" placeholder=" " required style="width: 100%; padding: 12px; border: 1px solid var(--color-border); font-size: 0.85rem; border-radius: var(--border-radius-sm);">
+                    <label for="chk-zip" class="floating-label" style="position: absolute; left: 12px; top: 12px; font-size: 0.85rem; color: var(--color-text-muted); transition: all 0.2s ease; pointer-events: none;">ZIP / PIN Code</label>
+                  </div>
+                </div>
+                
+                <h3 class="checkout-sub-title" style="font-family: var(--font-editorial); font-size: 1.25rem; font-weight: 300; margin: var(--spacing-md) 0 var(--spacing-sm); border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">Delivery Options</h3>
+                <div class="delivery-methods-group" style="display: flex; flex-direction: column; gap: var(--spacing-xs);">
+                  <label class="delivery-method-label selected" style="border: 1px solid var(--color-brand-burgundy); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer; background: var(--color-white);">
+                    <input type="radio" name="chk-shipping-method" value="standard" checked style="cursor: pointer;">
+                    <div style="flex-grow: 1;">
+                      <span class="delivery-method-title" style="font-size: 0.85rem; font-weight: 700; display: block;">Standard Shipping (3-5 Business Days)</span>
+                      <span class="delivery-method-desc" style="font-size: 0.72rem; color: var(--color-text-muted);">Deliver with SMS & WhatsApp tracking updates</span>
+                    </div>
+                    <span class="delivery-method-price" id="chk-shipping-standard-price" style="font-size: 0.85rem; font-weight: 700;">Free</span>
+                  </label>
+                  <label class="delivery-method-label" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer; background: var(--color-white);">
+                    <input type="radio" name="chk-shipping-method" value="express" style="cursor: pointer;">
+                    <div style="flex-grow: 1;">
+                      <span class="delivery-method-title" style="font-size: 0.85rem; font-weight: 700; display: block;">Express Delivery (1-2 Business Days)</span>
+                      <span class="delivery-method-desc" style="font-size: 0.72rem; color: var(--color-text-muted);">Prioritized dispatch with local delivery speed</span>
+                    </div>
+                    <span class="delivery-method-price" style="font-size: 0.85rem; font-weight: 700;">₹250</span>
+                  </label>
+                </div>
+                
+                <button type="submit" class="cta-button cta-button-primary" style="width: 100%; padding: 14px; margin-top: var(--spacing-md); font-size: 0.85rem;">Continue to Payment</button>
+              </form>
+            </div>
+            
+            <!-- Step 2: Payment & Review -->
+            <div class="checkout-step-container" id="checkout-step-payment-panel" style="display: none;">
+              <h2 class="checkout-step-title" style="font-family: var(--font-editorial); font-size: 1.6rem; font-weight: 300; margin-bottom: var(--spacing-md);">Payment Method</h2>
+              <form id="checkout-payment-form">
+                <div class="payment-tabs" style="display: flex; gap: var(--spacing-xs); margin-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">
+                  <button type="button" class="payment-tab-btn active" data-pay="card" style="padding: 8px 16px; border: 1px solid var(--color-border); border-bottom: none; background: var(--color-white); font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 4px; border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0; cursor: pointer;"><i data-lucide="credit-card" style="width: 14px;"></i> Card</button>
+                  <button type="button" class="payment-tab-btn" data-pay="upi" style="padding: 8px 16px; border: 1px solid transparent; background: none; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 4px; cursor: pointer;"><i data-lucide="smartphone" style="width: 14px;"></i> UPI</button>
+                  <button type="button" class="payment-tab-btn" data-pay="cod" style="padding: 8px 16px; border: 1px solid transparent; background: none; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 4px; cursor: pointer;"><i data-lucide="truck" style="width: 14px;"></i> COD</button>
+                </div>
+                
+                <div class="payment-fields-container" id="checkout-payment-fields">
+                  <!-- Rendered dynamically -->
+                </div>
+                
+                <div class="secure-checkout-seal" style="background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: var(--spacing-sm); display: flex; align-items: center; gap: var(--spacing-xs); margin-top: var(--spacing-md);">
+                  <i data-lucide="shield-check" style="color: var(--color-brand-sage); width: 20px; height: 20px; flex-shrink: 0;"></i>
+                  <p style="font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.4; margin: 0;">
+                    Your payment details are processed through secure 256-bit encrypted gateways. Ruven Studio does not store credentials.
+                  </p>
+                </div>
+                
+                <div style="display: flex; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                  <button type="button" class="cta-button" id="checkout-back-to-shipping" style="flex: 1; padding: 12px; background: none; border: 1px solid var(--color-border); font-size: 0.8rem; margin: 0; min-width: auto; width: auto; color: var(--color-text-primary);">Back</button>
+                  <button type="submit" class="cta-button cta-button-primary" style="flex: 2; padding: 12px; font-size: 0.8rem; margin: 0; width: auto;" id="checkout-place-order-btn">Place Order (₹0.00)</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+          <!-- Right Column: Sticky Summary -->
+          <div class="checkout-summary-panel" style="width: 350px; flex-shrink: 0;">
+            <div class="checkout-summary-card" style="background: var(--color-bg-warm); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); position: sticky; top: 20px;">
+              <h3 class="summary-card-title" style="font-family: var(--font-editorial); font-size: 1.3rem; margin-bottom: var(--spacing-md); font-weight: 300; border-bottom: 1px solid var(--color-border); padding-bottom: 8px;">Order Details</h3>
+              <div class="checkout-summary-items" id="checkout-summary-items-target" style="display: flex; flex-direction: column; gap: var(--spacing-sm); max-height: 250px; overflow-y: auto; margin-bottom: var(--spacing-sm);">
+                <!-- Dynamically filled -->
+              </div>
+              <div class="checkout-summary-totals" id="checkout-summary-totals-target" style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm); margin-top: var(--spacing-sm);">
+                <!-- Subtotal, Shipping, Tax, Discounts, Grand Total -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ORDER CONFIRMATION VIEW -->
+    <section id="confirmation-view" class="view-section">
+      <div class="pdp-wrapper-container" style="max-width: 600px; text-align: center; padding: var(--spacing-xl) var(--spacing-md); margin: 0 auto;">
+        <div class="confirmation-celebrate-graphic" style="margin-bottom: var(--spacing-md);">
+          <i data-lucide="check-circle" style="width: 60px; height: 60px; color: var(--color-brand-sage); stroke-width: 1.25px;"></i>
+        </div>
+        <p class="section-subtitle">Thank You For Your Support</p>
+        <h1 class="editorial-title" style="font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 300; margin-top: 4px;">Order Confirmed</h1>
+        
+        <div class="confirmation-details-box" style="background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); margin: var(--spacing-md) 0; text-align: left; font-size: 0.88rem;">
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-border); padding-bottom: 8px; margin-bottom: 8px;">
+            <span style="color: var(--color-text-muted);">Order Number</span>
+            <strong id="confirm-order-number">RV-2026-98124</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-border); padding-bottom: 8px; margin-bottom: 8px;">
+            <span style="color: var(--color-text-muted);">Estimated Delivery</span>
+            <strong id="confirm-delivery-window">June 25 - June 27</strong>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.5; margin: 4px 0 0;">
+            A confirmation receipt and tracking updates have been sent to your WhatsApp and email.
+          </p>
+        </div>
+
+        <div class="confirmation-scripture-box" style="margin: var(--spacing-md) 0; padding: var(--spacing-md); border-left: 2px solid var(--color-brand-gold); background: rgba(212, 175, 55, 0.03); text-align: left;">
+          <p class="scripture-text" style="font-style: italic; font-family: var(--font-editorial); font-size: 1.1rem; line-height: 1.5; color: var(--color-text-primary); margin-bottom: 4px;">
+            "In all things give thanks; for this is the will of God in Christ Jesus for you."
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-brand-gold);">1 Thessalonians 5:18</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+          <button id="confirm-invoice-btn" class="cta-button" style="padding: 12px; font-size: 0.8rem; background: none; border: 1px solid var(--color-border); color: var(--color-text-primary);"><i data-lucide="download" style="width: 14px; margin-right: 4px; vertical-align: middle;"></i> Invoice</button>
+          <button id="confirm-track-btn" class="cta-button cta-button-primary" style="padding: 12px; font-size: 0.8rem;"><i data-lucide="map-pin" style="width: 14px; margin-right: 4px; vertical-align: middle;"></i> Track Order</button>
+        </div>
+
+        <!-- Community / Referral Box -->
+        <div class="confirmation-referral-card" style="border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); text-align: center; margin-top: var(--spacing-lg); background: var(--color-white);">
+          <h4 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: var(--spacing-xs);">Share the Light</h4>
+          <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Invite your friends to the Ruven Fellowship. Give them ₹300 off their first order, and get ₹300 in credits when they purchase!</p>
+          <div class="referral-link-group" style="display: flex; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); overflow: hidden;">
+            <input type="text" id="chk-referral-code" value="RUVEN-SH-10254" readonly style="flex-grow: 1; border: none; padding: 10px; font-size: 0.8rem; text-align: center; background: var(--color-bg-card);">
+            <button id="chk-copy-referral-btn" style="padding: 10px 16px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: none; background: var(--color-brand-burgundy); color: var(--color-white); cursor: pointer;">Copy</button>
+          </div>
+        </div>
+
+        <a href="#shop" class="nav-trigger" data-view="shop" style="display: inline-block; margin-top: var(--spacing-lg); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-primary);">Continue Shopping <i data-lucide="arrow-right" style="width: 14px; vertical-align: middle;"></i></a>
+      </div>
+    </section>
+
+    <!-- 11. ORDER TRACKING VIEW -->
+    <section id="tracking-view" class="view-section">
+      <div class="cart-page-header text-center" style="margin-bottom: var(--spacing-lg); padding-top: var(--spacing-md); text-align: center;">
+        <p class="section-subtitle">Real-time Logistics</p>
+        <h1 class="editorial-title" style="font-size: 2rem; font-weight: 300; margin-top: 4px;">Order Tracking</h1>
+      </div>
+      <div class="pdp-wrapper-container" style="max-width: 650px; margin: 0 auto;">
+        <!-- tracking status card -->
+        <div class="tracking-summary-card" id="tracking-summary-target"></div>
+        <!-- tracking timeline -->
+        <div class="tracking-timeline-container" id="tracking-timeline-target" style="background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: var(--spacing-md); margin-top: var(--spacing-md);"></div>
+        
+        <div style="text-align: center; margin-top: var(--spacing-lg);">
+          <a href="#account" class="nav-trigger cta-button" data-view="account" style="padding: 10px 24px; font-size: 0.75rem; background: none; border: 1px solid var(--color-border); color: var(--color-text-primary); display: inline-block;">Return to Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. CUSTOMER ACCOUNT VIEW -->
+    <section id="account-view" class="view-section">
+      <div class="pdp-wrapper-container" style="padding-top: var(--spacing-md);">
+        <div class="account-grid-layout">
+          <!-- Sidebar Navigation -->
+          <div class="account-sidebar-nav">
+            <div class="account-profile-summary">
+              <div class="account-profile-avatar" id="account-profile-avatar-char" style="width: 50px; height: 50px; border-radius: var(--border-radius-full); background: var(--color-brand-burgundy); color: var(--color-white); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 8px;">S</div>
+              <div class="account-profile-meta">
+                <h4 id="account-profile-display-name" style="font-size: 1.05rem; font-weight: 700;">Samuel Ruven</h4>
+                <p id="account-profile-display-email" style="font-size: 0.75rem; color: var(--color-text-muted);">samuel@ruvenstudio.in</p>
+              </div>
+            </div>
+            <div class="account-nav-tabs" style="display: flex; flex-direction: column; gap: var(--spacing-xs); margin-top: var(--spacing-md);">
+              <button class="account-nav-tab-btn active" data-tab="profile" style="padding: 10px 14px; border: 1px solid var(--color-border); background: var(--color-white); text-align: left; font-size: 0.8rem; font-weight:700; border-radius: var(--border-radius-sm); display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="user" style="width: 14px;"></i> Profile Settings</button>
+              <button class="account-nav-tab-btn" data-tab="orders" style="padding: 10px 14px; border: 1px solid transparent; background: none; text-align: left; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="package" style="width: 14px;"></i> Order History</button>
+              <button class="account-nav-tab-btn" data-tab="wishlist" style="padding: 10px 14px; border: 1px solid transparent; background: none; text-align: left; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="heart" style="width: 14px;"></i> Wishlist Manager</button>
+              <button class="account-nav-tab-btn" data-tab="addresses" style="padding: 10px 14px; border: 1px solid transparent; background: none; text-align: left; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="map-pin" style="width: 14px;"></i> Saved Addresses</button>
+              <button class="account-nav-tab-btn" data-tab="returns" style="padding: 10px 14px; border: 1px solid transparent; background: none; text-align: left; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="refresh-cw" style="width: 14px;"></i> Returns & Exchanges</button>
+              <button class="account-nav-tab-btn" data-tab="loyalty" style="padding: 10px 14px; border: 1px solid transparent; background: none; text-align: left; font-size: 0.8rem; font-weight:700; display: flex; align-items: center; gap: 8px; cursor: pointer;"><i data-lucide="award" style="width: 14px;"></i> Loyalty Rewards</button>
+            </div>
+          </div>
+          
+          <!-- Content Panels -->
+          <div class="account-panels-container" id="account-panels-target" style="flex-grow: 1;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ==========================================================================
@@ -1039,6 +1340,16 @@
       <h3>Your Bag</h3>
       <button class="drawer-close-btn" id="cart-close-btn" aria-label="Close cart"><i data-lucide="x"></i></button>
     </div>
+    <!-- Shipping Progress Bar (Phase 7 addition) -->
+    <div class="drawer-shipping-progress-bar-wrap" id="drawer-shipping-progress-wrap" style="padding: 12px var(--spacing-md) 0; background: var(--color-bg-warm);">
+      <div class="drawer-shipping-progress-text" id="drawer-shipping-progress-text" style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; display: flex; justify-content: space-between;">
+        <span>Free Shipping Progress</span>
+        <span id="drawer-shipping-progress-needed">₹3,000 to free shipping</span>
+      </div>
+      <div style="height: 6px; background: var(--color-border); border-radius: var(--border-radius-full); overflow: hidden;">
+        <div id="drawer-shipping-progress-bar" style="height: 100%; background: var(--color-brand-sage); width: 0%; transition: width 0.3s ease;"></div>
+      </div>
+    </div>
     <div class="drawer-content" id="cart-drawer-content">
       <!-- Dynamically Rendered Cart Items or Empty State -->
     </div>
@@ -1048,7 +1359,10 @@
         <span id="cart-subtotal-val">₹0.00</span>
       </div>
       <p class="cart-totals-subtitle">Free standard shipping applied. Taxes calculated at checkout.</p>
-      <button class="cta-button cta-button-primary checkout-btn" id="checkout-btn">Proceed to Secure Checkout</button>
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-xs); margin-top: var(--spacing-xs);">
+        <a href="#checkout" class="cta-button cta-button-primary checkout-btn nav-trigger" id="checkout-btn" style="text-align: center; padding: 12px; font-size: 0.8rem; display: block;">Proceed to Secure Checkout</a>
+        <a href="#cart" class="cta-button nav-trigger" id="cart-drawer-view-bag-btn" style="text-align: center; padding: 12px; font-size: 0.8rem; background: none; border: 1px solid var(--color-border); color: var(--color-text-primary); display: block;">View Shopping Bag</a>
+      </div>
     </div>
   </div>
 
