@@ -1038,22 +1038,7 @@ function setupSearchModal() {
   });
 }
 
-// 13. HERO PARALLAX MOUSE INTERACTION
+// 13. HERO PARALLAX MOUSE INTERACTION (Disabled to keep image still)
 function setupHeroParallax() {
-  const bg = document.getElementById("hero-bg-parallax");
-  if (!bg) return;
-
-  document.addEventListener("mousemove", (e) => {
-    if (state.activeView !== "home") return;
-    
-    // Parallax relative to center of screen
-    const xPct = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-    const yPct = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-    
-    // Move bg image slightly in opposite direction
-    const img = bg.querySelector(".hero-img");
-    if (img) {
-      img.style.transform = `scale(1.03) translate(${xPct * -15}px, ${yPct * -15}px)`;
-    }
-  });
+  // Parallax removed so the image behaves still
 }
