@@ -60,7 +60,7 @@ export const MOCK_CATEGORIES: MockCategory[] = [
 
 export const MOCK_PRODUCTS: MockProduct[] = [
   {
-    id: "p1111111-1111-1111-1111-111111111111",
+    id: "f1111111-1111-1111-1111-111111111111",
     category_id: "c1111111-1111-1111-1111-111111111112",
     category_slug: "oversized-tees",
     name: "Armor of Light Heavyweight Tee",
@@ -80,14 +80,14 @@ export const MOCK_PRODUCTS: MockProduct[] = [
       text_content: "The night is far gone; the day is at hand. So then let us cast off the works of darkness and put on the armor of light."
     },
     variants: [
-      { id: "v1111111-1111-1111-1111-111111111111", sku: "RU-OVS-GRC-S", size: "S", color: "Ink Black", stock: 120 },
-      { id: "v1111111-1111-1111-1111-111111111112", sku: "RU-OVS-GRC-M", size: "M", color: "Ink Black", stock: 150 },
-      { id: "v1111111-1111-1111-1111-111111111113", sku: "RU-OVS-GRC-L", size: "L", color: "Ink Black", stock: 180 },
-      { id: "v1111111-1111-1111-1111-111111111114", sku: "RU-OVS-GRC-XL", size: "XL", color: "Ink Black", stock: 90 },
+      { id: "d1111111-1111-1111-1111-111111111111", sku: "RU-OVS-GRC-S", size: "S", color: "Ink Black", stock: 120 },
+      { id: "d1111111-1111-1111-1111-111111111112", sku: "RU-OVS-GRC-M", size: "M", color: "Ink Black", stock: 150 },
+      { id: "d1111111-1111-1111-1111-111111111113", sku: "RU-OVS-GRC-L", size: "L", color: "Ink Black", stock: 180 },
+      { id: "d1111111-1111-1111-1111-111111111114", sku: "RU-OVS-GRC-XL", size: "XL", color: "Ink Black", stock: 90 },
     ]
   },
   {
-    id: "p1111111-1111-1111-1111-111111111112",
+    id: "f1111111-1111-1111-1111-111111111112",
     category_id: "c1111111-1111-1111-1111-111111111113",
     category_slug: "hoodies",
     name: "Renewal of Mind French Terry Hoodie",
@@ -107,9 +107,9 @@ export const MOCK_PRODUCTS: MockProduct[] = [
       text_content: "Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect."
     },
     variants: [
-      { id: "v1111111-1111-1111-1111-111111111115", sku: "RU-HD-RNW-M", size: "M", color: "Warm Charcoal", stock: 75 },
-      { id: "v1111111-1111-1111-1111-111111111116", sku: "RU-HD-RNW-L", size: "L", color: "Warm Charcoal", stock: 80 },
-      { id: "v1111111-1111-1111-1111-111111111117", sku: "RU-HD-RNW-XL", size: "XL", color: "Warm Charcoal", stock: 45 },
+      { id: "d1111111-1111-1111-1111-111111111115", sku: "RU-HD-RNW-M", size: "M", color: "Warm Charcoal", stock: 75 },
+      { id: "d1111111-1111-1111-1111-111111111116", sku: "RU-HD-RNW-L", size: "L", color: "Warm Charcoal", stock: 80 },
+      { id: "d1111111-1111-1111-1111-111111111117", sku: "RU-HD-RNW-XL", size: "XL", color: "Warm Charcoal", stock: 45 },
     ]
   }
 ];

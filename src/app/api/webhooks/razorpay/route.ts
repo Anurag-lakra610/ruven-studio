@@ -75,7 +75,7 @@ export async function POST(request: Request) {
           const itemsToInsert = cart.map((item: any) => ({
             order_id: ordData.id,
             variant_id: item.variantId.includes("default")
-              ? "v1111111-1111-1111-1111-111111111111"
+              ? "d1111111-1111-1111-1111-111111111111"
               : item.variantId,
             quantity: item.qty,
             unit_price: item.price,
