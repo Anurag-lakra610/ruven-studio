@@ -141,436 +141,456 @@ export default function StorefrontHomePage() {
         </div>
       </section>
 
-      {/* 2. TRUST STRIP */}
-      <div className="w-full bg-white dark:bg-zinc-900 border-b border-border-warm py-6 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-6 flex justify-around items-center gap-8 flex-wrap">
-          <div className="flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-text-primary">
-            <Shirt className="w-4 h-4 text-brand-gold" />
-            <span>Premium Fabric</span>
+      {/* SECTION 1: Trust Strip */}
+      <div className="trust-strip-v2">
+        <div className="trust-strip-container">
+          <div className="trust-item-v2">
+            <Shirt className="trust-icon-v2" />
+            <span className="trust-text-v2">Premium Fabric</span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-text-primary">
-            <Sparkles className="w-4 h-4 text-brand-gold" />
-            <span>Faith Inspired</span>
+          <div className="trust-item-v2">
+            <Sparkles className="trust-icon-v2" />
+            <span className="trust-text-v2">Faith Inspired</span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-text-primary">
-            <ShieldCheck className="w-4 h-4 text-brand-gold" />
-            <span>Secure Checkout</span>
+          <div className="trust-item-v2">
+            <ShieldCheck className="trust-icon-v2" />
+            <span className="trust-text-v2">Secure Checkout</span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-bold tracking-wider uppercase text-text-primary">
-            <Truck className="w-4 h-4 text-brand-gold" />
-            <span>Fast Shipping</span>
+          <div className="trust-item-v2">
+            <Truck className="trust-icon-v2" />
+            <span className="trust-text-v2">Fast Shipping</span>
+          </div>
+          <div className="trust-item-v2">
+            <Compass className="trust-icon-v2" />
+            <span className="trust-text-v2">Designed with Purpose</span>
+          </div>
+          <div className="trust-item-v2">
+            <Activity className="trust-icon-v2" />
+            <span className="trust-text-v2">Made for Everyday Wear</span>
           </div>
         </div>
       </div>
 
-      {/* 3. EDITORIAL STORYTELLING */}
-      <section className="py-20 md:py-28 px-6 md:px-12 max-w-[1400px] mx-auto" id="story-section">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase">Our Purpose</span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-primary leading-tight">
-              Formed in Faith.<br />
-              Tailored for Purpose.
-            </h2>
-            <p className="text-sm text-text-muted leading-relaxed">
-              Ruven Studio is an independent fashion label creating limited organic streetwear garments designed to spark organic conversations. We construct each piece carefully to serve as a visual bridge, allowing you to carry your faith with confidence, elegance, and modern Scandinavian minimalism.
+      {/* SECTION 2: Our Mission (Editorial Storytelling) */}
+      <section className="editorial-mission section-padding-lg" id="story-section">
+        <div className="editorial-mission-grid">
+          <div className="mission-text-col">
+            <span className="section-subtitle-lowercase">our purpose</span>
+            <h2 className="editorial-headline-large">Formed in Faith.<br />Tailored for Purpose.</h2>
+            <p className="mission-paragraph">
+              Ruven Studio is an independent Christian lifestyle label creating heavy-weight apparel designed to start quiet, meaningful conversations. We construct each garment to serve as a visual bridge, allowing you to carry your faith with elegance and confidence in modern creative environments.
             </p>
-            <div className="border-l-2 border-brand-burgundy pl-6 py-2 my-8">
-              <p className="italic text-base text-brand-burgundy font-medium">
-                "We don't create clothing to conform; we design to transform."
-              </p>
-              <p className="text-[10px] uppercase font-bold tracking-wider text-text-muted mt-2">— The Ruven Collective</p>
+            <div className="mission-quote-box">
+              <span className="quote-sign">“</span>
+              <p className="mission-quote-text">We don't create clothing to conform; we design to transform.</p>
+              <p className="mission-quote-author">— The Ruven Collective</p>
             </div>
-            <div className="bg-bg-card dark:bg-zinc-900/50 rounded-lg p-5 border border-border-warm flex flex-col gap-2">
-              <p className="text-xs text-text-primary italic leading-relaxed">
-                "Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect."
-              </p>
-              <p className="text-[9px] uppercase font-bold tracking-widest text-brand-gold text-right">— Romans 12:2</p>
+            <div className="mission-verse-accent">
+              <p className="mission-verse-quote">"Do not be conformed to this world, but be transformed by the renewal of your mind..."</p>
+              <p className="mission-verse-ref">Romans 12:2</p>
             </div>
           </div>
-          <div className="relative aspect-square w-full max-w-lg mx-auto rounded-lg overflow-hidden shadow-xl border border-border-warm">
-            <Image
-              src="/brand_story_lifestyle.png"
-              alt="Ruven Studio Craftsmanship and Story"
-              fill
-              className="object-cover"
-            />
+          <div className="mission-image-col">
+            <div className="mission-image-wrap">
+              <img src="/brand_story_lifestyle.png" alt="Ruven Studio Craftsmanship and Story" className="mission-img" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. FEATURED CAMPAIGN DROPS */}
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-white dark:bg-zinc-900 border-t border-b border-border-warm">
-        <div className="max-w-[1400px] mx-auto space-y-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div className="space-y-3">
-              <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase">Editorial Drop 01</span>
-              <h2 className="text-3xl font-bold tracking-tight text-text-primary">The Armor & Protection Drop</h2>
-            </div>
-            <p className="text-xs text-text-muted max-w-sm leading-relaxed">
-              A limited-run campaign constructed to represent resilience, spiritual armor, and mental integrity. Styled in a clean Scandinavian aesthetic.
-            </p>
+      {/* SECTION 3: Featured Collection Campaign */}
+      <section className="featured-campaign section-padding-lg">
+        <div className="campaign-header">
+          <div>
+            <span className="section-subtitle-lowercase">editorial drop 01</span>
+            <h2 className="editorial-title-v2">The Armor & Protection Campaign</h2>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            {/* Left Hero Card - Armor of Light Tee */}
-            {teeProduct && (
-              <div className="lg:col-span-7 bg-bg-warm dark:bg-zinc-950 rounded-xl border border-border-warm overflow-hidden shadow-md flex flex-col justify-between">
-                <div className="relative aspect-[4/3] w-full overflow-hidden group">
-                  <Image
-                    src={teeProduct.image}
-                    alt={teeProduct.name}
-                    fill
-                    className="object-cover group-hover:scale-103 transition-transform duration-700"
-                  />
-                  <span className="absolute top-4 left-4 bg-brand-burgundy text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded">
-                    New Release
+          <p className="campaign-description">
+            A meticulous collection representing strength and spiritual integrity in a chaotic world. Styled with Scandinavian minimalism and heavyweight textures.
+          </p>
+        </div>
+        
+        <div className="campaign-grid">
+          {/* Left Hero Campaign Card (Armor of Light Tee) */}
+          {teeProduct && (
+            <article className="campaign-hero-card product-card" data-id={teeProduct.id}>
+              <div className="campaign-hero-img-wrap">
+                <img src={teeProduct.image} alt={teeProduct.name} className="campaign-hero-img" />
+                <span className="campaign-tag-badge">New Release</span>
+                <button 
+                  onClick={() => handleWishlistToggle(teeProduct)}
+                  className={`wishlist-btn ${isItemInWishlist(teeProduct.id) ? "active" : ""}`} 
+                  aria-label="Add to wishlist"
+                >
+                  <Heart className="w-4 h-4 fill-current" />
+                </button>
+              </div>
+              <div className="campaign-hero-info">
+                <div className="campaign-info-meta">
+                  <span className="campaign-verse-tag">Romans 13:12</span>
+                  <span className="campaign-category-tag">Oversized Tee</span>
+                </div>
+                <h3 className="campaign-hero-title">{teeProduct.name}</h3>
+                <p className="campaign-hero-desc">
+                  240 GSM organic combed cotton, styled in a custom boxy oversized cut. Featuring a clean, linear shield design signifying spiritual defense.
+                </p>
+                <div className="campaign-actions">
+                  <span className="campaign-price">
+                    ₹{teeProduct.base_price} {teeProduct.original_price && <span className="price-original">₹{teeProduct.original_price}</span>}
                   </span>
-                  <button
-                    onClick={() => handleWishlistToggle(teeProduct)}
-                    className="absolute top-4 right-4 bg-white dark:bg-zinc-900 hover:text-brand-burgundy transition-colors p-2.5 rounded-full shadow-md z-10"
-                    aria-label="Wishlist"
+                  {/* Sizes Selector inside Campaign Card for Quick Add */}
+                  <div className="size-selector-v2">
+                    {["S", "M", "L", "XL"].map((size) => (
+                      <button 
+                        key={size}
+                        onClick={() => handleQuickAdd(teeProduct, size)}
+                        className="size-btn" 
+                        data-size={size}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+
+          {/* Right supporting column */}
+          <div className="campaign-side-col">
+            {hoodieProduct && (
+              <article className="campaign-supporting-card product-card" data-id={hoodieProduct.id}>
+                <div className="supporting-img-wrap">
+                  <img src={hoodieProduct.image} alt={hoodieProduct.name} className="supporting-img" />
+                  <span className="campaign-tag-badge">Best Seller</span>
+                  <button 
+                    onClick={() => handleWishlistToggle(hoodieProduct)}
+                    className={`wishlist-btn ${isItemInWishlist(hoodieProduct.id) ? "active" : ""}`} 
+                    aria-label="Add to wishlist"
                   >
-                    <Heart
-                      className={`w-4 h-4 ${
-                        isItemInWishlist(teeProduct.id)
-                          ? "text-brand-burgundy fill-brand-burgundy"
-                          : "text-text-primary"
-                      }`}
-                    />
+                    <Heart className="w-4 h-4 fill-current" />
                   </button>
                 </div>
-                <div className="p-6 md:p-8 space-y-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-bold tracking-wider bg-brand-gold/15 text-brand-burgundy px-2.5 py-1 rounded">
-                      Romans 13:12
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted">
-                      Oversized Tee
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold uppercase tracking-wide text-text-primary">{teeProduct.name}</h3>
-                    <p className="text-xs text-text-muted mt-2 leading-relaxed">
-                      Heavyweight 240 GSM organic cotton drop. Features screen-printed shield details and boxy oversized streetwear aesthetics.
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border-warm">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-brand-burgundy">₹{teeProduct.base_price}</span>
-                      {teeProduct.original_price && (
-                        <span className="text-xs text-text-muted line-through">₹{teeProduct.original_price}</span>
-                      )}
-                    </div>
-                    {/* Size selector & Add */}
-                    <div className="flex items-center gap-4">
-                      <div className="flex gap-1.5">
-                        {["S", "M", "L", "XL"].map((sz) => (
-                          <button
-                            key={sz}
-                            onClick={() => setSelectedTeeSize(sz)}
-                            className={`w-8 h-8 rounded border text-xs font-bold flex items-center justify-center transition-colors ${
-                              selectedTeeSize === sz
-                                ? "bg-text-primary text-white border-text-primary"
-                                : "border-border-warm hover:border-text-primary text-text-primary"
-                            }`}
-                          >
-                            {sz}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        onClick={() => handleQuickAdd(teeProduct, selectedTeeSize)}
-                        className="px-5 py-2 bg-brand-burgundy hover:bg-brand-gold text-white text-[10px] font-bold uppercase tracking-widest rounded transition-colors flex items-center gap-1.5"
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Add</span>
-                      </button>
+                <div className="supporting-info">
+                  <span className="campaign-verse-tag">Romans 12:2</span>
+                  <h4 className="supporting-title">{hoodieProduct.name}</h4>
+                  <div className="flex justify-between items-center mt-2">
+                    <p className="supporting-price">₹{hoodieProduct.base_price}</p>
+                    <div className="size-selector-v2">
+                      {["M", "L", "XL"].map((size) => (
+                        <button 
+                          key={size}
+                          onClick={() => handleQuickAdd(hoodieProduct, size)}
+                          className="size-btn" 
+                          data-size={size}
+                        >
+                          {size}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
             )}
+            
+            <div className="campaign-editorial-statement">
+              <h3>Every Thread Tells a Story</h3>
+              <p>
+                Our graphics are not simple illustrations. They are screen-printed conversations waiting to happen, serving as reminders of mental renewal, clarity, and protection in God.
+              </p>
+              <Link href="/shop" className="editorial-text-link">
+                Browse All Apparel →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Right side - Supporting Hoodie & Quote */}
-            {hoodieProduct && (
-              <div className="lg:col-span-5 flex flex-col justify-between gap-12">
-                <div className="bg-bg-warm dark:bg-zinc-950 rounded-xl border border-border-warm overflow-hidden shadow-md p-6 flex flex-col justify-between flex-1">
-                  <div className="relative aspect-[4/3] w-full rounded overflow-hidden group">
-                    <Image
-                      src={hoodieProduct.image}
-                      alt={hoodieProduct.name}
-                      fill
-                      className="object-cover group-hover:scale-103 transition-transform duration-700"
-                    />
-                    <span className="absolute top-4 left-4 bg-brand-gold text-text-primary text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded">
-                      Best Seller
-                    </span>
-                    <button
-                      onClick={() => handleWishlistToggle(hoodieProduct)}
-                      className="absolute top-4 right-4 bg-white dark:bg-zinc-900 hover:text-brand-burgundy transition-colors p-2.5 rounded-full shadow-md z-10"
-                      aria-label="Wishlist"
-                    >
-                      <Heart
-                        className={`w-4 h-4 ${
-                          isItemInWishlist(hoodieProduct.id)
-                            ? "text-brand-burgundy fill-brand-burgundy"
-                            : "text-text-primary"
-                        }`}
-                      />
-                    </button>
-                  </div>
-                  <div className="space-y-4 mt-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <span className="text-[9px] font-bold tracking-wider text-brand-gold uppercase">Romans 12:2</span>
-                        <h4 className="text-base font-bold uppercase tracking-wide text-text-primary mt-1">
-                          {hoodieProduct.name}
-                        </h4>
-                      </div>
-                      <span className="text-base font-bold text-brand-burgundy">₹{hoodieProduct.base_price}</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-4 pt-4 border-t border-border-warm">
-                      <div className="flex gap-1.5">
-                        {["M", "L", "XL"].map((sz) => (
-                          <button
-                            key={sz}
-                            onClick={() => setSelectedHoodieSize(sz)}
-                            className={`w-8 h-8 rounded border text-xs font-bold flex items-center justify-center transition-colors ${
-                              selectedHoodieSize === sz
-                                ? "bg-text-primary text-white border-text-primary"
-                                : "border-border-warm hover:border-text-primary text-text-primary"
-                            }`}
-                          >
-                            {sz}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        onClick={() => handleQuickAdd(hoodieProduct, selectedHoodieSize)}
-                        className="px-5 py-2 bg-brand-burgundy hover:bg-brand-gold text-white text-[10px] font-bold uppercase tracking-widest rounded transition-colors flex items-center gap-1.5"
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Add</span>
-                      </button>
-                    </div>
-                  </div>
+      {/* SECTION 4: Immersive Lifestyle Campaign */}
+      <section className="lifestyle-immersive-campaign">
+        <div className="immersive-bg-wrap">
+          <img src="/hero_lifestyle.png" alt="Ruven Studio Lifestyle Movement" className="immersive-bg-img" />
+        </div>
+        <div className="immersive-overlay-v2"></div>
+        <div className="immersive-content">
+          <span className="immersive-subtitle">lifestyle campaign</span>
+          <h2 className="immersive-statement">Faith Is Meant To Be Lived.<br />Not Hidden.</h2>
+          <p className="immersive-subtext">Designed in India to carry the message of light. Our premium minimal streetwear helps you start the conversations that matter.</p>
+          <Link href="/shop" className="immersive-cta-link">Explore the Lookbook</Link>
+        </div>
+      </section>
+
+      {/* SECTION 5: Bible Verse Highlight */}
+      <section className="scripture-highlight section-padding-lg">
+        <div className="scripture-container">
+          <div className="scripture-vector">
+            {/* Sleek minimalist cross / ray graphic (inline SVG) */}
+            <svg viewBox="0 0 100 100" className="scripture-svg-graphic" aria-hidden="true">
+              <path d="M50,10 L50,90 M20,35 L80,35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.3"></path>
+              <circle cx="50" cy="35" r="22" stroke="currentColor" strokeWidth="1" stroke-dasharray="2 3" fill="none" opacity="0.25"></circle>
+            </svg>
+          </div>
+          <span className="verse-label-accent">scripture focus</span>
+          <blockquote className="modern-bible-verse">
+            "Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect."
+          </blockquote>
+          <p className="modern-bible-reference">Romans 12:2</p>
+          
+          <div className="verse-connection-box">
+            <h4>Why This Verse Matters</h4>
+            <p>
+              In a generation driven by noise, social pressure, and anxiety, this verse is a sanctuary. It reminds us that our true identity is found in renewal and divine transformation, rather than mimicking temporary worldly patterns. This scriptural theme forms the creative core of our Heavyweight Hoodie collection.
+            </p>
+            <Link href="/shop?category=hoodies" className="verse-connect-link">Explore Mind Renewal Drops</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 6: Best Sellers (Asymmetrical Editorial Layout) */}
+      <section className="best-sellers-editorial section-padding-lg">
+        <div className="best-sellers-header">
+          <span className="section-subtitle-lowercase">essential drops</span>
+          <h2 className="editorial-title-v2">Ruven Studio Best Sellers</h2>
+        </div>
+
+        <div className="best-sellers-layout">
+          {/* Hero Best Seller (Left, taking up larger space) */}
+          {hoodieProduct && (
+            <article className="product-card best-seller-hero-card" data-id={hoodieProduct.id}>
+              <div className="best-seller-hero-grid">
+                <div className="best-seller-hero-img-side">
+                  <img src={hoodieProduct.image} alt={hoodieProduct.name} className="best-seller-hero-img" />
+                  <button 
+                    onClick={() => handleWishlistToggle(hoodieProduct)}
+                    className={`wishlist-btn ${isItemInWishlist(hoodieProduct.id) ? "active" : ""}`} 
+                    aria-label="Add to wishlist"
+                  >
+                    <Heart className="w-4 h-4 fill-current" />
+                  </button>
+                  <span className="badge-tag">Best Seller</span>
                 </div>
-
-                <div className="bg-brand-burgundy text-white rounded-xl p-8 space-y-4 shadow-lg shadow-brand-burgundy/15 relative overflow-hidden flex flex-col justify-center">
-                  <div className="absolute -right-8 -bottom-8 text-white/5 font-bold text-9xl pointer-events-none select-none">
-                    †
-                  </div>
-                  <h3 className="text-lg font-bold uppercase tracking-wide text-brand-gold">Every Thread Tells a Story</h3>
-                  <p className="text-xs text-zinc-200 leading-relaxed">
-                    Our graphics are not simple illustrations. They are screen-printed messages constructed carefully, serving as physical checkpoints of mental renewal, clarity, and armor in Christ.
+                <div className="best-seller-hero-info-side">
+                  <span className="best-seller-verse-ref">Romans 12:2</span>
+                  <h3 className="best-seller-title">{hoodieProduct.name}</h3>
+                  <p className="best-seller-price">
+                    ₹{hoodieProduct.base_price} {hoodieProduct.original_price && <span className="price-original">₹{hoodieProduct.original_price}</span>}
                   </p>
-                  <Link href="/shop" className="text-xs font-bold uppercase tracking-widest text-brand-gold hover:text-white transition-colors pt-2 block">
-                    Browse All Apparel →
-                  </Link>
+                  
+                  <p className="best-seller-fabric-summary">
+                    Fabric: 380 GSM ultra-heavy combed French Terry. Loop-back lining, double-lined drawstring-free hood. Crafted to represent comfortable, mindful living.
+                  </p>
+                  
+                  <div className="best-seller-verse-preview">
+                    <p className="verse-quote-short">"Do not conform... but be transformed."</p>
+                  </div>
+                  
+                  {/* Quick add sizes selector */}
+                  <div className="best-seller-quick-add">
+                    <span className="quick-add-label">Quick Add Size</span>
+                    <div className="size-selector-v2">
+                      {["M", "L", "XL"].map((size) => (
+                        <button 
+                          key={size}
+                          onClick={() => handleQuickAdd(hoodieProduct, size)}
+                          className="size-btn" 
+                          data-size={size}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-            )}
+            </article>
+          )}
+
+          {/* Supporting Best Seller (Right, smaller vertical card) */}
+          {teeProduct && (
+            <article className="product-card best-seller-side-card" data-id={teeProduct.id}>
+              <button 
+                onClick={() => handleWishlistToggle(teeProduct)}
+                className={`wishlist-btn ${isItemInWishlist(teeProduct.id) ? "active" : ""}`} 
+                aria-label="Add to wishlist"
+              >
+                <Heart className="w-4 h-4 fill-current" />
+              </button>
+              <div className="best-seller-side-img-wrap">
+                <img src={teeProduct.image} alt={teeProduct.name} className="best-seller-side-img" />
+                <span className="badge-tag">New Drop</span>
+              </div>
+              <div className="best-seller-side-info">
+                <span className="best-seller-verse-ref">Romans 13:12</span>
+                <h3 className="best-seller-title">{teeProduct.name}</h3>
+                <p className="best-seller-price">₹{teeProduct.base_price}</p>
+                
+                {/* Quick add sizes selector */}
+                <div className="best-seller-quick-add-mini">
+                  <div className="size-selector-v2">
+                    {["S", "M", "L", "XL"].map((size) => (
+                      <button 
+                        key={size}
+                        onClick={() => handleQuickAdd(teeProduct, size)}
+                        className="size-btn" 
+                        data-size={size}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+        </div>
+      </section>
+
+      {/* SECTION 7: Why Choose Ruven */}
+      <section className="why-ruven section-padding-lg">
+        <div className="why-ruven-header">
+          <span className="section-subtitle-lowercase">crafted for conversation</span>
+          <h2 className="editorial-title-v2">The Anatomy of Ruven Studio</h2>
+        </div>
+        <div className="why-ruven-grid">
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <MessageSquare className="w-5 h-5" />
+            </div>
+            <h4>Designed to Start Conversations</h4>
+            <p>Every graphic acts as an intentional conversation starter, creating direct opportunities to share faith and hope.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <Shirt className="w-5 h-5" />
+            </div>
+            <h4>Premium Heavyweight Cotton</h4>
+            <p>Tailored in 240 GSM T-shirts and 380 GSM loopback French Terry hoodies. Durable, dense, and built to last.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <Feather className="w-5 h-5" />
+            </div>
+            <h4>Faith Inspired Graphics</h4>
+            <p>Original, minimalist scriptural symbols screen-printed carefully with absolute precision.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <h4>Limited Edition Collections</h4>
+            <p>Released in small, calculated runs to maintain design integrity and reduce environmental manufacturing waste.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <Heart className="w-5 h-5" />
+            </div>
+            <h4>Ethically Produced</h4>
+            <p>Independently manufactured in clean, safe facilities in India supporting local creative tailors.</p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrap">
+              <Activity className="w-5 h-5" />
+            </div>
+            <h4>Built for Everyday Wear</h4>
+            <p>Featuring pre-shrunk structures, double-stitched details, and timeless cuts for modern comfort.</p>
           </div>
         </div>
       </section>
 
-      {/* 5. IMMERSIVE LIFESTYLE LOOKBOOK BANNER */}
-      <section className="relative h-[480px] w-full flex items-center justify-center text-center px-6">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero_lifestyle.png"
-            alt="Ruven Studio Lifestyle Movement"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+      {/* SECTION 8: Community Stories */}
+      <section className="community-testimonials section-padding-lg">
+        <div className="testimonials-header">
+          <span className="section-subtitle-lowercase">united in faith</span>
+          <h2 className="editorial-title-v2">Shared Reflections</h2>
         </div>
-        <div className="relative z-20 max-w-xl text-white space-y-6">
-          <span className="text-[10px] font-bold tracking-[0.2em] text-brand-gold uppercase">Lifestyle Campaign</span>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">
-            Faith Is Meant To Be Lived.<br />
-            Not Hidden.
-          </h2>
-          <p className="text-xs md:text-sm text-zinc-300 leading-relaxed max-w-md mx-auto">
-            Constructed in India to represent and share the message of light. Our premium minimal streetwear helps you start the conversations that matter.
-          </p>
-          <Link
-            href="/shop"
-            className="inline-block px-8 py-3 border border-white hover:bg-white hover:text-text-primary text-white text-xs font-bold uppercase tracking-widest rounded-full transition-colors"
-          >
-            Explore the Lookbook
-          </Link>
-        </div>
-      </section>
-
-      {/* 6. SCRIPTURE HIGHLIGHT */}
-      <section className="py-20 md:py-28 px-6 md:px-12 max-w-4xl mx-auto text-center space-y-8">
-        <div className="w-16 h-16 mx-auto text-brand-burgundy/30 border border-brand-burgundy/15 rounded-full flex items-center justify-center relative">
-          <span className="text-2xl font-bold">†</span>
-        </div>
-        <span className="text-[10px] font-bold tracking-[0.2em] text-brand-gold uppercase block">Scripture Focus</span>
-        <blockquote className="text-xl md:text-2xl font-bold italic text-brand-burgundy max-w-2xl mx-auto leading-relaxed">
-          "The night is far gone; the day is at hand. So then let us cast off the works of darkness and put on the armor of light."
-        </blockquote>
-        <p className="text-xs font-bold uppercase tracking-widest text-text-muted">— Romans 13:12</p>
-
-        <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-6 md:p-8 text-left space-y-4 max-w-xl mx-auto">
-          <h4 className="text-xs font-bold uppercase tracking-wide text-text-primary">Why This Verse Inspires Us</h4>
-          <p className="text-xs text-text-muted leading-relaxed">
-            In a generation driven by noise, visual pressure, and anxiety, this scripture acts as a sanctuary. It reminds us that our true identity is found in light, renewal, and active spiritual defence, rather than conforming to temporary worldly designs.
-          </p>
-          <Link
-            href="/shop?category=oversized-tees"
-            className="text-xs font-bold text-brand-burgundy hover:text-brand-gold transition-colors inline-block"
-          >
-            Explore Armor Collection →
-          </Link>
-        </div>
-      </section>
-
-      {/* 7. WHY CHOOSE RUVEN (ANATOMY) */}
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-white dark:bg-zinc-900 border-t border-b border-border-warm">
-        <div className="max-w-[1400px] mx-auto space-y-16">
-          <div className="text-center space-y-3">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase block">Crafted for Conversation</span>
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">The Anatomy of Ruven Studio</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 bg-bg-warm dark:bg-zinc-950 border border-border-warm rounded-xl space-y-4">
-              <div className="w-10 h-10 rounded-full bg-brand-burgundy/10 text-brand-burgundy flex items-center justify-center">
-                <MessageSquare className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-text-primary">Conversation Starters</h4>
-              <p className="text-xs text-text-muted leading-relaxed">
-                Every design elements screen-printed carries intentional biblical references, giving you opportunities to share your walk.
-              </p>
-            </div>
-
-            <div className="p-8 bg-bg-warm dark:bg-zinc-950 border border-border-warm rounded-xl space-y-4">
-              <div className="w-10 h-10 rounded-full bg-brand-burgundy/10 text-brand-burgundy flex items-center justify-center">
-                <Shirt className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-text-primary">Premium Heavyweight Cotton</h4>
-              <p className="text-xs text-text-muted leading-relaxed">
-                Tailored in dense 240 GSM organic tees and 380 GSM loopback French Terry hoodies. Cozy, thick, and durable.
-              </p>
-            </div>
-
-            <div className="p-8 bg-bg-warm dark:bg-zinc-950 border border-border-warm rounded-xl space-y-4">
-              <div className="w-10 h-10 rounded-full bg-brand-burgundy/10 text-brand-burgundy flex items-center justify-center">
-                <Feather className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-text-primary">Minimalist Faith Graphics</h4>
-              <p className="text-xs text-text-muted leading-relaxed">
-                Original scriptural artwork drawn and screens-printed carefully with maximum focus on design integrity.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. TESTIMONIALS */}
-      <section className="py-20 md:py-28 px-6 md:px-12 max-w-[1400px] mx-auto space-y-16">
-        <div className="text-center space-y-3">
-          <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase block">United in Fellowship</span>
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">Shared Reflections</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-6 md:p-8 space-y-6 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex text-brand-gold">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />)}
-              </div>
-              <p className="text-xs text-text-muted italic leading-relaxed">
-                "The Armor of Light tee has opened so many doors. Friends at college ask what the shield represents, allowing me to share my faith journey naturally."
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-brand-burgundy text-white flex items-center justify-center font-bold text-xs">D</div>
-              <div>
-                <h5 className="text-xs font-bold text-text-primary">David S.</h5>
-                <span className="text-[10px] text-text-muted">Bengaluru • College Ministry</span>
+        <div className="testimonials-grid">
+          <div className="testimonial-card">
+            <div className="testimonial-rating">★★★★★</div>
+            <p className="testimonial-quote">"The Armor of Light tee has opened so many doors. Friends at college ask what the shield represents, allowing me to share my faith journey naturally."</p>
+            <div className="testimonial-author">
+              <div className="author-avatar-initials" style={{ backgroundColor: "var(--color-brand-burgundy)", color: "var(--color-white)" }}>D</div>
+              <div className="author-details">
+                <span className="author-name">David S.</span>
+                <span className="author-loc">Bengaluru • College Ministry</span>
               </div>
             </div>
           </div>
-
-          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-6 md:p-8 space-y-6 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex text-brand-gold">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />)}
-              </div>
-              <p className="text-xs text-text-muted italic leading-relaxed">
-                "The comfort of the French Terry hoodie is outstanding, but the reminder of mental renewal on the chest serves as a quiet anchor of peace during long days."
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-brand-gold text-text-primary flex items-center justify-center font-bold text-xs">P</div>
-              <div>
-                <h5 className="text-xs font-bold text-text-primary">Priya M.</h5>
-                <span className="text-[10px] text-text-muted">Mumbai • Creative Director</span>
+          <div className="testimonial-card">
+            <div className="testimonial-rating">★★★★★</div>
+            <p className="testimonial-quote">"The comfort of the loopback French Terry is outstanding, but the reminder of mental renewal on the chest serves as a quiet anchor of peace during my days."</p>
+            <div className="testimonial-author">
+              <div className="author-avatar-initials" style={{ backgroundColor: "var(--color-brand-gold)", color: "var(--color-text-primary)" }}>P</div>
+              <div className="author-details">
+                <span className="author-name">Priya M.</span>
+                <span className="author-loc">Mumbai • Creative Director</span>
               </div>
             </div>
           </div>
-
-          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-6 md:p-8 space-y-6 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex text-brand-gold">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />)}
-              </div>
-              <p className="text-xs text-text-muted italic leading-relaxed">
-                "Perfect boxy fit. I wear my Ruven Studio tees to fellowships and study circles. It always sparks conversations about walk of faith."
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-border-warm text-text-primary flex items-center justify-center font-bold text-xs">R</div>
-              <div>
-                <h5 className="text-xs font-bold text-text-primary">Rahul K.</h5>
-                <span className="text-[10px] text-text-muted">New Delhi • Student Leader</span>
+          <div className="testimonial-card">
+            <div className="testimonial-rating">★★★★★</div>
+            <p className="testimonial-quote">"Perfect boxy fit. I wear my Ruven Studio tees to fellowships and study circles. It always sparks conversations about walk of faith and identity in Christ."</p>
+            <div className="testimonial-author">
+              <div className="author-avatar-initials" style={{ backgroundColor: "var(--color-border)", color: "var(--color-text-primary)" }}>R</div>
+              <div className="author-details">
+                <span className="author-name">Rahul K.</span>
+                <span className="author-loc">New Delhi • Student Leader</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 9. INSTAGRAM GALLERY WALL */}
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-white dark:bg-zinc-900 border-t border-border-warm">
-        <div className="max-w-[1400px] mx-auto space-y-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-            <div>
-              <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase block">Fellowship Studio</span>
-              <h2 className="text-2xl font-bold tracking-tight text-text-primary mt-2">Shared on Instagram</h2>
-            </div>
-            <a
-              href="https://instagram.com/ruven.studio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-bold text-brand-burgundy hover:text-brand-gold transition-colors flex items-center gap-1.5"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* SECTION 9: Asymmetrical Instagram Social Wall */}
+      <section className="instagram-gallery section-padding-lg">
+        <div className="instagram-header">
+          <span className="section-subtitle-lowercase">fellowship studio</span>
+          <h2 className="editorial-title-v2">Shared on Instagram</h2>
+          <a href="https://instagram.com/ruven.studio" target="_blank" rel="noopener noreferrer" className="instagram-handle">@ruven.studio</a>
+        </div>
+        <div className="instagram-asymmetric-grid">
+          <div className="instagram-grid-item">
+            <img src="/brand_story_lifestyle.png" alt="Ruven Studio lookbook styling" />
+            <div className="instagram-overlay">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
               </svg>
-              <span>@ruven.studio</span>
-            </a>
+              <span>View Post</span>
+            </div>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["/brand_story_lifestyle.png", "/hero_lifestyle.png", "/oversized_tee_product.png", "/faith_hoodie_product.png"].map((img, idx) => (
-              <div key={idx} className="relative aspect-square rounded-lg overflow-hidden group border border-border-warm">
-                <Image src={img} alt={`Lookbook snapshot ${idx + 1}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                </div>
-              </div>
-            ))}
+          <div className="instagram-grid-item">
+            <img src="/hero_lifestyle.png" alt="Youth sharing scripture in streetwear" />
+            <div className="instagram-overlay">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>View Post</span>
+            </div>
+          </div>
+          <div className="instagram-grid-item">
+            <img src="/oversized_tee_product.png" alt="Heavyweight screen print detail" />
+            <div className="instagram-overlay">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>View Post</span>
+            </div>
+          </div>
+          <div className="instagram-grid-item">
+            <img src="/faith_hoodie_product.png" alt="Embroidered branch detailing on French Terry" />
+            <div className="instagram-overlay">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>View Post</span>
+            </div>
           </div>
         </div>
       </section>
