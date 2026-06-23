@@ -21,10 +21,31 @@ import {
   ArrowRight
 } from "lucide-react";
 
+// Helper to highlight matched query keyword in search results
+const highlightKeyword = (text: string, query: string) => {
+  if (!query.trim()) return <span className="text-text-primary">{text}</span>;
+  const escapedQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const parts = text.split(new RegExp(`(${escapedQuery})`, 'gi'));
+  return (
+    <span className="text-text-primary">
+      {parts.map((part, i) =>
+        part.toLowerCase() === query.toLowerCase().trim() ? (
+          <mark key={i} className="bg-transparent text-brand-burgundy font-bold underline decoration-brand-burgundy/30 p-0">
+            {part}
+          </mark>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </span>
+  );
+};
+
 export const Header: React.FC = () => {
   const router = useRouter();
   
   // Custom Spotlight Search states
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [allProducts, setAllProducts] = useState<MockProduct[]>([]);
   const [allDevotionals, setAllDevotionals] = useState<MockDevotional[]>([]);
   const [searchResults, setSearchResults] = useState<{
@@ -34,6 +55,30 @@ export const Header: React.FC = () => {
   }>({ products: [], devotionals: [], collections: [] });
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [searching, setSearching] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("ruven_recent_searches");
+      if (stored) {
+        setRecentSearches(JSON.parse(stored));
+      } else {
+        const defaults = ["tee", "hoodie", "renewal", "Romans 12:2"];
+        setRecentSearches(defaults);
+        localStorage.setItem("ruven_recent_searches", JSON.stringify(defaults));
+      }
+    }
+  }, []);
+
+  const addRecentSearch = (query: string) => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    setRecentSearches((prev) => {
+      const filtered = prev.filter((s) => s.toLowerCase() !== trimmed.toLowerCase());
+      const next = [trimmed, ...filtered].slice(0, 5);
+      localStorage.setItem("ruven_recent_searches", JSON.stringify(next));
+      return next;
+    });
+  };
 
   const {
     cart,
@@ -142,7 +187,7 @@ export const Header: React.FC = () => {
       type: "product",
       id: p.id,
       title: p.name,
-      subtitle: `$${p.base_price.toFixed(2)} — ${p.category_slug || "Apparel"}`,
+      subtitle: `₹${p.base_price.toFixed(0)} — ${p.category_slug || "Apparel"}`,
       url: `/products/${p.slug}`,
       image: p.image
     });
@@ -182,6 +227,7 @@ export const Header: React.FC = () => {
           e.preventDefault();
           const activeItem = flatResults[activeItemIndex];
           if (activeItem) {
+            addRecentSearch(searchQuery.trim() || activeItem.title);
             setSearchOpen(false);
             router.push(activeItem.url);
           }
@@ -198,12 +244,14 @@ export const Header: React.FC = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      addRecentSearch(searchQuery.trim());
       setSearchOpen(false);
       router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
   const handleSuggestionClick = (tag: string) => {
+    addRecentSearch(tag);
     setSearchQuery(tag);
     setSearchOpen(false);
     router.push(`/shop?search=${encodeURIComponent(tag)}`);
@@ -291,58 +339,80 @@ export const Header: React.FC = () => {
 
               {/* Mega Menu Dropdown */}
               <div className="mega-menu">
-                <div className="mega-menu-grid">
-                  <div className="mega-menu-col">
-                    <Link href="/shop?filter=new-arrivals" className="mega-item">
-                      <div className="mega-item-img-wrap">
-                        <img src="/hero_lifestyle.png" alt="Featured Collection" />
+                <div className="mega-menu-grid grid grid-cols-1 md:grid-cols-5 gap-8 max-w-7xl mx-auto py-4">
+                  {/* Column 1: Categories */}
+                  <div className="mega-menu-col space-y-4">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Categories</h4>
+                    <div className="flex flex-col gap-3">
+                      <Link href="/shop?category=oversized-tees" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Oversized Tees</Link>
+                      <Link href="/shop?category=hoodies" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Premium Hoodies</Link>
+                      <Link href="/shop?category=sweatshirts" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">French Terry Sweatshirts</Link>
+                      <Link href="/shop" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Accessories</Link>
+                      <Link href="/shop" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium text-brand-burgundy">Browse Catalog</Link>
+                    </div>
+                  </div>
+
+                  {/* Column 2: Collections */}
+                  <div className="mega-menu-col space-y-4">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Collections</h4>
+                    <div className="flex flex-col gap-3">
+                      <Link href="/shop?filter=new-arrivals" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Renewal Drop '26</Link>
+                      <Link href="/shop?filter=best-sellers" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Faith Essentials</Link>
+                      <Link href="/shop" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Grace & Peace Capsule</Link>
+                      <Link href="/shop" className="text-xs text-text-primary hover:text-brand-burgundy transition-colors font-medium">Sovereign Heavyweights</Link>
+                    </div>
+                  </div>
+
+                  {/* Column 3: Featured Product */}
+                  <div className="mega-menu-col space-y-3">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Featured Product</h4>
+                    <Link href="/products/armor-of-light-heavyweight-tee" className="mega-item group block">
+                      <div className="mega-item-img-wrap aspect-[4/3] w-full overflow-hidden bg-bg-card border border-border-warm rounded-none mb-3">
+                        <img src="/oversized_tee_product.png" alt="Featured Product" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       </div>
-                      <h5>Featured Collection</h5>
-                      <p>Explore the visual ministry drop</p>
+                      <h5 className="text-[11px] font-bold uppercase tracking-wider text-text-primary group-hover:text-brand-burgundy transition-colors">Armor of Light Tee</h5>
+                      <p className="text-[10px] text-brand-burgundy font-bold mt-0.5">₹2,690</p>
                     </Link>
                   </div>
 
-                  <div className="mega-menu-col">
-                    <Link href="/shop?category=oversized-tees" className="mega-item">
-                      <div className="mega-item-img-wrap">
-                        <img src="/oversized_tee_product.png" alt="Oversized Tees" />
-                      </div>
-                      <h5>Oversized Tees</h5>
-                      <p>Heavy-weight 240 GSM organic cotton</p>
-                    </Link>
+                  {/* Column 4: Trending */}
+                  <div className="mega-menu-col space-y-4">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Trending Items</h4>
+                    <div className="flex flex-col gap-3">
+                      <Link href="/products/renewal-of-mind-french-terry-hoodie" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 bg-bg-card border border-border-warm overflow-hidden flex-shrink-0">
+                          <img src="/faith_hoodie_product.png" alt="Trending hoodie" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-[11px] font-semibold text-text-primary block truncate group-hover:text-brand-burgundy transition-colors">Renewal Hoodie</span>
+                          <span className="text-[10px] text-text-muted block">₹4,490</span>
+                        </div>
+                      </Link>
+                      <Link href="/products/child-of-god-tee-white" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 bg-bg-card border border-border-warm overflow-hidden flex-shrink-0">
+                          <img src="/brand_story_lifestyle.png" alt="Trending tee" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-[11px] font-semibold text-text-primary block truncate group-hover:text-brand-burgundy transition-colors">Child of God Tee</span>
+                          <span className="text-[10px] text-text-muted block">₹2,690</span>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
 
-                  <div className="mega-menu-col">
-                    <Link href="/shop?category=hoodies" className="mega-item">
-                      <div className="mega-item-img-wrap">
-                        <img src="/faith_hoodie_product.png" alt="Premium Hoodies" />
+                  {/* Column 5: Verse Inspiration */}
+                  <div className="mega-menu-col space-y-4 border-l border-border-warm/40 pl-6">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Verse Inspiration</h4>
+                    <div className="space-y-3 font-sans">
+                      <p className="text-[11px] italic font-light text-text-muted leading-relaxed">
+                        "Put on the whole armor of God, that you may be able to stand against the schemes of the devil."
+                      </p>
+                      <div>
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-brand-burgundy">Ephesians 6:11</span>
+                        <p className="text-[9px] text-text-light-muted mt-0.5">The inspiration behind our active Armor Drop.</p>
                       </div>
-                      <h5>Premium Hoodies</h5>
-                      <p>Cozy 380 GSM French Terry hoodies</p>
-                    </Link>
+                    </div>
                   </div>
-
-                  <div className="mega-menu-col">
-                    <Link href="/shop?filter=best-sellers" className="mega-item">
-                      <div className="mega-item-img-wrap">
-                        <img src="/brand_story_lifestyle.png" alt="Best Sellers" />
-                      </div>
-                      <h5>Best Sellers</h5>
-                      <p>Our most loved conversation starters</p>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="mega-menu-links">
-                  <Link href="/shop?filter=new-arrivals">
-                    New Drops
-                  </Link>
-                  <Link href="/shop?filter=best-sellers">
-                    Limited Edition
-                  </Link>
-                  <Link href="/shop">
-                    Browse All
-                  </Link>
                 </div>
               </div>
             </li>
@@ -430,7 +500,7 @@ export const Header: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-[10vh] px-4 md:px-0"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-start justify-center pt-[10vh] px-4 md:px-0"
           >
             {/* Click outside search modal to close */}
             <div className="absolute inset-0 z-0" onClick={() => setSearchOpen(false)} />
@@ -440,14 +510,14 @@ export const Header: React.FC = () => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 w-full max-w-[760px] bg-white dark:bg-zinc-900 rounded-none flex flex-col shadow-2xl border border-border-warm overflow-hidden"
+              className="relative z-10 w-full max-w-[800px] bg-white dark:bg-zinc-900 rounded-none flex flex-col shadow-2xl border border-border-warm overflow-hidden"
             >
               {/* Input Header */}
               <div className="h-[64px] border-b border-border-warm flex items-center px-6 gap-3.5 bg-white dark:bg-zinc-950">
                 <Search className="w-5 h-5 text-text-muted flex-shrink-0" />
                 <input
                   type="text"
-                  placeholder="Search products, collections, articles or Bible verses..."
+                  placeholder="Search products, collections, journal articles or Bible verses..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full text-base bg-transparent border-none p-0 focus:outline-none focus:ring-0 text-text-primary placeholder:text-text-light-muted font-sans"
@@ -464,7 +534,7 @@ export const Header: React.FC = () => {
               </div>
 
               {/* Suggestions / Results */}
-              <div className="flex-1 overflow-y-auto max-h-[440px] bg-white dark:bg-zinc-900">
+              <div className="flex-1 overflow-y-auto max-h-[480px] bg-white dark:bg-zinc-900">
                 {searching ? (
                   /* Loading Skeletons */
                   <div className="p-6 space-y-4">
@@ -482,16 +552,16 @@ export const Header: React.FC = () => {
                     </div>
                   </div>
                 ) : !searchQuery.trim() ? (
-                  /* Empty state - suggestions */
-                  <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-border-warm">
-                    <div className="space-y-5">
-                      {/* Popular Search Tags */}
+                  /* Empty state - Spotlight dashboard */
+                  <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 divide-y md:divide-y-0 md:divide-x divide-border-warm bg-white dark:bg-zinc-900">
+                    <div className="space-y-6">
+                      {/* Recent Searches */}
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-wider text-text-light-muted block">
-                          Suggested Searches
+                          Recent Searches
                         </span>
                         <div className="flex flex-wrap gap-2 mt-3">
-                          {["tee", "hoodie", "armor", "renewal", "Romans 12:2"].map((tag) => (
+                          {recentSearches.map((tag) => (
                             <button
                               key={tag}
                               onClick={() => handleSuggestionClick(tag)}
@@ -510,15 +580,18 @@ export const Header: React.FC = () => {
                         </span>
                         <div className="flex flex-col gap-2 mt-3 font-sans">
                           {[
-                            { name: "Oversized Tees Drop", url: "/shop?category=oversized-tees" },
-                            { name: "French Terry Hoodies", url: "/shop?category=hoodies" },
-                            { name: "All Streetwear", url: "/shop" }
+                            { name: "Oversized Tees Drop", slug: "oversized-tees" },
+                            { name: "French Terry Hoodies", slug: "hoodies" },
+                            { name: "All Streetwear Catalog", slug: "" }
                           ].map((col) => (
                             <Link
                               key={col.name}
-                              href={col.url}
-                              onClick={() => setSearchOpen(false)}
-                              className="text-xs font-semibold text-text-primary hover:text-brand-burgundy flex items-center justify-between group py-1"
+                              href={`/shop${col.slug ? `?category=${col.slug}` : ""}`}
+                              onClick={() => {
+                                addRecentSearch(col.name);
+                                setSearchOpen(false);
+                              }}
+                              className="text-xs font-semibold text-text-primary hover:text-brand-burgundy flex items-center justify-between group py-1 border-b border-border-warm/20"
                             >
                               <span>{col.name}</span>
                               <ChevronRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-brand-burgundy" />
@@ -526,20 +599,36 @@ export const Header: React.FC = () => {
                           ))}
                         </div>
                       </div>
+
+                      {/* Quick Links */}
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-text-light-muted block">
+                          Quick Links
+                        </span>
+                        <div className="grid grid-cols-2 gap-3 mt-3 font-sans">
+                          <Link href="/shop" onClick={() => setSearchOpen(false)} className="text-xs font-semibold text-text-primary hover:text-brand-burgundy transition-colors">All Shop</Link>
+                          <Link href="/account" onClick={() => setSearchOpen(false)} className="text-xs font-semibold text-text-primary hover:text-brand-burgundy transition-colors">My Dashboard</Link>
+                          <Link href="/tracking" onClick={() => setSearchOpen(false)} className="text-xs font-semibold text-text-primary hover:text-brand-burgundy transition-colors">Track Cargo</Link>
+                          <Link href="/#story-section" onClick={() => setSearchOpen(false)} className="text-xs font-semibold text-text-primary hover:text-brand-burgundy transition-colors">Our Story</Link>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="sm:pl-6 pt-5 sm:pt-0 space-y-5">
+                    <div className="md:pl-8 pt-6 md:pt-0 space-y-6">
                       {/* Trending Products */}
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-wider text-text-light-muted block">
-                          Trending Items
+                          Trending Products
                         </span>
                         <div className="flex flex-col gap-3 mt-3 font-sans">
-                          {allProducts.slice(0, 2).map((prod) => (
+                          {allProducts.slice(0, 3).map((prod) => (
                             <Link
                               key={prod.id}
                               href={`/products/${prod.slug}`}
-                              onClick={() => setSearchOpen(false)}
+                              onClick={() => {
+                                addRecentSearch(prod.name);
+                                setSearchOpen(false);
+                              }}
                               className="flex items-center gap-3.5 group animate-fadeIn"
                             >
                               <div className="w-9 h-9 relative bg-zinc-50 dark:bg-zinc-800 border border-border-warm flex-shrink-0 overflow-hidden">
@@ -550,9 +639,32 @@ export const Header: React.FC = () => {
                                   {prod.name}
                                 </span>
                                 <span className="text-[10px] text-text-light-muted block mt-0.5">
-                                  ${prod.base_price.toFixed(2)}
+                                  ₹{prod.base_price.toFixed(0)}
                                 </span>
                               </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Latest Journal Articles */}
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-text-light-muted block">
+                          Latest Journal Articles
+                        </span>
+                        <div className="flex flex-col gap-2.5 mt-3 font-sans">
+                          {allDevotionals.slice(0, 2).map((dev) => (
+                            <Link
+                              key={dev.id}
+                              href={`/journal/${dev.slug}`}
+                              onClick={() => {
+                                addRecentSearch(dev.title);
+                                setSearchOpen(false);
+                              }}
+                              className="text-xs font-semibold text-text-primary hover:text-brand-burgundy flex flex-col group py-1"
+                            >
+                              <span className="group-hover:text-brand-burgundy transition-colors text-xs font-medium">{dev.title}</span>
+                              <span className="text-[9px] text-text-light-muted mt-0.5">By {dev.author} — Devotional</span>
                             </Link>
                           ))}
                         </div>
@@ -607,29 +719,32 @@ export const Header: React.FC = () => {
                         <Link
                           key={item.id}
                           href={item.url}
-                          onClick={() => setSearchOpen(false)}
+                          onClick={() => {
+                            addRecentSearch(searchQuery || item.title);
+                            setSearchOpen(false);
+                          }}
                           className={`flex items-center gap-4 px-6 py-3.5 transition-all select-none border-l-2 ${
                             isActive
-                              ? "bg-bg-card dark:bg-zinc-800/50 border-brand-burgundy pl-7 text-brand-burgundy"
+                              ? "bg-bg-card dark:bg-zinc-800/50 border-brand-burgundy pl-7"
                               : "border-transparent hover:bg-bg-secondary"
                           }`}
                         >
                           {item.image ? (
-                            <div className="w-10 h-10 bg-zinc-50 dark:bg-zinc-800 flex-shrink-0 overflow-hidden border border-border-warm">
+                            <div className="w-10 h-10 bg-zinc-50 dark:bg-zinc-800 flex-shrink-0 overflow-hidden border border-border-warm rounded-none">
                               <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div className="w-10 h-10 bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 border border-border-warm">
+                            <div className="w-10 h-10 bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 border border-border-warm rounded-none">
                               <span className="text-[9px] font-bold text-text-light-muted tracking-widest uppercase">
                                 {item.type.slice(0, 3)}
                               </span>
                             </div>
                           )}
                           <div className="flex-grow min-w-0">
-                            <h4 className="text-sm font-semibold text-text-primary truncate">
-                              {item.title}
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-text-primary truncate">
+                              {highlightKeyword(item.title, searchQuery)}
                             </h4>
-                            <p className="text-[11px] text-text-muted truncate mt-0.5">
+                            <p className="text-[10px] text-text-muted truncate mt-0.5 uppercase tracking-wider">
                               {item.subtitle}
                             </p>
                           </div>
@@ -700,14 +815,14 @@ export const Header: React.FC = () => {
                     <Link
                       href="/shop"
                       onClick={() => setWishlistOpen(false)}
-                      className="px-6 py-2.5 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-gold transition-colors rounded-full"
+                      className="px-6 py-2.5 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-burgundy-light transition-colors rounded-none"
                     >
                       Browse Catalog
                     </Link>
                   </div>
                 ) : (
                   wishlist.map((item) => (
-                    <div key={item.id} className="flex gap-4 p-4 bg-white dark:bg-zinc-950 border border-border-warm rounded-lg relative group">
+                    <div key={item.id} className="flex gap-4 p-4 bg-white dark:bg-zinc-950 border border-border-warm rounded-none relative group">
                       <div className="w-20 h-24 bg-bg-card rounded overflow-hidden relative flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
@@ -777,15 +892,15 @@ export const Header: React.FC = () => {
                     <Link
                       href="/shop"
                       onClick={() => setCartOpen(false)}
-                      className="px-6 py-2.5 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-gold transition-colors rounded-full"
+                      className="px-6 py-2.5 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-burgundy-light transition-colors rounded-none"
                     >
                       Shop Now
                     </Link>
                   </div>
                 ) : (
                   cart.map((item) => (
-                    <div key={`${item.id}-${item.size}`} className="flex gap-4 p-4 bg-white dark:bg-zinc-950 border border-border-warm rounded-lg">
-                      <div className="w-20 h-24 bg-bg-card rounded overflow-hidden relative flex-shrink-0">
+                    <div key={`${item.id}-${item.size}`} className="flex gap-4 p-4 bg-white dark:bg-zinc-950 border border-border-warm rounded-none">
+                      <div className="w-20 h-24 bg-bg-card rounded-none overflow-hidden relative flex-shrink-0">
                         <Image src={item.image} alt={item.name} fill className="object-cover" />
                       </div>
                       <div className="flex-1 flex flex-col justify-between py-1">
@@ -841,7 +956,7 @@ export const Header: React.FC = () => {
                       setCartOpen(false);
                       router.push("/checkout");
                     }}
-                    className="w-full py-3 bg-brand-burgundy text-white hover:bg-brand-gold font-bold text-xs uppercase tracking-widest rounded-full transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-brand-burgundy text-white hover:bg-brand-burgundy-light font-bold text-xs uppercase tracking-widest rounded-none transition-colors flex items-center justify-center gap-2"
                   >
                     <span>Proceed to Checkout</span>
                     <ArrowRight className="w-4 h-4" />

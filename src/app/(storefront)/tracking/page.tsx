@@ -55,12 +55,12 @@ function TrackingContent() {
 
         {/* Header */}
         <div className="text-center space-y-3">
-          <span className="text-[10px] font-bold tracking-[0.15em] text-brand-gold uppercase block">Logistics Hub</span>
+          <span className="text-[10px] font-bold tracking-[0.15em] text-brand-burgundy uppercase block">Logistics Hub</span>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary uppercase">Track Shipment</h1>
         </div>
 
         {/* Lookup bar */}
-        <form onSubmit={handleSearchSubmit} className="flex gap-2 p-2 bg-white dark:bg-zinc-900 border border-border-warm rounded-full shadow-sm max-w-lg mx-auto">
+        <form onSubmit={handleSearchSubmit} className="flex gap-2 p-2 bg-white dark:bg-zinc-900 border border-border-warm rounded-none shadow-sm max-w-lg mx-auto">
           <div className="flex-1 flex items-center pl-3">
             <Search className="w-4 h-4 text-text-muted mr-2" />
             <input
@@ -73,14 +73,14 @@ function TrackingContent() {
           </div>
           <button
             type="submit"
-            className="px-6 py-2.5 bg-brand-burgundy hover:bg-brand-gold text-white text-xs font-bold uppercase tracking-wider rounded-full transition-colors"
+            className="px-6 py-2.5 bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-xs font-bold uppercase tracking-wider rounded-none transition-colors"
           >
             Track
           </button>
         </form>
 
         {orderNo ? (
-          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-6 md:p-8 space-y-8 shadow-sm">
+          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-none p-6 md:p-8 space-y-8 shadow-sm">
             {/* Courier Details */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-6 border-b border-border-warm text-xs">
               <div className="space-y-1">
@@ -103,7 +103,7 @@ function TrackingContent() {
               <div className="space-y-1">
                 <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider block">Est. Delivery</span>
                 <span className="font-bold text-text-primary flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-brand-gold" />
+                  <Calendar className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
                   <span>June 26, 2026</span>
                 </span>
               </div>
@@ -120,7 +120,7 @@ function TrackingContent() {
                     <div key={idx} className="relative">
                       {/* Step Indicator Dot */}
                       <span
-                        className={`absolute -left-[31px] top-0 w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                        className={`absolute -left-[31px] top-0 w-4 h-4 rounded-none border-2 flex items-center justify-center ${
                           isActive
                             ? "bg-brand-burgundy border-brand-burgundy text-white shadow-md shadow-brand-burgundy/15"
                             : "bg-white dark:bg-zinc-950 border-border-warm text-text-muted"
@@ -148,7 +148,7 @@ function TrackingContent() {
 
             {/* Delivery address */}
             <div className="border-t border-border-warm pt-6 flex items-start gap-3 text-xs">
-              <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
+              <MapPin className="w-5 h-5 text-zinc-400 dark:text-zinc-500 flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider block">Ship-To Address</span>
                 <p className="text-text-primary leading-relaxed">
@@ -158,7 +158,7 @@ function TrackingContent() {
             </div>
           </div>
         ) : (
-          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-xl p-8 text-center text-xs space-y-4 shadow-sm">
+          <div className="bg-white dark:bg-zinc-900 border border-border-warm rounded-none p-8 text-center text-xs space-y-4 shadow-sm">
             <Package className="w-10 h-10 text-text-muted stroke-[1] mx-auto" />
             <h3 className="font-bold text-text-primary uppercase tracking-wider">No active shipment query</h3>
             <p className="text-text-muted max-w-xs mx-auto">

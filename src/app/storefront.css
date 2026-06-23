@@ -21,7 +21,7 @@
   /* Brand Accent Colors */
   --color-brand-burgundy: #670000;   /* Deep rich burgundy - the core faith accent */
   --color-brand-burgundy-light: #8E1B1B;
-  --color-brand-gold: #C09A6B;       /* Secondary premium metal tone */
+  --color-brand-gold: #8A8A8A;       /* Secondary premium metal tone - neutralised */
   --color-brand-sage: #5B6B5A;       /* Peaceful tertiary nature tone */
   --color-white: #FFFFFF;
   --color-border: #ECECEC;           /* Subtle grey border */
@@ -236,7 +236,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cta-button-primary::before {
-  background-color: var(--color-brand-gold);
+  background-color: var(--color-brand-burgundy-light);
 }
 
 .cta-button-primary:hover::before {
@@ -244,9 +244,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cta-button-primary:hover {
-  border-color: var(--color-brand-gold);
+  border-color: var(--color-brand-burgundy-light);
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(192, 154, 107, 0.15);
+  box-shadow: 0 10px 25px rgba(103, 0, 0, 0.15);
 }
 
 .cta-button-secondary {
@@ -513,8 +513,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .mega-menu-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-xl);
   max-width: var(--max-width-site);
   margin: 0 auto;
 }
@@ -775,7 +775,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   height: 100%;
   width: 0;
-  background-color: var(--color-brand-gold);
+  background-color: var(--color-brand-burgundy);
   animation: heroSlideProgress 5000ms linear forwards;
 }
 
@@ -788,7 +788,6 @@ h1, h2, h3, h4, h5, h6 {
   .hero-indicators {
     left: 50%;
     transform: translateX(-50%);
-    bottom: 2rem;
   }
 }
 
@@ -835,7 +834,7 @@ h1, h2, h3, h4, h5, h6 {
 .blur-shape.shape-2 {
   width: 420px;
   height: 420px;
-  background-color: var(--color-brand-gold);
+  background-color: var(--color-brand-burgundy);
   bottom: 12%;
   right: 18%;
   animation-delay: -6s;

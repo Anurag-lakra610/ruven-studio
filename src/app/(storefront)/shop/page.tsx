@@ -140,9 +140,9 @@ function ShopContent() {
         <div className="plp-hero-overlay"></div>
         <div className="plp-hero-content">
           <nav className="plp-breadcrumbs" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
+            <Link href="/" className="hover:text-brand-burgundy transition-colors">Home</Link>
             <span className="plp-breadcrumb-sep">/</span>
-            <span className="text-brand-gold">Collections</span>
+            <span className="text-brand-burgundy font-semibold">Collections</span>
             <span className="plp-breadcrumb-sep">/</span>
             <span id="breadcrumb-current">All Drops</span>
           </nav>

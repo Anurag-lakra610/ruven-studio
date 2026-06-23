@@ -205,8 +205,8 @@ export default function StorefrontHomePage() {
         author_initial: "P",
         author_name: "Priya M.",
         author_sub: "Mumbai • Creative Director",
-        avatar_color: "var(--color-brand-gold)",
-        avatar_text_color: "var(--color-text-primary)"
+        avatar_color: "var(--color-text-secondary)",
+        avatar_text_color: "var(--color-white)"
       },
       {
         rating: 5,
@@ -650,7 +650,7 @@ export default function StorefrontHomePage() {
                 <div key={idx} className="testimonial-card">
                   <div className="testimonial-rating" role="img" aria-label={`${rev.rating} out of 5 stars`}>
                     {Array.from({ length: rev.rating }).map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-brand-gold text-brand-gold inline-block mr-0.5" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-brand-burgundy text-brand-burgundy inline-block mr-0.5" />
                     ))}
                   </div>
                   <p className="testimonial-quote">"{rev.quote}"</p>
