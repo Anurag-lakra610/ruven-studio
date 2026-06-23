@@ -11,6 +11,11 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Ruven Studio | Premium Christian Streetwear & Lifestyle Label",
   description: "Ruven Studio is an independent fashion label creating limited pieces that reflect a journey of self-discovery, renewal of mind, and walking in faith. Explore our premium oversized tees and streetwear hoodies.",
+  icons: {
+    icon: "/offcial_fav.png",
+    shortcut: "/offcial_fav.png",
+    apple: "/offcial_fav.png",
+  },
 };
 
 export default function RootLayout({
