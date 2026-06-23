@@ -1,286 +1,793 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
-import { AlertCircle, ArrowRight } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { CartProvider } from "@/context/CartContext";
 import { Header } from "@/components/storefront/Header";
-import { Footer } from "@/components/storefront/Footer";
 
+/* ─────────────────────────────────────────────
+   Design Tokens — strictly from brand spec
+───────────────────────────────────────────── */
+const T = {
+  bgPage:       "#F5F3EE",
+  bgWhite:      "#FFFFFF",
+  dark:         "#1A1A18",
+  muted:        "#888880",
+  border:       "#C8C5BE",
+  errorRed:     "#E24B4A",
+  errorBg:      "#FCEBEB",
+  errorBorder:  "#F09595",
+  errorText:    "#A32D2D",
+} as const;
+
+/* Shared style objects */
+const baseInput: React.CSSProperties = {
+  border: `1px solid ${T.border}`,
+  borderRadius: 0,
+  background: T.bgWhite,
+  height: "42px",
+  padding: "0 12px",
+  fontSize: "13px",
+  color: T.dark,
+  width: "100%",
+  outline: "none",
+  display: "block",
+  boxSizing: "border-box",
+  fontFamily: "inherit",
+  transition: "border-color 0.15s ease",
+};
+
+const labelSt: React.CSSProperties = {
+  fontSize: "11px",
+  textTransform: "uppercase",
+  letterSpacing: "0.04em",
+  fontWeight: 500,
+  color: "#555555",
+  display: "block",
+  marginBottom: "5px",
+};
+
+/* ─────────────────────────────────────────────
+   Inner Login Form (client logic lives here)
+───────────────────────────────────────────── */
 function LoginForm() {
   const router = useRouter();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  /* Form values */
+  const [email,      setEmail]      = useState("");
+  const [password,   setPassword]   = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isDev, setIsDev] = useState(false);
+
+  /* UI state */
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading,      setLoading]      = useState(false);
+  const [isDev,        setIsDev]        = useState(false);
+
+  /* Focused states for border colour */
+  const [emailFocused, setEmailFocused]   = useState(false);
+  const [pwFocused,    setPwFocused]      = useState(false);
+
+  /* Error states — three distinct types per spec */
+  const [emailError,  setEmailError]  = useState("");
+  const [pwError,     setPwError]     = useState("");
+  const [authError,   setAuthError]   = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hostname = window.location.hostname;
-      setIsDev(
-        hostname === "localhost" ||
-        hostname === "127.0.0.1" ||
-        window.location.port !== ""
-      );
-    }
+    if (typeof window === "undefined") return;
+    const h = window.location.hostname;
+    setIsDev(h === "localhost" || h === "127.0.0.1" || window.location.port !== "");
   }, []);
 
+  /* ── Validation ─────────────────────────── */
+  const validateForm = useCallback((): boolean => {
+    let ok = true;
+    setEmailError("");
+    setPwError("");
+
+    if (!email.trim()) {
+      setEmailError("Email address is required.");
+      ok = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setEmailError("Please enter a valid email address.");
+      ok = false;
+    }
+
+    if (!password) {
+      setPwError("Password is required.");
+      ok = false;
+    }
+
+    return ok;
+  }, [email, password]);
+
+  /* ── Submit ──────────────────────────────── */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError("");
+    if (!validateForm()) return;
     setLoading(true);
-    setError("");
 
-    const isDummy = process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") || !process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const isDummy =
+      process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") ||
+      !process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-    if (mode === "signup") {
-      if (isDummy) {
-        setTimeout(() => {
-          document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-          document.cookie = `mock_user_email=${email}; path=/; max-age=86400`;
-          document.cookie = `mock_user_name=${name || "New User"}; path=/; max-age=86400`;
-          router.push("/account");
-        }, 1000);
-        return;
-      }
-      try {
-        const supabase = createClient();
-        const { error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { full_name: name } }
-        });
-        if (signUpError) throw signUpError;
+    if (isDummy) {
+      await new Promise<void>((res) => setTimeout(res, 1200));
+      if (email === "admin@ruven.in" && password === "admin123") {
+        document.cookie = "mock_admin_session=true; path=/; max-age=86400";
+        document.cookie = "mock_user_email=admin@ruven.in; path=/; max-age=86400";
+        document.cookie = "mock_user_name=Super Admin; path=/; max-age=86400";
+        router.push("/admin");
+      } else if (email === "customer@ruven.in" && password === "customer123") {
         document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-        document.cookie = `mock_user_email=${email}; path=/; max-age=86400`;
-        document.cookie = `mock_user_name=${name || "New User"}; path=/; max-age=86400`;
+        document.cookie = "mock_user_email=customer@ruven.in; path=/; max-age=86400";
+        document.cookie = "mock_user_name=John Doe; path=/; max-age=86400";
         router.push("/account");
-      } catch (err: any) {
-        setError(err.message || "Registration failed. Please check credentials.");
+      } else {
+        setAuthError("Incorrect email or password. Please try again.");
         setLoading(false);
       }
       return;
     }
 
-    // Sign in flow
-    if (isDummy) {
-      setTimeout(() => {
-        if (email === "admin@ruven.in" && password === "admin123") {
-          document.cookie = "mock_admin_session=true; path=/; max-age=86400";
-          document.cookie = "mock_user_email=admin@ruven.in; path=/; max-age=86400";
-          document.cookie = "mock_user_name=Super Admin; path=/; max-age=86400";
-          router.push("/admin");
-        } else if (email === "customer@ruven.in" && password === "customer123") {
-          document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-          document.cookie = "mock_user_email=customer@ruven.in; path=/; max-age=86400";
-          document.cookie = "mock_user_name=John Doe; path=/; max-age=86400";
-          router.push("/account");
-        } else {
-          setError("Invalid sandbox credentials. Use admin@ruven.in / admin123 or customer@ruven.in / customer123");
-          setLoading(false);
-        }
-      }, 1000);
-      return;
-    }
-
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-      if (authError) throw authError;
+      const { error: authErr } = await supabase.auth.signInWithPassword({ email, password });
+      if (authErr) throw authErr;
       if (email.endsWith("@ruvenstudio.in") || email.endsWith("@ruven.in")) {
         router.push("/admin");
       } else {
         router.push("/account");
       }
-    } catch (err: any) {
-      setError(err.message || "Authentication failed. Please verify credentials.");
+    } catch {
+      setAuthError("Incorrect email or password. Please try again.");
       setLoading(false);
     }
   };
 
+  /* ── Google OAuth ────────────────────────── */
+  const handleGoogleSignIn = async () => {
+    const isDummy =
+      process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") ||
+      !process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+    if (isDummy) {
+      setAuthError("Google sign-in requires Supabase configuration.");
+      return;
+    }
+    try {
+      const supabase = createClient();
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/account` },
+      });
+    } catch {
+      setAuthError("Google sign-in failed. Please try again.");
+    }
+  };
+
+  /* ── Clear auth error when user edits either field ── */
+  const clearAuthError = () => { if (authError) setAuthError(""); };
+
+  /* ── Computed border colours ─────────────── */
+  const emailBorder = emailError
+    ? T.errorRed
+    : emailFocused
+    ? T.dark
+    : T.border;
+
+  const pwBorder = pwError
+    ? T.errorRed
+    : pwFocused
+    ? T.dark
+    : T.border;
+
+  /* ═══════════════════════════════════════════
+     Render
+  ═══════════════════════════════════════════ */
   return (
-    <main className="flex-1 flex items-center justify-center px-4 py-16 bg-bg-warm dark:bg-zinc-950">
-      {/* BUG 15: Centered card layout, max-w-420px, white background, thin border */}
-      <div className="w-full max-w-[420px] bg-white dark:bg-zinc-900 border border-border-warm p-8 md:p-10 space-y-8">
-        {/* Header */}
-        <div className="space-y-4">
-          <Link href="/" className="inline-block">
-            <img
-              src="/logo.png"
-              alt="Ruven Studio Logo"
-              className="h-7 w-auto object-contain dark:hidden"
-            />
-            <img
-              src="/logo_white.png"
-              alt="Ruven Studio Logo"
-              className="h-7 w-auto object-contain hidden dark:block"
-            />
-          </Link>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-text-primary uppercase text-center">
-              {mode === "signin" ? "Welcome Back" : "Create Account"}
-            </h1>
-            <p className="text-xs text-text-muted text-center mt-1.5 leading-relaxed">
-              {mode === "signin"
-                ? "Sign in to access your Ruven Studio account."
-                : "Create your account to start shopping."}
+    <>
+      {/* Spinner keyframe — injected once */}
+      <style>{`
+        @keyframes ruven-spin {
+          to { transform: rotate(360deg); }
+        }
+        .ruven-spin {
+          animation: ruven-spin 0.7s linear infinite;
+        }
+        .back-link { color: ${T.muted}; transition: color 0.15s ease; }
+        .back-link:hover { color: ${T.dark}; }
+        .forgot-link { color: ${T.muted}; transition: color 0.15s ease; }
+        .forgot-link:hover { color: ${T.dark}; }
+        .google-btn { transition: background 0.15s ease, border-color 0.15s ease; }
+        .google-btn:hover { background: #F0EDE8 !important; border-color: #A8A49E !important; }
+        @media (max-width: 767px) {
+          .login-left-panel { display: none !important; }
+          .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
+          .login-inner { padding: 0 !important; }
+        }
+      `}</style>
+
+      <div style={{ display: "flex", flex: 1, overflow: "hidden", minHeight: 0 }}>
+
+        {/* ──────────────────────────────────────
+            LEFT EDITORIAL PANEL  (45%)
+        ────────────────────────────────────── */}
+        <div
+          className="login-left-panel"
+          style={{
+            width: "45%",
+            flexShrink: 0,
+            position: "relative",
+            overflow: "hidden",
+            background: "#2A2820",
+          }}
+        >
+          {/* Hero image */}
+          <img
+            src="/hero_lifestyle.png"
+            alt=""
+            aria-hidden="true"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "/brand_story_editorial.png";
+            }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+              display: "block",
+            }}
+          />
+
+          {/* Gradient overlay */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(26,24,19,0.90) 0%, rgba(26,24,19,0.35) 50%, rgba(26,24,19,0.10) 100%)",
+              zIndex: 1,
+            }}
+          />
+
+          {/* Scripture content block — bottom of panel */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "40px",
+              left: "32px",
+              right: "32px",
+              zIndex: 2,
+            }}
+          >
+            {/* Drop label */}
+            <p
+              style={{
+                fontSize: "10px",
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                color: "rgba(255,255,255,0.50)",
+                margin: "0 0 10px 0",
+              }}
+            >
+              Armor of Light Drop &apos;26
+            </p>
+
+            {/* Scripture quote */}
+            <blockquote
+              style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontSize: "15px",
+                fontStyle: "italic",
+                lineHeight: 1.65,
+                color: "rgba(255,255,255,0.92)",
+                margin: "0 0 8px 0",
+                padding: 0,
+                border: "none",
+              }}
+            >
+              &ldquo;Cast off the works of darkness and put on the armor of
+              light.&rdquo;
+            </blockquote>
+
+            {/* Scripture reference */}
+            <p
+              style={{
+                fontSize: "11px",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: "rgba(255,255,255,0.40)",
+                margin: 0,
+              }}
+            >
+              — Romans 13:12
             </p>
           </div>
         </div>
 
-        {/* Error message */}
-        {error && (
-          <div className="border-l-2 border-brand-burgundy bg-red-50/50 dark:bg-red-950/10 p-4 flex items-start gap-3 text-xs text-red-600 dark:text-red-400">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-            <span className="leading-relaxed">{error}</span>
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {mode === "signup" && (
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-                Full Name
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-                placeholder="Enter your full name"
-              />
-            </div>
-          )}
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-              placeholder="name@domain.com"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <div className="flex justify-between items-center">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-                Password
-              </label>
-              {mode === "signin" && (
-                <Link href="#" className="text-[9px] uppercase font-bold text-text-muted hover:text-brand-burgundy transition-colors tracking-wider">
-                  Forgot?
-                </Link>
-              )}
-            </div>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-              placeholder="••••••••"
-            />
-          </div>
-
-          {mode === "signin" && (
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-3.5 h-3.5 accent-brand-burgundy border-zinc-300 rounded-none"
-              />
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
-                Remember Me
-              </span>
-            </label>
-          )}
-
-          {/* Submit — matches PDP CTA style */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full h-[52px] bg-brand-burgundy hover:bg-brand-burgundy-light disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs font-bold uppercase tracking-widest rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-burgundy/10 active:scale-[0.99]"
+        {/* ──────────────────────────────────────
+            RIGHT FORM PANEL  (55%)
+        ────────────────────────────────────── */}
+        <div
+          className="login-right-panel"
+          style={{
+            flex: 1,
+            background: T.bgPage,
+            overflowY: "auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "40px 24px",
+          }}
+        >
+          {/* Inner content wrapper */}
+          <div
+            className="login-inner"
+            style={{
+              width: "100%",
+              maxWidth: "380px",
+              padding: "48px 40px",
+              background: T.bgPage,
+            }}
           >
-            <span>
-              {loading
-                ? (mode === "signin" ? "Authenticating..." : "Creating...")
-                : (mode === "signin" ? "Sign In" : "Create Account")}
-            </span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </form>
+            {/* ── Back to shop ───────────────── */}
+            <Link
+              href="/shop"
+              className="back-link"
+              tabIndex={0}
+              style={{
+                fontSize: "12px",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                cursor: "pointer",
+                marginBottom: "32px",
+                fontFamily: "inherit",
+              }}
+            >
+              ← Back to shop
+            </Link>
 
-        {/* Mode switcher */}
-        <div className="text-center">
-          {mode === "signin" ? (
-            <span className="text-xs text-text-muted">
-              Don&apos;t have an account?{" "}
+            {/* ── Page heading ───────────────── */}
+            <h1
+              style={{
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                fontSize: "28px",
+                fontWeight: 400,
+                color: T.dark,
+                letterSpacing: "-0.025em",
+                lineHeight: 1.2,
+                margin: "0 0 6px 0",
+              }}
+            >
+              Welcome back.
+            </h1>
+
+            {/* ── Sub-heading ────────────────── */}
+            <p
+              style={{
+                fontSize: "13px",
+                color: T.muted,
+                lineHeight: 1.5,
+                margin: "0 0 36px 0",
+              }}
+            >
+              Sign in to your Ruven Studio account.
+            </p>
+
+            {/* ══════════════════════════════════
+                FORM
+            ══════════════════════════════════ */}
+            <form onSubmit={handleSubmit} noValidate>
+
+              {/* ── Email field ────────────────── */}
+              <div style={{ marginBottom: "20px" }}>
+                <label htmlFor="login-email" style={labelSt}>
+                  Email address
+                </label>
+                <input
+                  id="login-email"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder="you@email.com"
+                  tabIndex={0}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) setEmailError("");
+                    clearAuthError();
+                  }}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
+                  aria-describedby="email-error"
+                  aria-invalid={emailError ? "true" : "false"}
+                  style={{ ...baseInput, borderColor: emailBorder }}
+                />
+                <span
+                  id="email-error"
+                  role="alert"
+                  style={{
+                    display: emailError ? "block" : "none",
+                    fontSize: "11px",
+                    color: T.errorRed,
+                    marginTop: "4px",
+                  }}
+                >
+                  {emailError}
+                </span>
+              </div>
+
+              {/* ── Password field ─────────────── */}
+              <div>
+                <label htmlFor="login-password" style={labelSt}>
+                  Password
+                </label>
+                <div style={{ position: "relative" }}>
+                  <input
+                    id="login-password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    autoComplete="current-password"
+                    placeholder="••••••••"
+                    tabIndex={0}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (pwError) setPwError("");
+                      clearAuthError();
+                    }}
+                    onFocus={() => setPwFocused(true)}
+                    onBlur={() => setPwFocused(false)}
+                    aria-describedby="password-error"
+                    aria-invalid={pwError ? "true" : "false"}
+                    style={{
+                      ...baseInput,
+                      paddingRight: "44px",
+                      borderColor: pwBorder,
+                    }}
+                  />
+                  {/* Eye toggle */}
+                  <button
+                    type="button"
+                    tabIndex={0}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword((v) => !v)}
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      color: T.muted,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {showPassword ? (
+                      <EyeOff size={16} />
+                    ) : (
+                      <Eye size={16} />
+                    )}
+                  </button>
+                </div>
+                <span
+                  id="password-error"
+                  role="alert"
+                  style={{
+                    display: pwError ? "block" : "none",
+                    fontSize: "11px",
+                    color: T.errorRed,
+                    marginTop: "4px",
+                  }}
+                >
+                  {pwError}
+                </span>
+              </div>
+
+              {/* ── Links row ──────────────────── */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                  marginBottom: "28px",
+                }}
+              >
+                {/* Remember me */}
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    cursor: "pointer",
+                    fontSize: "11px",
+                    color: "#666666",
+                    fontFamily: "inherit",
+                    userSelect: "none",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    tabIndex={0}
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    style={{ accentColor: T.dark, cursor: "pointer" }}
+                  />
+                  Remember me
+                </label>
+
+                {/* Forgot password */}
+                <Link
+                  href="/forgot-password"
+                  className="forgot-link"
+                  tabIndex={0}
+                  style={{
+                    fontSize: "11px",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
+              {/* ── Auth error banner (Type 3) ── */}
+              {authError && (
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  style={{
+                    background: T.errorBg,
+                    border: `1px solid ${T.errorBorder}`,
+                    borderRadius: 0,
+                    padding: "10px 14px",
+                    marginBottom: "16px",
+                    fontSize: "12px",
+                    color: T.errorText,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {authError}
+                </div>
+              )}
+
+              {/* ── Sign In button ─────────────── */}
+              <button
+                type="submit"
+                id="signin-btn"
+                tabIndex={0}
+                disabled={loading}
+                style={{
+                  background: T.dark,
+                  color: T.bgPage,
+                  borderRadius: 0,
+                  height: "44px",
+                  width: "100%",
+                  fontSize: "13px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  fontWeight: 500,
+                  border: "none",
+                  cursor: loading ? "not-allowed" : "pointer",
+                  opacity: loading ? 0.7 : 1,
+                  pointerEvents: loading ? "none" : "auto",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  marginBottom: "20px",
+                  fontFamily: "inherit",
+                  transition: "opacity 0.15s ease",
+                }}
+              >
+                {loading ? (
+                  <>
+                    <span
+                      className="ruven-spin"
+                      aria-hidden="true"
+                      style={{
+                        width: "14px",
+                        height: "14px",
+                        border: "1.5px solid rgba(245,243,238,0.35)",
+                        borderTopColor: T.bgPage,
+                        borderRadius: "50%",
+                        display: "inline-block",
+                        flexShrink: 0,
+                      }}
+                    />
+                    Signing in&hellip;
+                  </>
+                ) : (
+                  "Sign In"
+                )}
+              </button>
+
+              {/* ── OR divider ─────────────────── */}
+              <div
+                aria-hidden="true"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginBottom: "16px",
+                }}
+              >
+                <div style={{ flex: 1, height: "0.5px", background: T.border }} />
+                <span
+                  style={{
+                    fontSize: "10px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em",
+                    color: "#AAAAAA",
+                  }}
+                >
+                  or
+                </span>
+                <div style={{ flex: 1, height: "0.5px", background: T.border }} />
+              </div>
+
+              {/* ── Google button ──────────────── */}
               <button
                 type="button"
-                onClick={() => { setMode("signup"); setError(""); }}
-                className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
+                tabIndex={0}
+                className="google-btn"
+                onClick={handleGoogleSignIn}
+                style={{
+                  background: "transparent",
+                  border: `1px solid ${T.border}`,
+                  borderRadius: 0,
+                  height: "40px",
+                  width: "100%",
+                  fontSize: "12px",
+                  color: "#555555",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginBottom: "24px",
+                  fontFamily: "inherit",
+                }}
               >
-                Create Account
+                {/* Google G logo — inline SVG per spec */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    fill="#4285F4"
+                  />
+                  <path
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    fill="#34A853"
+                  />
+                  <path
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                    fill="#FBBC05"
+                  />
+                  <path
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                    fill="#EA4335"
+                  />
+                </svg>
+                Continue with Google
               </button>
-            </span>
-          ) : (
-            <span className="text-xs text-text-muted">
-              Already have an account?{" "}
-              <button
-                type="button"
-                onClick={() => { setMode("signin"); setError(""); }}
-                className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
-              >
-                Sign In
-              </button>
-            </span>
-          )}
-        </div>
 
-        {/* Sandbox testing box */}
-        {isDev && mode === "signin" && (
-          <div className="bg-bg-card dark:bg-zinc-900/60 p-5 border border-zinc-200 dark:border-zinc-800 space-y-3 text-[10px] text-text-muted leading-relaxed">
-            <span className="font-bold text-text-primary uppercase tracking-wider block">
-              Local Sandbox Testing Profiles:
-            </span>
-            <div className="space-y-2">
-              <div>
-                <span className="font-semibold text-brand-burgundy uppercase block tracking-wider text-[9px] mb-0.5">• Admin OS Access:</span>
-                <span>email: <strong className="text-text-primary">admin@ruven.in</strong> / pass: <strong className="text-text-primary">admin123</strong></span>
-              </div>
-              <div>
-                <span className="font-semibold text-zinc-500 dark:text-zinc-400 uppercase block tracking-wider text-[9px] mb-0.5">• Customer Storefront Access:</span>
-                <span>email: <strong className="text-text-primary">customer@ruven.in</strong> / pass: <strong className="text-text-primary">customer123</strong></span>
-              </div>
-            </div>
+              {/* ── Create account link ────────── */}
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "12px",
+                  color: T.muted,
+                  margin: 0,
+                  fontFamily: "inherit",
+                }}
+              >
+                Don&apos;t have an account?
+                <Link
+                  href="/register"
+                  tabIndex={0}
+                  style={{
+                    color: T.dark,
+                    fontWeight: 500,
+                    textDecoration: "underline",
+                    marginLeft: "4px",
+                  }}
+                >
+                  Create account
+                </Link>
+              </p>
+
+              {/* ── Dev sandbox (localhost only) ─ */}
+              {isDev && (
+                <div
+                  style={{
+                    marginTop: "32px",
+                    background: "#EEEAE3",
+                    border: `1px solid #D9D5CE`,
+                    padding: "14px 16px",
+                    fontSize: "10px",
+                    color: "#666",
+                    lineHeight: 1.7,
+                    borderRadius: 0,
+                  }}
+                >
+                  <strong
+                    style={{
+                      display: "block",
+                      marginBottom: "8px",
+                      color: "#333",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      fontSize: "9px",
+                    }}
+                  >
+                    Sandbox Credentials
+                  </strong>
+                  <div>
+                    Admin:{" "}
+                    <strong style={{ color: T.dark }}>admin@ruven.in</strong>
+                    {" / "}
+                    <strong style={{ color: T.dark }}>admin123</strong>
+                  </div>
+                  <div>
+                    Customer:{" "}
+                    <strong style={{ color: T.dark }}>customer@ruven.in</strong>
+                    {" / "}
+                    <strong style={{ color: T.dark }}>customer123</strong>
+                  </div>
+                </div>
+              )}
+            </form>
           </div>
-        )}
+        </div>
       </div>
-    </main>
+    </>
   );
 }
 
+/* ─────────────────────────────────────────────
+   Page Root — CartProvider + Header + Form
+   No Footer per spec.
+───────────────────────────────────────────── */
 export default function LoginPage() {
-  // BUG 15: Wrap in CartProvider so Header/Footer can access cart context
   return (
     <CartProvider>
-      <div className="flex flex-col min-h-screen bg-bg-warm dark:bg-zinc-950 font-sans text-text-primary">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          background: "#F5F3EE",
+          overflowX: "hidden",
+        }}
+      >
+        {/* Full site Navbar — identical to every other storefront page */}
         <Header />
-        <LoginForm />
-        <Footer />
+
+        {/* Body fills exactly remaining viewport height */}
+        <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+          <LoginForm />
+        </div>
       </div>
     </CartProvider>
   );
