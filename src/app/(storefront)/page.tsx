@@ -84,15 +84,35 @@ export default function StorefrontHomePage() {
   const mission = getSection("editorial-mission");
   const showMission = mission ? mission.is_active : true;
   const missionSettings = mission?.settings || {
-    subtitle: "our purpose",
-    title: "Formed in Faith. Tailored for Purpose.",
-    paragraph: "Ruven Studio is an independent Christian lifestyle label creating heavy-weight apparel designed to start quiet, meaningful conversations. We construct each garment to serve as a visual bridge, allowing you to carry your faith with elegance and confidence in modern creative environments.",
-    quote_text: "We don't create clothing to conform; we design to transform.",
+    subtitle: "our story",
+    title: "Every Garment Begins With Scripture",
+    paragraph: "We believe clothing can quietly start meaningful conversations. Every piece is constructed to serve as a physical canvas for biblical truths—minimalist, premium, and designed to carry faith with confidence in modern creative environments.",
+    quote_text: "We believe clothing can quietly start meaningful conversations.",
     quote_author: "The Ruven Collective",
     verse_quote: "Do not be conformed to this world, but be transformed by the renewal of your mind...",
     verse_ref: "Romans 12:2",
-    image_url: "/brand_story_lifestyle.png"
+    image_url: "/brand_story_editorial.png"
   };
+
+  const rawTitle = missionSettings.title || "";
+  const displayTitle = (rawTitle === "Formed in Faith. Tailored for Purpose." || !rawTitle)
+    ? "Every Garment Begins With Scripture"
+    : rawTitle;
+
+  const rawParagraph = missionSettings.paragraph || "";
+  const displayParagraph = (rawParagraph.includes("Ruven Studio is an independent") || !rawParagraph)
+    ? "We believe clothing can quietly start meaningful conversations. Every piece is constructed to serve as a physical canvas for biblical truths—minimalist, premium, and designed to carry faith with confidence in modern creative environments."
+    : rawParagraph;
+
+  const rawQuote = missionSettings.quote_text || "";
+  const displayQuote = (rawQuote.includes("conform") || !rawQuote)
+    ? "We believe clothing can quietly start meaningful conversations."
+    : rawQuote;
+
+  const rawImg = missionSettings.image_url || "";
+  const displayImg = (rawImg.includes("lifestyle") || !rawImg)
+    ? "/brand_story_editorial.png"
+    : rawImg;
 
   // Featured Campaign variables
   const featuredCampaignSection = getSection("featured-campaign");
@@ -268,27 +288,82 @@ export default function StorefrontHomePage() {
         return showMission && (
           <section key="editorial-mission" className="editorial-mission section-padding-lg" id="story-section">
             <div className="editorial-mission-grid">
-              <div className="mission-text-col">
-                <span className="section-subtitle-lowercase">{missionSettings.subtitle}</span>
-                <h2 className="editorial-headline-large" dangerouslySetInnerHTML={{ __html: missionSettings.title.replace(/\n/g, '<br />') }} />
-                <p className="mission-paragraph">
-                  {missionSettings.paragraph}
-                </p>
-                <div className="mission-quote-box">
-                  <span className="quote-sign">“</span>
-                  <p className="mission-quote-text">{missionSettings.quote_text}</p>
-                  <p className="mission-quote-author">{missionSettings.quote_author}</p>
-                </div>
-                <div className="mission-verse-accent">
+              <motion.div 
+                className="mission-text-col"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-120px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span className="section-subtitle-lowercase">{missionSettings.subtitle === "our purpose" ? "our story" : missionSettings.subtitle}</span>
+                <motion.h2 
+                  className="editorial-headline-large" 
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  dangerouslySetInnerHTML={{ __html: displayTitle.replace(/\n/g, '<br />') }} 
+                />
+                <motion.p 
+                  className="mission-paragraph"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {displayParagraph}
+                </motion.p>
+                
+                <motion.div 
+                  className="mission-quote-box"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <p className="mission-quote-text">
+                    "{displayQuote}"
+                  </p>
+                </motion.div>
+                
+                <motion.div 
+                  className="mission-verse-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                >
                   <p className="mission-verse-quote">"{missionSettings.verse_quote}"</p>
-                  <p className="mission-verse-ref">{missionSettings.verse_ref}</p>
-                </div>
-              </div>
-              <div className="mission-image-col">
+                  <span className="mission-verse-ref">{missionSettings.verse_ref}</span>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  <Link href="/shop" className="mission-cta">
+                    Discover Our Mission <span className="cta-arrow">→</span>
+                  </Link>
+                </motion.div>
+              </motion.div>
+              
+              <motion.div 
+                className="mission-image-col"
+                initial={{ opacity: 0, scale: 0.98 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-120px" }}
+                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <div className="mission-image-wrap">
-                  <img src={missionSettings.image_url} alt="Ruven Studio Craftsmanship and Story" className="mission-img" />
+                  <img 
+                    src={displayImg} 
+                    alt="Ruven Studio Story Editorial" 
+                    className="mission-img" 
+                  />
                 </div>
-              </div>
+              </motion.div>
             </div>
           </section>
         );

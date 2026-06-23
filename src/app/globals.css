@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -51,9 +52,12 @@
 
   /* Custom Brand Colors */
   --color-bg-warm: var(--bg-warm);
+  --color-bg-secondary: var(--bg-secondary);
   --color-bg-card: var(--bg-card);
   --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-text-light-muted: var(--text-light-muted);
   --color-brand-burgundy: var(--brand-burgundy);
   --color-brand-burgundy-light: var(--brand-burgundy-light);
   --color-brand-gold: var(--brand-gold);
@@ -96,15 +100,18 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Brand Colors Light */
-  --bg-warm: #FAF9F6;
-  --bg-card: #F4F2EB;
-  --text-primary: #1C1C1C;
-  --text-muted: #6B6862;
+  --bg-warm: #FFFFFF;
+  --bg-secondary: #FCFCFC;
+  --bg-card: #F8F8F8;
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --text-muted: #666666;
+  --text-light-muted: #8A8A8A;
   --brand-burgundy: #670000;
   --brand-burgundy-light: #8E1B1B;
   --brand-gold: #C09A6B;
   --brand-sage: #5B6B5A;
-  --border-warm: #E8E5DD;
+  --border-warm: #ECECEC;
 }
 
 .dark {
@@ -142,9 +149,12 @@
 
   /* Brand Colors Dark */
   --bg-warm: #121212;
-  --bg-card: #1A1A1A;
-  --text-primary: #FAF9F6;
-  --text-muted: #A09E98;
+  --bg-secondary: #181818;
+  --bg-card: #202020;
+  --text-primary: #ECECEC;
+  --text-secondary: #A0A0A0;
+  --text-muted: #8A8A8A;
+  --text-light-muted: #707070;
   --brand-burgundy: #B33A3A;
   --brand-burgundy-light: #C94C4C;
   --brand-gold: #D4AF37;

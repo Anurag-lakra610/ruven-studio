@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+/* Google Fonts imported in globals.css */
 
 /* ==========================================================================
    Ruven Studio Design System - CSS stylesheet
@@ -9,12 +9,14 @@
 
 :root {
   /* Harmonious Color Palette */
-  --color-bg-warm: #FAF9F6;          /* Clean warm linen/cream */
-  --color-bg-card: #F4F2EB;          /* Slightly deeper warm cream for cards */
+  --color-bg-warm: #FFFFFF;          /* Pure White canvas */
+  --color-bg-secondary: #FCFCFC;     /* Very Soft White */
+  --color-bg-card: #F8F8F8;          /* Card Surface */
   --color-bg-primary: var(--color-bg-warm);   /* Primary background */
-  --color-bg-secondary: var(--color-bg-card); /* Secondary background */
-  --color-text-primary: #1C1C1C;     /* Charcoal/off-black for premium look */
-  --color-text-muted: #6B6862;       /* Subdued grayish-brown body/caption */
+  --color-text-primary: #111111;     /* Primary text */
+  --color-text-secondary: #666666;   /* Secondary text */
+  --color-text-muted: #666666;       /* Muted text */
+  --color-text-light-muted: #8A8A8A; /* Light muted text */
   
   /* Brand Accent Colors */
   --color-brand-burgundy: #670000;   /* Deep rich burgundy - the core faith accent */
@@ -22,8 +24,8 @@
   --color-brand-gold: #C09A6B;       /* Secondary premium metal tone */
   --color-brand-sage: #5B6B5A;       /* Peaceful tertiary nature tone */
   --color-white: #FFFFFF;
-  --color-border: #E8E5DD;           /* Subtle linen border */
-  --color-overlay: rgba(28, 28, 28, 0.4);
+  --color-border: #ECECEC;           /* Subtle grey border */
+  --color-overlay: rgba(17, 17, 17, 0.4);
   
   /* Typography Variables */
   --font-editorial: 'DM Sans', sans-serif;
@@ -2511,7 +2513,7 @@ h1, h2, h3, h4, h5, h6 {
    13. Redesigned Homepage Editorial Sections (Phase 3)
    ========================================================================== */
 .section-padding-lg {
-  padding: var(--spacing-3xl) var(--spacing-2xl);
+  padding: 9.5rem var(--spacing-2xl); /* 152px vertical spacing */
 }
 
 /* Reveal on Scroll */
@@ -2528,7 +2530,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Section 1: Trust Strip V2 */
 .trust-strip-v2 {
-  background-color: var(--color-bg-card);
+  background-color: var(--color-bg-secondary);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) var(--spacing-2xl);
   overflow-x: auto;
@@ -2573,7 +2575,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .editorial-mission-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 0.95fr 1.05fr;
   gap: var(--spacing-3xl);
   max-width: var(--max-width-site);
   margin: 0 auto;
@@ -2642,27 +2644,63 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 4px;
 }
 
-.mission-verse-accent {
-  background-color: var(--color-bg-card);
-  padding: var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+.mission-verse-card {
+  background-color: var(--color-bg-warm);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
   max-width: 500px;
+  box-shadow: var(--shadow-subtle);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.mission-verse-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-premium);
 }
 
 .mission-verse-quote {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--color-text-primary);
+  font-family: var(--font-editorial);
 }
 
 .mission-verse-ref {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
-  margin-top: 4px;
+  color: var(--color-brand-burgundy);
+  margin-top: 6px;
+  display: block;
+}
+
+.mission-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-brand-burgundy);
+  margin-top: var(--spacing-sm);
+  transition: color var(--transition-fast);
+}
+
+.mission-cta:hover {
+  color: var(--color-brand-burgundy-light);
+}
+
+.mission-cta .cta-arrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.mission-cta:hover .cta-arrow {
+  transform: translateX(4px);
 }
 
 .mission-image-col {
@@ -2672,7 +2710,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .mission-image-wrap {
   width: 100%;
-  max-width: 480px;
+  max-width: 600px;
   aspect-ratio: 4/5;
   overflow: hidden;
   border-radius: var(--border-radius-md);
@@ -3126,7 +3164,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Section 5: Scripture Highlight */
 .scripture-highlight {
-  background-color: var(--color-bg-card);
+  background-color: var(--color-bg-warm);
   border-bottom: 1px solid var(--color-border);
   text-align: center;
 }
@@ -3451,7 +3489,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Section 7: Why Choose Ruven */
 .why-ruven {
-  background-color: var(--color-bg-card);
+  background-color: var(--color-bg-warm);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -3469,7 +3507,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .feature-card {
-  background: var(--color-bg-warm);
+  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   padding: var(--spacing-lg);
   border-radius: var(--border-radius-md);
@@ -3594,7 +3632,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Section 9: Instagram Social Wall */
 .instagram-gallery {
-  background-color: var(--color-bg-card);
+  background-color: var(--color-bg-warm);
   border-bottom: 1px solid var(--color-border);
 }
 
