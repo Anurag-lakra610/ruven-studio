@@ -1,145 +1,163 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, ArrowRight, Check } from "lucide-react";
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    // Simulate API call
+    setTimeout(() => {
+      setSubscribed(true);
+      setEmail("");
+      alert("Subscription successful! Welcome to the Ruven Studio fellowship.");
+    }, 400);
+  };
+
   return (
-    <footer className="bg-bg-card dark:bg-zinc-900 border-t border-border-warm py-16 px-6 md:px-12 mt-auto" id="site-footer">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        {/* Brand Information */}
-        <div className="space-y-4">
-          <Image
-            src="/logo.png"
-            alt="Ruven Studio Logo"
-            width={100}
-            height={42}
-            className="h-[45px] w-auto object-contain dark:invert mix-blend-multiply dark:mix-blend-normal"
-          />
-          <p className="text-xs text-text-muted leading-relaxed">
-            Ruven Studio is an independent fashion label constructed to construct conversations about Christ, faith, and grace in modern creative environments.
+    <>
+      {/* SECTION: Newsletter (Red invitation strip) */}
+      <section className="newsletter-section-v2 section-padding-lg" id="newsletter-section">
+        <div className="newsletter-container">
+          <span className="newsletter-subtitle">studio invitation</span>
+          <h2>Join a Community That Wears Its Faith.</h2>
+          <p className="newsletter-description">
+            Ruven Studio is more than apparel. It is a fellowship. Subscribe to receive monthly reflections on scripture, behind-the-scenes design diary insights, and exclusive early access to our limited batches.
           </p>
-          <div className="flex gap-4">
-            <a
-              href="https://instagram.com/ruven.studio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-primary hover:text-brand-burgundy transition-colors"
-              aria-label="Instagram"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
-            </a>
-            <a
-              href="https://facebook.com/ruven.studio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-primary hover:text-brand-burgundy transition-colors"
-              aria-label="Facebook"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-text-primary mb-4">Collections</h4>
-          <ul className="space-y-2.5 text-xs text-text-muted">
-            <li>
-              <Link href="/shop" className="hover:text-brand-burgundy transition-colors">Shop All Drops</Link>
-            </li>
-            <li>
-              <Link href="/shop?category=oversized-tees" className="hover:text-brand-burgundy transition-colors">Oversized Tees</Link>
-            </li>
-            <li>
-              <Link href="/shop?category=hoodies" className="hover:text-brand-burgundy transition-colors">French Terry Hoodies</Link>
-            </li>
-            <li>
-              <Link href="/shop?filter=new-arrivals" className="hover:text-brand-burgundy transition-colors">New Releases</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Brand Story & Support */}
-        <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-text-primary mb-4">Journal & Story</h4>
-          <ul className="space-y-2.5 text-xs text-text-muted">
-            <li>
-              <Link href="/#story-section" className="hover:text-brand-burgundy transition-colors">Our Story & Mission</Link>
-            </li>
-            <li>
-              <Link href="/#community-section" className="hover:text-brand-burgundy transition-colors">Community Wall</Link>
-            </li>
-            <li>
-              <Link href="/journal/the-armor-of-light" className="hover:text-brand-burgundy transition-colors">Weekly Devotional</Link>
-            </li>
-            <li>
-              <Link href="/account" className="hover:text-brand-burgundy transition-colors">My Profile & Orders</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Newsletter & Contact */}
-        <div className="space-y-4">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-text-primary">Contact & Journal</h4>
-          <p className="text-xs text-text-muted">
-            Subscribe to receive alerts for limited product drop dates, devotionals, and early access codes.
-          </p>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="flex items-center border border-border-warm rounded bg-white dark:bg-zinc-950 p-1"
-          >
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 text-xs px-2 py-1.5 bg-transparent border-none focus:outline-none"
-              required
-            />
-            <button
-              type="submit"
-              className="p-1.5 bg-brand-burgundy hover:bg-brand-gold text-white rounded transition-colors"
-              aria-label="Subscribe"
-            >
-              <Send className="w-3.5 h-3.5" />
-            </button>
+          
+          <form className="newsletter-form-v2" onSubmit={handleSubscribe}>
+            <div className="newsletter-input-group">
+              <input 
+                type="email" 
+                placeholder="Enter your email address" 
+                aria-label="Email Address" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="newsletter-input-field"
+              />
+              <button type="submit" className="newsletter-submit-btn-solid">
+                <span>{subscribed ? "Subscribed" : "Subscribe"}</span>
+                <span className="btn-icon">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </button>
+            </div>
           </form>
-          <div className="space-y-1.5 pt-2 text-[11px] text-text-muted">
-            <div className="flex items-center gap-2">
-              <Mail className="w-3.5 h-3.5 text-brand-gold" />
-              <span>fellowship@ruvenstudio.in</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-brand-gold" />
-              <span>Tiruppur, Tamil Nadu, India</span>
-            </div>
+          
+          <div className="newsletter-benefits">
+            <span className="benefit-tag">
+              <Check className="w-3 h-3 text-[var(--color-brand-gold)] inline-block mr-1 align-middle" /> 
+              <span className="align-middle">Early Access</span>
+            </span>
+            <span className="benefit-tag">
+              <Check className="w-3 h-3 text-[var(--color-brand-gold)] inline-block mr-1 align-middle" /> 
+              <span className="align-middle">Scriptural Devotionals</span>
+            </span>
+            <span className="benefit-tag">
+              <Check className="w-3 h-3 text-[var(--color-brand-gold)] inline-block mr-1 align-middle" /> 
+              <span className="align-middle">Limited Drops</span>
+            </span>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer Bottom */}
-      <div className="max-w-[1400px] mx-auto border-t border-border-warm mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-text-muted">
-        <div>
-          <span>© {new Date().getFullYear()} Ruven Studio. Made with purpose for the glory of Christ.</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <span>Secure payments via Razorpay</span>
-          <div className="flex items-center gap-2 grayscale opacity-70">
-            {/* Mock Credit Card UPI icons */}
-            <span className="border border-border-warm px-1.5 py-0.5 rounded font-mono text-[8px]">UPI</span>
-            <span className="border border-border-warm px-1.5 py-0.5 rounded font-mono text-[8px]">VISA</span>
-            <span className="border border-border-warm px-1.5 py-0.5 rounded font-mono text-[8px]">MC</span>
-            <span className="border border-border-warm px-1.5 py-0.5 rounded font-mono text-[8px]">NET</span>
+      {/* FOOTER: Dark Sitemap Grid */}
+      <footer className="footer-v2" id="site-footer">
+        <div className="footer-grid-v2">
+          {/* Column 1: Brand Info & Socials */}
+          <div className="footer-brand-v2">
+            <Link href="/" className="brand-logo" style={{ marginBottom: "var(--spacing-sm)", display: "inline-block", width: "max-content" }}>
+              <img 
+                src="/logo_white.png" 
+                alt="Ruven Studio Label Logo" 
+                style={{ height: "60px", width: "auto", objectFit: "contain", display: "block" }} 
+              />
+            </Link>
+            <p className="footer-statement-v2">
+              An independent Christian lifestyle fashion label crafting heavy-weight apparel designed to start quiet, meaningful conversations about faith, renewal, and identity.
+            </p>
+            <div className="footer-social-row">
+              <a href="https://instagram.com/ruven.studio" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg className="footer-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://facebook.com/ruven.studio" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg className="footer-social-icon" viewBox="0 0 320 512" fill="currentColor">
+                  <path d="M80 299.3V256H12v-54.7h68v-39.7c0-67.3 41.1-104 101.2-104 28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.7 0-39 15.5-39 38.3V201.3h78.2l-10.2 54.7H161v198H80z"/>
+                </svg>
+              </a>
+              <a href="https://wa.me/message" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Group">
+                <svg className="footer-social-icon" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                </svg>
+              </a>
+            </div>
+            <div className="footer-contact-details">
+              <div className="footer-contact-item">
+                <Mail className="footer-contact-icon w-3.5 h-3.5" />
+                <a href="mailto:hello@ruvenstudio.in">hello@ruvenstudio.in</a>
+              </div>
+              <div className="footer-contact-item">
+                <Phone className="footer-contact-icon w-3.5 h-3.5" />
+                <a href="tel:+919876543210">+91 98765 43210</a>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Studio Collections */}
+          <div className="footer-links-col-v2">
+            <h4>Studio Collections</h4>
+            <ul>
+              <li><Link href="/shop?category=oversized-tees">Oversized T-Shirts</Link></li>
+              <li><Link href="/shop?category=hoodies">French Terry Hoodies</Link></li>
+              <li><Link href="/shop?filter=new-arrivals">Armor of Light Drop</Link></li>
+              <li><Link href="/shop?filter=best-sellers">Best Sellers</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Fellowship & Mission */}
+          <div className="footer-links-col-v2">
+            <h4>Fellowship & Mission</h4>
+            <ul>
+              <li><Link href="/admin/community">The Prayer Wall</Link></li>
+              <li><Link href="/journal/the-armor-of-light">Weekly Faith Devotionals</Link></li>
+              <li><Link href="/#story-section">Our Mission Statement</Link></li>
+              <li><Link href="/admin/community">Campus Ministries</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Client Services */}
+          <div className="footer-links-col-v2">
+            <h4>Client Services</h4>
+            <ul>
+              <li><Link href="/#faq-section">Sizing Guidelines</Link></li>
+              <li><Link href="/#faq-section">7-Day Exchanges</Link></li>
+              <li><Link href="/#faq-section">Support & Contact</Link></li>
+              <li><Link href="/account">Privacy Policy</Link></li>
+            </ul>
           </div>
         </div>
-      </div>
-    </footer>
+
+        {/* Bottom bar */}
+        <div className="footer-bottom-v2">
+          <p>&copy; {new Date().getFullYear()} Ruven Studio. Crafted with purpose in India.</p>
+          <div className="footer-bottom-links-v2">
+            <Link href="/account">Privacy Policy</Link>
+            <span className="footer-separator">•</span>
+            <Link href="/account">Terms of Service</Link>
+          </div>
+        </div>
+      </footer>
+    </>
   );
 };
