@@ -34,10 +34,9 @@ export async function updateSession(request: NextRequest) {
 
   // Protected Admin Routes Check
   if (request.nextUrl.pathname.startsWith('/admin') && !user) {
-    const isDummy = process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('dummy') || !process.env.NEXT_PUBLIC_SUPABASE_URL;
     const mockAdminCookie = request.cookies.get('mock_admin_session');
     
-    if (isDummy && mockAdminCookie?.value === 'true') {
+    if (mockAdminCookie?.value === 'true') {
       return supabaseResponse
     }
 
