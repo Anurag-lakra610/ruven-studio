@@ -342,8 +342,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .announcement-track {
   display: flex;
+  align-items: center;
   width: max-content;
-  animation: announcementMarquee 20s linear infinite;
+  /* No gap here — spacing is baked into each content block via padding-inline */
+  animation: announcementMarquee 28s linear infinite;
+  will-change: transform;
 }
 
 .announcement-bar:hover .announcement-track {
@@ -353,9 +356,15 @@ h1, h2, h3, h4, h5, h6 {
 .announcement-content {
   display: flex;
   align-items: center;
-  gap: 3rem;
-  padding-right: 3rem;
+  gap: 2.5rem;
+  /* Both copies must be identical width.
+     padding-inline-end creates the same amount of space
+     at the tail of EACH copy so the gap between end of
+     copy-1 and start of copy-2 equals the gap between
+     any two items inside a copy. */
+  padding-inline-end: 2.5rem;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .announcement-content span {
@@ -366,20 +375,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .announcement-cross {
-  width: 13px;
-  height: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  width: 12px;
+  height: 12px;
+  color: rgba(255, 255, 255, 0.55);
   flex-shrink: 0;
-  opacity: 0.95;
 }
 
 @keyframes announcementMarquee {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .header {

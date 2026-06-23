@@ -288,27 +288,33 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      {/* Announcement Bar — BUG 10: reduced to 2 copies for -50% seamless marquee */}
+      {/* Announcement Bar — 2 identical copies, -50% translate = seamless infinite loop */}
       <div className="announcement-bar">
         <div className="announcement-track">
+
+          {/* Copy 1 */}
           <div className="announcement-content">
             <span>Designed to Start Conversations About Christ</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Premium Quality • Faith Inspired • Limited Collections</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <span>Premium Quality&nbsp;&bull;&nbsp;Faith Inspired&nbsp;&bull;&nbsp;Limited Collections</span>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
             <span>Made with Purpose</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
           </div>
+
+          {/* Copy 2 — aria-hidden so screen readers only see copy 1 */}
           <div className="announcement-content" aria-hidden="true">
             <span>Designed to Start Conversations About Christ</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Premium Quality • Faith Inspired • Limited Collections</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <span>Premium Quality&nbsp;&bull;&nbsp;Faith Inspired&nbsp;&bull;&nbsp;Limited Collections</span>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
             <span>Made with Purpose</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
+            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
           </div>
+
         </div>
       </div>
+
 
       {/* Main Header */}
       <header className="header" id="site-header">
