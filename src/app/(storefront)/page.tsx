@@ -84,11 +84,11 @@ export default function StorefrontHomePage() {
   const mission = getSection("editorial-mission");
   const showMission = mission ? mission.is_active : true;
   const missionSettings = mission?.settings || {
-    subtitle: "our story",
+    subtitle: "THE RUVEN STORY",
     title: "Every Garment Begins With Scripture",
-    paragraph: "We believe clothing can quietly start meaningful conversations. Every piece is constructed to serve as a physical canvas for biblical truths—minimalist, premium, and designed to carry faith with confidence in modern creative environments.",
-    quote_text: "We believe clothing can quietly start meaningful conversations.",
-    quote_author: "The Ruven Collective",
+    paragraph: "We started Ruven Studio because we wanted clothing that carried our faith without compromising on design. Every garment is crafted from heavy, custom milled fabrics, built for daily wear, and designed to start quiet conversations. For us, scripture is not a print. It is a way of life.",
+    quote_text: "",
+    quote_author: "",
     verse_quote: "Do not be conformed to this world, but be transformed by the renewal of your mind...",
     verse_ref: "Romans 12:2",
     image_url: "/brand_story_editorial.png"
@@ -100,8 +100,8 @@ export default function StorefrontHomePage() {
     : rawTitle;
 
   const rawParagraph = missionSettings.paragraph || "";
-  const displayParagraph = (rawParagraph.includes("Ruven Studio is an independent") || !rawParagraph)
-    ? "We believe clothing can quietly start meaningful conversations. Every piece is constructed to serve as a physical canvas for biblical truths—minimalist, premium, and designed to carry faith with confidence in modern creative environments."
+  const displayParagraph = (rawParagraph.includes("Ruven Studio is") || rawParagraph.includes("We believe clothing") || !rawParagraph)
+    ? "We started Ruven Studio because we wanted clothing that carried our faith without compromising on design. Every garment is crafted from heavy, custom milled fabrics, built for daily wear, and designed to start quiet conversations. For us, scripture is not a print. It is a way of life."
     : rawParagraph;
 
   const rawQuote = missionSettings.quote_text || "";
@@ -295,7 +295,13 @@ export default function StorefrontHomePage() {
                 viewport={{ once: true, margin: "-120px" }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="section-subtitle-lowercase">{missionSettings.subtitle === "our purpose" ? "our story" : missionSettings.subtitle}</span>
+                <div className="mission-label-wrap">
+                  <span className="mission-label">
+                    {missionSettings.subtitle === "our story" || missionSettings.subtitle === "our purpose" ? "THE RUVEN STORY" : missionSettings.subtitle.toUpperCase()}
+                  </span>
+                  <div className="mission-label-line" />
+                </div>
+                
                 <motion.h2 
                   className="editorial-headline-large" 
                   initial={{ opacity: 0, y: 15 }}
@@ -304,6 +310,7 @@ export default function StorefrontHomePage() {
                   transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                   dangerouslySetInnerHTML={{ __html: displayTitle.replace(/\n/g, '<br />') }} 
                 />
+                
                 <motion.p 
                   className="mission-paragraph"
                   initial={{ opacity: 0, y: 15 }}
@@ -315,36 +322,28 @@ export default function StorefrontHomePage() {
                 </motion.p>
                 
                 <motion.div 
-                  className="mission-quote-box"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <p className="mission-quote-text">
-                    "{displayQuote}"
-                  </p>
-                </motion.div>
-                
-                <motion.div 
                   className="mission-verse-card"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
+                  <div className="verse-card-accent-line" />
+                  <div className="verse-card-header">
+                    <Feather className="verse-card-icon" />
+                    <span className="mission-verse-ref">{missionSettings.verse_ref}</span>
+                  </div>
                   <p className="mission-verse-quote">"{missionSettings.verse_quote}"</p>
-                  <span className="mission-verse-ref">{missionSettings.verse_ref}</span>
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  <Link href="/shop" className="mission-cta">
-                    Discover Our Mission <span className="cta-arrow">→</span>
+                  <Link href="/shop" className="mission-cta-btn">
+                    SHOP THE COLLECTION
                   </Link>
                 </motion.div>
               </motion.div>

@@ -2575,7 +2575,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .editorial-mission-grid {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: 0.9fr 1.1fr; /* 45% content / 55% photography */
   gap: var(--spacing-3xl);
   max-width: var(--max-width-site);
   margin: 0 auto;
@@ -2585,15 +2585,29 @@ h1, h2, h3, h4, h5, h6 {
 .mission-text-col {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md); /* Increased breathing room */
 }
 
-.section-subtitle-lowercase {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: lowercase;
-  letter-spacing: 0.12em;
-  color: var(--color-brand-gold);
+/* Label styling */
+.mission-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.mission-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+}
+
+.mission-label-line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--color-border);
 }
 
 .editorial-headline-large {
@@ -2611,56 +2625,50 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 540px;
 }
 
-.mission-quote-box {
-  position: relative;
-  border-left: 2px solid var(--color-brand-burgundy);
-  padding-left: var(--spacing-md);
-  margin: var(--spacing-xs) 0;
-}
-
-.quote-sign {
-  position: absolute;
-  left: var(--spacing-md);
-  top: -15px;
-  font-size: 3rem;
-  opacity: 0.1;
-  font-family: serif;
-  color: var(--color-brand-burgundy);
-}
-
-.mission-quote-text {
-  font-size: 1.15rem;
-  font-style: italic;
-  font-weight: 500;
-  color: var(--color-brand-burgundy);
-  line-height: 1.5;
-}
-
-.mission-quote-author {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  margin-top: 4px;
-}
-
+/* Redesigned minimal editorial collectible scripture card */
 .mission-verse-card {
-  background-color: var(--color-bg-warm);
-  border: 1px solid var(--color-border);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--border-radius-md);
+  position: relative;
+  background-color: var(--color-bg-secondary); /* Soft white surface */
+  border: 1px solid var(--color-border); /* Thin neutral border */
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) calc(var(--spacing-lg) + 12px); /* Large internal padding */
+  border-radius: 0px; /* Sharp corners, no rounded radius */
   max-width: 500px;
-  box-shadow: var(--shadow-subtle);
-  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  box-shadow: none; /* No heavy shadows */
+  transition: transform var(--transition-medium), border-color var(--transition-medium);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .mission-verse-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-premium);
+  border-color: var(--color-text-muted);
+}
+
+.verse-card-accent-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-brand-burgundy); /* Ruven Burgundy accent line */
+}
+
+.verse-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-brand-burgundy);
+}
+
+.verse-card-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .mission-verse-quote {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-style: italic;
   line-height: 1.65;
   color: var(--color-text-primary);
@@ -2673,34 +2681,33 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-brand-burgundy);
-  margin-top: 6px;
+  margin-top: var(--spacing-xs);
   display: block;
 }
 
-.mission-cta {
+/* Premium editorial sharp CTA button */
+.mission-cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.82rem;
+  justify-content: center;
+  height: 50px;
+  padding: 0 var(--spacing-xl);
+  border: 1px solid var(--color-brand-burgundy);
+  background-color: transparent;
+  color: var(--color-brand-burgundy);
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-brand-burgundy);
-  margin-top: var(--spacing-sm);
-  transition: color var(--transition-fast);
+  letter-spacing: 0.15em;
+  border-radius: 0px; /* Sharp corners */
+  transition: background-color 200ms ease, color 200ms ease;
+  cursor: pointer;
+  width: fit-content;
 }
 
-.mission-cta:hover {
-  color: var(--color-brand-burgundy-light);
-}
-
-.mission-cta .cta-arrow {
-  display: inline-block;
-  transition: transform var(--transition-fast);
-}
-
-.mission-cta:hover .cta-arrow {
-  transform: translateX(4px);
+.mission-cta-btn:hover {
+  background-color: var(--color-brand-burgundy);
+  color: #FFFFFF; /* White text on hover */
 }
 
 .mission-image-col {
