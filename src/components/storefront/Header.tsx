@@ -48,6 +48,17 @@ export const Header: React.FC = () => {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [allProducts, setAllProducts] = useState<MockProduct[]>([]);
   const [allDevotionals, setAllDevotionals] = useState<MockDevotional[]>([]);
+  // BUG 3: Menu product prices — loaded on mount for dynamic display
+  const [menuProducts, setMenuProducts] = useState<MockProduct[]>([]);
+
+  useEffect(() => {
+    import("@/lib/db").then((db) => db.getProducts()).then(setMenuProducts);
+  }, []);
+
+  const getMenuPrice = (slug: string) => {
+    const p = menuProducts.find((m) => m.slug === slug);
+    return p ? `₹${p.base_price.toFixed(0)}` : "—";
+  };
   const [searchResults, setSearchResults] = useState<{
     products: MockProduct[];
     devotionals: MockDevotional[];
@@ -277,26 +288,10 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      {/* Announcement Bar */}
+      {/* Announcement Bar — BUG 10: reduced to 2 copies for -50% seamless marquee */}
       <div className="announcement-bar">
         <div className="announcement-track">
           <div className="announcement-content">
-            <span>Designed to Start Conversations About Christ</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Premium Quality • Faith Inspired • Limited Collections</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Made with Purpose</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-          </div>
-          <div className="announcement-content" aria-hidden="true">
-            <span>Designed to Start Conversations About Christ</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Premium Quality • Faith Inspired • Limited Collections</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-            <span>Made with Purpose</span>
-            <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
-          </div>
-          <div className="announcement-content" aria-hidden="true">
             <span>Designed to Start Conversations About Christ</span>
             <svg className="announcement-cross" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v5h6v4h-6v11h-4v-11h-6v-4h6z"/></svg>
             <span>Premium Quality • Faith Inspired • Limited Collections</span>
@@ -371,7 +366,7 @@ export const Header: React.FC = () => {
                         <img src="/oversized_tee_product.png" alt="Featured Product" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       </div>
                       <h5 className="text-[11px] font-bold uppercase tracking-wider text-text-primary group-hover:text-brand-burgundy transition-colors">Armor of Light Tee</h5>
-                      <p className="text-[10px] text-brand-burgundy font-bold mt-0.5">₹2,690</p>
+                      <p className="text-[10px] text-brand-burgundy font-bold mt-0.5">{getMenuPrice("armor-of-light-heavyweight-tee")}</p>
                     </Link>
                   </div>
 
@@ -385,31 +380,31 @@ export const Header: React.FC = () => {
                         </div>
                         <div className="min-w-0">
                           <span className="text-[11px] font-semibold text-text-primary block truncate group-hover:text-brand-burgundy transition-colors">Renewal Hoodie</span>
-                          <span className="text-[10px] text-text-muted block">₹4,490</span>
+                          <span className="text-[10px] text-text-muted block">{getMenuPrice("renewal-of-mind-french-terry-hoodie")}</span>
                         </div>
                       </Link>
-                      <Link href="/products/child-of-god-tee-white" className="flex items-center gap-3 group">
+                      <Link href="/products/armor-of-light-heavyweight-tee" className="flex items-center gap-3 group">
                         <div className="w-10 h-10 bg-bg-card border border-border-warm overflow-hidden flex-shrink-0">
-                          <img src="/brand_story_lifestyle.png" alt="Trending tee" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                          <img src="/oversized_tee_product.png" alt="Trending tee" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[11px] font-semibold text-text-primary block truncate group-hover:text-brand-burgundy transition-colors">Child of God Tee</span>
-                          <span className="text-[10px] text-text-muted block">₹2,690</span>
+                          <span className="text-[11px] font-semibold text-text-primary block truncate group-hover:text-brand-burgundy transition-colors">Armor of Light Tee</span>
+                          <span className="text-[10px] text-text-muted block">{getMenuPrice("armor-of-light-heavyweight-tee")}</span>
                         </div>
                       </Link>
                     </div>
                   </div>
 
-                  {/* Column 5: Verse Inspiration */}
+                  {/* Column 5: Verse Inspiration — BUG 19: blockquote semantic markup */}
                   <div className="mega-menu-col space-y-4 border-l border-border-warm/40 pl-6">
                     <h4 className="text-[10px] font-bold uppercase tracking-widest text-text-light-muted pb-1 border-b border-border-warm/30">Verse Inspiration</h4>
                     <div className="space-y-3 font-sans">
-                      <p className="text-[11px] italic font-light text-text-muted leading-relaxed">
-                        "Put on the whole armor of God, that you may be able to stand against the schemes of the devil."
-                      </p>
+                      <blockquote className="border-l-2 border-text-primary pl-3 italic text-[13px] text-text-primary leading-relaxed m-0">
+                        &ldquo;Put on the whole armor of God, that you may be able to stand against the schemes of the devil.&rdquo;
+                      </blockquote>
                       <div>
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-brand-burgundy">Ephesians 6:11</span>
-                        <p className="text-[9px] text-text-light-muted mt-0.5">The inspiration behind our active Armor Drop.</p>
+                        <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-text-secondary block">— Ephesians 6:11</span>
+                        <p className="text-[11px] text-text-light-muted mt-1">The inspiration behind our active Armor Drop.</p>
                       </div>
                     </div>
                   </div>
@@ -864,12 +859,13 @@ export const Header: React.FC = () => {
                   <p className="text-[10px] text-text-muted">
                     Tax and shipping calculated at checkout. Free shipping on orders over ₹1,500.
                   </p>
+                  {/* BUG 14: Cart checkout CTA polished to match PDP add-to-bag style */}
                   <button
                     onClick={() => {
                       setCartOpen(false);
                       router.push("/checkout");
                     }}
-                    className="w-full py-3 bg-brand-burgundy text-white hover:bg-brand-burgundy-light font-bold text-xs uppercase tracking-widest rounded-none transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-brand-burgundy text-white hover:bg-brand-burgundy-light active:scale-[0.99] font-bold text-xs uppercase tracking-widest rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-burgundy/10"
                   >
                     <span>Proceed to Checkout</span>
                     <ArrowRight className="w-4 h-4" />
@@ -985,13 +981,18 @@ export const Header: React.FC = () => {
                     <Heart className="w-4 h-4 text-brand-burgundy" />
                   </button>
 
+                  {/* BUG 9: Mobile account link — User icon + text side-by-side */}
                   <Link
                     href="/account"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-between w-full text-xs font-bold uppercase tracking-wider text-text-primary"
+                    aria-label="My Account"
                   >
-                    <span>My Account</span>
-                    <User className="w-4 h-4 text-text-muted" />
+                    <span className="flex items-center gap-2">
+                      <User className="w-4 h-4 text-brand-burgundy" />
+                      <span>Account</span>
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 text-text-muted" />
                   </Link>
                 </div>
               </div>

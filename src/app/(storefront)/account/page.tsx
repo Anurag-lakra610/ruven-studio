@@ -15,10 +15,20 @@ interface Order {
 
 export default function AccountPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ email: string; name: string } | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
+    let resolved = false;
+
+    // Timeout after 3000ms
+    const timeoutId = setTimeout(() => {
+      if (!resolved) {
+        router.push("/login");
+      }
+    }, 3000);
+
     // Check for cookie sessions
     const getCookie = (name: string) => {
       const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)"));
@@ -30,33 +40,41 @@ export default function AccountPage() {
     const email = getCookie("mock_user_email");
     const name = getCookie("mock_user_name") || "Valued Customer";
 
-    if (!isCustomer && !isAdmin) {
+    if (isCustomer || isAdmin) {
+      resolved = true;
+      setUser({
+        email: email || (isAdmin ? "admin@ruven.in" : "customer@ruven.in"),
+        name: name
+      });
+
+      // Populate mock order history
+      setOrders([
+        {
+          number: "RU-389271",
+          date: "June 23, 2026",
+          total: 2199,
+          status: "Processing",
+          items: "Armor of Light Heavyweight Tee (M)"
+        },
+        {
+          number: "RU-187391",
+          date: "May 10, 2026",
+          total: 3774,
+          status: "Delivered",
+          items: "Renewal of Mind French Terry Hoodie (L)"
+        }
+      ]);
+      setLoading(false);
+      clearTimeout(timeoutId);
+    } else {
+      resolved = true;
+      clearTimeout(timeoutId);
       router.push("/login");
-      return;
     }
 
-    setUser({
-      email: email || (isAdmin ? "admin@ruven.in" : "customer@ruven.in"),
-      name: name
-    });
-
-    // Populate mock order history
-    setOrders([
-      {
-        number: "RU-389271",
-        date: "June 23, 2026",
-        total: 2199,
-        status: "Processing",
-        items: "Armor of Light Heavyweight Tee (M)"
-      },
-      {
-        number: "RU-187391",
-        date: "May 10, 2026",
-        total: 3774,
-        status: "Delivered",
-        items: "Renewal of Mind French Terry Hoodie (L)"
-      }
-    ]);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [router]);
 
   const handleLogout = () => {
@@ -68,10 +86,14 @@ export default function AccountPage() {
     router.push("/login");
   };
 
-  if (!user) {
+  if (loading || !user) {
     return (
-      <div className="w-full min-h-[400px] flex items-center justify-center bg-bg-warm dark:bg-zinc-950 text-text-muted text-xs font-bold uppercase tracking-widest">
-        Verifying Account Session...
+      <div className="w-full min-h-[400px] flex flex-col items-center justify-center bg-bg-warm dark:bg-zinc-950 gap-4">
+        <svg className="animate-spin h-8 w-8 text-brand-burgundy dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span className="text-[10px] tracking-widest text-text-muted uppercase font-bold animate-pulse">Verifying Session...</span>
       </div>
     );
   }

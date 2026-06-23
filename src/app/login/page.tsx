@@ -5,8 +5,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { AlertCircle, ArrowRight } from "lucide-react";
+import { CartProvider } from "@/context/CartContext";
+import { Header } from "@/components/storefront/Header";
+import { Footer } from "@/components/storefront/Footer";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
@@ -50,15 +53,9 @@ export default function LoginPage() {
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
-          options: {
-            data: {
-              full_name: name,
-            }
-          }
+          options: { data: { full_name: name } }
         });
         if (signUpError) throw signUpError;
-        
-        // Auto-login after sign-up for simple user flow
         document.cookie = "mock_customer_session=true; path=/; max-age=86400";
         document.cookie = `mock_user_email=${email}; path=/; max-age=86400`;
         document.cookie = `mock_user_name=${name || "New User"}; path=/; max-age=86400`;
@@ -93,13 +90,8 @@ export default function LoginPage() {
 
     try {
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
       if (authError) throw authError;
-
       if (email.endsWith("@ruvenstudio.in") || email.endsWith("@ruven.in")) {
         router.push("/admin");
       } else {
@@ -112,234 +104,184 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 bg-bg-warm dark:bg-zinc-950 text-text-primary font-sans">
-      {/* Left side: Editorial Image & Tagline (Hidden on mobile) */}
-      <div className="relative hidden md:flex flex-col justify-between pt-24 pb-20 pl-28 pr-20 lg:pt-32 lg:pb-28 lg:pl-36 lg:pr-24 overflow-hidden bg-zinc-900 text-white z-10 border-r border-border-warm/10">
-        <div className="absolute inset-0 z-0 opacity-80">
-          <img
-            src="/brand_story_editorial.png"
-            alt="Ruven Studio Brand Campaign"
-            className="w-full h-full object-cover"
-          />
-          {/* Elegant lightened overlay for typography contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/45" />
-        </div>
-
-        {/* Top brand signature - using logo_white.png as requested */}
-        <div className="relative z-20">
-          <Link href="/">
+    <main className="flex-1 flex items-center justify-center px-4 py-16 bg-bg-warm dark:bg-zinc-950">
+      {/* BUG 15: Centered card layout, max-w-420px, white background, thin border */}
+      <div className="w-full max-w-[420px] bg-white dark:bg-zinc-900 border border-border-warm p-8 md:p-10 space-y-8">
+        {/* Header */}
+        <div className="space-y-4">
+          <Link href="/" className="inline-block">
+            <img
+              src="/logo.png"
+              alt="Ruven Studio Logo"
+              className="h-7 w-auto object-contain dark:hidden"
+            />
             <img
               src="/logo_white.png"
               alt="Ruven Studio Logo"
-              className="h-8 lg:h-9 w-auto object-contain hover:opacity-80 transition-opacity"
+              className="h-7 w-auto object-contain hidden dark:block"
             />
           </Link>
-        </div>
-
-        {/* Bottom tagline */}
-        <div className="relative z-20 max-w-md space-y-6">
-          <h2 className="text-4xl font-extrabold tracking-tight leading-tight uppercase font-sans">
-            Faith, Woven Into<br />Everyday Life.
-          </h2>
-          <p className="text-xs text-zinc-300 font-light leading-relaxed tracking-wider">
-            Every garment is crafted as a physical canvas for timeless truths—designed with quiet purpose for modern creative environments.
-          </p>
-        </div>
-
-        {/* Footer info */}
-        <div className="relative z-20 text-[10px] text-zinc-400 tracking-wider uppercase font-semibold">
-          © {new Date().getFullYear()} Ruven Studio. All rights reserved.
-        </div>
-      </div>
-
-      {/* Right side: Elegant Authentication Card */}
-      <div className="flex items-center justify-center p-8 md:p-16 lg:p-24 bg-white dark:bg-zinc-950">
-        <div className="w-full max-w-[420px] space-y-10">
-          {/* Logo & Welcome Header */}
-          <div className="space-y-6">
-            <Link href="/" className="inline-flex items-center group">
-              <img
-                src="/logo.png"
-                alt="Ruven Studio Logo"
-                className="h-8 w-auto object-contain dark:hidden"
-              />
-              <img
-                src="/logo_white.png"
-                alt="Ruven Studio Logo"
-                className="h-8 w-auto object-contain hidden dark:block"
-              />
-            </Link>
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold tracking-tight text-text-primary uppercase">
-                {mode === "signin" ? "Welcome Back" : "Create Account"}
-              </h1>
-              <p className="text-xs text-text-muted leading-relaxed">
-                {mode === "signin"
-                  ? "Sign in to continue to your Ruven Studio account."
-                  : "Sign up to start your journey with Ruven Studio."}
-              </p>
-            </div>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-text-primary uppercase text-center">
+              {mode === "signin" ? "Welcome Back" : "Create Account"}
+            </h1>
+            <p className="text-xs text-text-muted text-center mt-1.5 leading-relaxed">
+              {mode === "signin"
+                ? "Sign in to access your Ruven Studio account."
+                : "Create your account to start shopping."}
+            </p>
           </div>
+        </div>
 
-          {error && (
-            <div className="border-l-2 border-brand-burgundy bg-red-50/50 dark:bg-red-950/10 p-4 flex items-start gap-3 text-xs text-red-600 dark:text-red-400 transition-all">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-              <span className="leading-relaxed">{error}</span>
-            </div>
-          )}
+        {/* Error message */}
+        {error && (
+          <div className="border-l-2 border-brand-burgundy bg-red-50/50 dark:bg-red-950/10 p-4 flex items-start gap-3 text-xs text-red-600 dark:text-red-400">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <span className="leading-relaxed">{error}</span>
+          </div>
+        )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {mode === "signup" && (
-              /* Name Field */
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full h-[52px] px-4 text-xs bg-transparent border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-1 focus:ring-brand-burgundy outline-none transition-all rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-                  placeholder="Enter your name"
-                />
-              </div>
-            )}
-
-            {/* Email Field */}
-            <div className="space-y-2">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {mode === "signup" && (
+            <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-                Email Address
+                Full Name
               </label>
               <input
-                type="email"
+                type="text"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-[52px] px-4 text-xs bg-transparent border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-1 focus:ring-brand-burgundy outline-none transition-all rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-                placeholder="name@domain.com"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
+                placeholder="Enter your full name"
               />
-            </div>
-
-            {/* Password Field */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
-                  Password
-                </label>
-                {mode === "signin" && (
-                  <Link href="#" className="text-[9px] uppercase font-bold text-text-muted hover:text-brand-burgundy transition-colors tracking-wider">
-                    Forgot Password?
-                  </Link>
-                )}
-              </div>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-[52px] px-4 text-xs bg-transparent border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-1 focus:ring-brand-burgundy outline-none transition-all rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
-                placeholder="••••••••"
-              />
-            </div>
-
-            {/* Remember Me Toggle */}
-            {mode === "signin" && (
-              <div className="flex items-center justify-between pt-1">
-                <label className="flex items-center gap-2 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-3.5 h-3.5 accent-brand-burgundy rounded-none border-zinc-300 text-brand-burgundy focus:ring-0 focus:ring-offset-0"
-                  />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
-                    Remember Me
-                  </span>
-                </label>
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full h-[52px] bg-brand-burgundy hover:bg-brand-burgundy-light text-white text-xs font-bold uppercase tracking-widest rounded-none transition-all flex items-center justify-center gap-2 cursor-pointer active:translate-y-[1px]"
-            >
-              <span>
-                {loading
-                  ? mode === "signin"
-                    ? "Authenticating..."
-                    : "Creating..."
-                  : mode === "signin"
-                  ? "Sign In"
-                  : "Create Account"}
-              </span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
-
-          {/* Switch flow link */}
-          <div className="text-center pt-2">
-            {mode === "signin" ? (
-              <span className="text-xs text-text-muted">
-                Don't have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode("signup");
-                    setError("");
-                  }}
-                  className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
-                >
-                  Create Account
-                </button>
-              </span>
-            ) : (
-              <span className="text-xs text-text-muted">
-                Already have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode("signin");
-                    setError("");
-                  }}
-                  className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
-                >
-                  Sign In
-                </button>
-              </span>
-            )}
-          </div>
-
-          {/* Info Helper Box for Sandbox Review */}
-          {isDev && mode === "signin" && (
-            <div className="bg-bg-card dark:bg-zinc-900/60 p-5 rounded-none border border-zinc-200 dark:border-zinc-800 space-y-3.5 text-[10px] text-text-muted leading-relaxed">
-              <span className="font-bold text-text-primary uppercase tracking-wider block">
-                Local Sandbox Testing Profiles:
-              </span>
-              <div className="space-y-2">
-                <div>
-                  <span className="font-semibold text-brand-burgundy uppercase block tracking-wider text-[9px] mb-0.5">
-                    • Admin OS Access:
-                  </span>
-                  <span>
-                    email: <strong className="text-text-primary">admin@ruven.in</strong> / pass: <strong className="text-text-primary">admin123</strong>
-                  </span>
-                </div>
-                <div>
-                  <span className="font-semibold text-zinc-500 dark:text-zinc-400 uppercase block tracking-wider text-[9px] mb-0.5">
-                    • Customer Storefront Access:
-                  </span>
-                  <span>
-                    email: <strong className="text-text-primary">customer@ruven.in</strong> / pass: <strong className="text-text-primary">customer123</strong>
-                  </span>
-                </div>
-              </div>
             </div>
           )}
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
+              Email Address
+            </label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
+              placeholder="name@domain.com"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary block">
+                Password
+              </label>
+              {mode === "signin" && (
+                <Link href="#" className="text-[9px] uppercase font-bold text-text-muted hover:text-brand-burgundy transition-colors tracking-wider">
+                  Forgot?
+                </Link>
+              )}
+            </div>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full h-[52px] px-4 text-sm bg-bg-warm dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:border-brand-burgundy dark:focus:border-brand-burgundy focus:ring-0 outline-none transition-colors rounded-none text-text-primary placeholder:text-text-light-muted font-sans"
+              placeholder="••••••••"
+            />
+          </div>
+
+          {mode === "signin" && (
+            <label className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-3.5 h-3.5 accent-brand-burgundy border-zinc-300 rounded-none"
+              />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
+                Remember Me
+              </span>
+            </label>
+          )}
+
+          {/* Submit — matches PDP CTA style */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full h-[52px] bg-brand-burgundy hover:bg-brand-burgundy-light disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs font-bold uppercase tracking-widest rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-burgundy/10 active:scale-[0.99]"
+          >
+            <span>
+              {loading
+                ? (mode === "signin" ? "Authenticating..." : "Creating...")
+                : (mode === "signin" ? "Sign In" : "Create Account")}
+            </span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </form>
+
+        {/* Mode switcher */}
+        <div className="text-center">
+          {mode === "signin" ? (
+            <span className="text-xs text-text-muted">
+              Don&apos;t have an account?{" "}
+              <button
+                type="button"
+                onClick={() => { setMode("signup"); setError(""); }}
+                className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
+              >
+                Create Account
+              </button>
+            </span>
+          ) : (
+            <span className="text-xs text-text-muted">
+              Already have an account?{" "}
+              <button
+                type="button"
+                onClick={() => { setMode("signin"); setError(""); }}
+                className="font-semibold text-brand-burgundy hover:underline hover:text-brand-burgundy-light transition-colors"
+              >
+                Sign In
+              </button>
+            </span>
+          )}
         </div>
+
+        {/* Sandbox testing box */}
+        {isDev && mode === "signin" && (
+          <div className="bg-bg-card dark:bg-zinc-900/60 p-5 border border-zinc-200 dark:border-zinc-800 space-y-3 text-[10px] text-text-muted leading-relaxed">
+            <span className="font-bold text-text-primary uppercase tracking-wider block">
+              Local Sandbox Testing Profiles:
+            </span>
+            <div className="space-y-2">
+              <div>
+                <span className="font-semibold text-brand-burgundy uppercase block tracking-wider text-[9px] mb-0.5">• Admin OS Access:</span>
+                <span>email: <strong className="text-text-primary">admin@ruven.in</strong> / pass: <strong className="text-text-primary">admin123</strong></span>
+              </div>
+              <div>
+                <span className="font-semibold text-zinc-500 dark:text-zinc-400 uppercase block tracking-wider text-[9px] mb-0.5">• Customer Storefront Access:</span>
+                <span>email: <strong className="text-text-primary">customer@ruven.in</strong> / pass: <strong className="text-text-primary">customer123</strong></span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </main>
+  );
+}
+
+export default function LoginPage() {
+  // BUG 15: Wrap in CartProvider so Header/Footer can access cart context
+  return (
+    <CartProvider>
+      <div className="flex flex-col min-h-screen bg-bg-warm dark:bg-zinc-950 font-sans text-text-primary">
+        <Header />
+        <LoginForm />
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }

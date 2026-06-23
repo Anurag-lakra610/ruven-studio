@@ -47,6 +47,8 @@ export const JournalClientPage: React.FC<JournalClientPageProps> = ({ article, r
 
   const isItemInWishlist = (productId: string) => wishlist.some((item) => item.id === productId);
 
+  const displayAuthor = (!article.author || article.author === "Super Admin" || article.author === "Admin" || article.author === "admin") ? "Ruven Studio" : article.author;
+
   return (
     <div className="w-full bg-bg-warm dark:bg-zinc-950 py-12 px-6 md:px-12 lg:px-20">
       {/* Back button */}
@@ -69,7 +71,7 @@ export const JournalClientPage: React.FC<JournalClientPageProps> = ({ article, r
           <div className="flex flex-wrap items-center gap-6 text-xs text-text-muted font-semibold pb-6 border-b border-border-warm">
             <div className="flex items-center gap-2">
               <User className="w-4 h-4 text-brand-gold" />
-              <span>By {article.author}</span>
+              <span>By {displayAuthor}</span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-brand-gold" />
@@ -137,7 +139,12 @@ export const JournalClientPage: React.FC<JournalClientPageProps> = ({ article, r
                   {relatedProduct.name}
                 </h3>
               </div>
-              <span className="text-base font-bold text-brand-burgundy">₹{relatedProduct.base_price}</span>
+              <div className="flex items-baseline gap-2">
+                <span className="text-sm font-bold text-brand-burgundy">₹{relatedProduct.base_price}</span>
+                {relatedProduct.original_price && (
+                  <span className="text-[10px] text-text-muted line-through">₹{relatedProduct.original_price}</span>
+                )}
+              </div>
             </div>
 
             <div className="flex flex-col md:flex-row gap-6">

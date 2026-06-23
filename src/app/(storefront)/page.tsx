@@ -684,8 +684,16 @@ export default function StorefrontHomePage() {
             </div>
             <div className="instagram-asymmetric-grid">
               {instagramSettings.items.map((item: any, idx: number) => (
-                <div key={idx} className="instagram-grid-item">
-                  <img src={item.image_url} alt="Ruven Studio Instagram fellowship styling" />
+                <div key={idx} className="instagram-grid-item relative group">
+                  <img src={item.image_url} alt="Ruven Studio Instagram fellowship styling" className="w-full h-full object-cover" />
+                  
+                  {/* Semi-transparent dark overlay with Coming Soon text */}
+                  <div className="absolute inset-0 bg-black/35 flex items-center justify-center pointer-events-none">
+                    <span className="text-white text-[12px] font-medium tracking-[0.08em] uppercase">
+                      Coming Soon
+                    </span>
+                  </div>
+
                   <a href={item.link} target="_blank" rel="noopener noreferrer" className="instagram-overlay">
                     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -708,6 +716,77 @@ export default function StorefrontHomePage() {
   const sectionOrderKeys = sections.length > 0 
     ? sections.map(s => s.section_key)
     : ["trust-strip", "editorial-mission", "featured-campaign", "lifestyle-immersive", "scripture-highlight", "best-sellers", "why-ruven", "testimonials", "instagram-gallery"];
+
+  // FAQ Accordion State & Component
+  const FAQSection = () => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+    const faqData = [
+      {
+        q: "What sizes do you offer?",
+        a: "S, M, L, and XL across all styles. Refer to the size chart on each product page for exact measurements."
+      },
+      {
+        q: "What is your return policy?",
+        a: "We offer a 7-day exchange window from the date of delivery. Items must be unworn, unwashed, and in original packaging."
+      },
+      {
+        q: "How long does shipping take?",
+        a: "5–7 business days across India. Free shipping on all orders above ₹1500."
+      },
+      {
+        q: "How do I reach support?",
+        a: "Email us at hello@ruvenstudio.in or message us on WhatsApp. We respond within 24 hours."
+      }
+    ];
+
+    return (
+      <section className="section-padding bg-bg-warm dark:bg-zinc-950 py-16 px-6 md:px-12 lg:px-20 border-t border-border-warm" id="faq-section">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <div className="text-center space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold block">common inquiries</span>
+            <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-text-primary">Frequently Asked Questions</h2>
+          </div>
+          
+          <div className="divide-y divide-border-warm">
+            {faqData.map((item, idx) => {
+              const isOpen = openIndex === idx;
+              return (
+                <div key={idx} className="py-4 font-sans">
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : idx)}
+                    className="w-full flex justify-between items-center text-left py-2 text-text-primary hover:text-brand-burgundy transition-colors focus:outline-none"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-sm font-medium">{item.q}</span>
+                    <span className="text-lg font-light leading-none ml-4 select-none">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+                  
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-sm text-text-muted mt-2 pr-6 leading-relaxed">
+                          {item.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   return (
     <div className="w-full flex flex-col bg-bg-warm dark:bg-zinc-950 overflow-x-hidden">
@@ -770,6 +849,7 @@ export default function StorefrontHomePage() {
         </div>
       </section>
       {sectionOrderKeys.map(key => renderSection(key))}
+      <FAQSection />
     </div>
   );
 }

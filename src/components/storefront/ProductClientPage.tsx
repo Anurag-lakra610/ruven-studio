@@ -15,17 +15,17 @@ export const ProductClientPage: React.FC<ProductClientPageProps> = ({ product })
   const { cart, wishlist, toggleWishlist, addToCart, setCartOpen } = useCart();
 
   // Selected state
-  const [selectedSize, setSelectedSize] = useState(product.variants[0]?.size || "M");
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<"description" | "size-chart">("description");
   const [isAccordionOpen, setAccordionOpen] = useState(false);
 
-  const selectedVariant = product.variants.find((v) => v.size === selectedSize);
+  const selectedVariant = selectedSize ? product.variants.find((v) => v.size === selectedSize) : null;
   const stockAvailable = selectedVariant ? selectedVariant.stock : 0;
-  const isLowStock = stockAvailable > 0 && stockAvailable <= 80; // adjusted threshold for seed values
+  const isLowStock = selectedSize ? (stockAvailable > 0 && stockAvailable <= 80) : false;
 
   const handleAddToCart = () => {
-    if (stockAvailable === 0) return;
+    if (!selectedSize || stockAvailable === 0) return;
     addToCart(
       {
         id: product.id,
@@ -54,8 +54,38 @@ export const ProductClientPage: React.FC<ProductClientPageProps> = ({ product })
 
   const isItemInWishlist = wishlist.some((item) => item.id === product.id);
 
+  // SEO Breadcrumb List structured data
+  const breadcrumbListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ruven-studio.vercel.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Shop",
+        "item": "https://ruven-studio.vercel.app/shop"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": product.name,
+        "item": `https://ruven-studio.vercel.app/products/${product.slug}`
+      }
+    ]
+  };
+
   return (
     <div className="w-full bg-bg-warm dark:bg-zinc-950 py-12 px-6 md:px-12 lg:px-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbListJsonLd) }}
+      />
       {/* Breadcrumbs */}
       <nav className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-8 max-w-[1400px] mx-auto">
         <Link href="/" className="hover:text-brand-burgundy transition-colors">Home</Link>
@@ -200,17 +230,19 @@ export const ProductClientPage: React.FC<ProductClientPageProps> = ({ product })
             </div>
 
             {/* Inventory Alerts */}
-            {stockAvailable > 0 ? (
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-green-600 dark:text-green-500 uppercase tracking-wider">
-                <Check className="w-3.5 h-3.5" />
-                <span>In Stock • Ready to ship ({stockAvailable} units)</span>
-              </div>
-            ) : (
-              <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider">
-                Temporarily Sold Out
-              </div>
+            {selectedSize && (
+              stockAvailable > 0 ? (
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-green-600 dark:text-green-500 uppercase tracking-wider">
+                  <Check className="w-3.5 h-3.5" />
+                  <span>In Stock • Ready to ship ({stockAvailable} units)</span>
+                </div>
+              ) : (
+                <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider">
+                  Temporarily Sold Out
+                </div>
+              )
             )}
-            {isLowStock && stockAvailable > 0 && (
+            {selectedSize && isLowStock && stockAvailable > 0 && (
               <p className="text-[10px] text-brand-gold font-bold uppercase tracking-wider">
                 ⚠️ Limited Stock: Only {stockAvailable} pieces left in this size!
               </p>
@@ -243,11 +275,11 @@ export const ProductClientPage: React.FC<ProductClientPageProps> = ({ product })
             <div className="flex gap-4">
               <button
                 onClick={handleAddToCart}
-                disabled={stockAvailable === 0}
+                disabled={!selectedSize || stockAvailable === 0}
                 className="flex-1 py-4 bg-brand-burgundy hover:bg-brand-gold disabled:bg-zinc-300 disabled:dark:bg-zinc-800 disabled:cursor-not-allowed text-white text-xs font-bold uppercase tracking-widest rounded-full transition-colors flex items-center justify-center gap-2 shadow-lg shadow-brand-burgundy/10"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>Add to Shopping Bag</span>
+                <span>{!selectedSize ? "Select a Size" : "Add to Shopping Bag"}</span>
               </button>
 
               <button

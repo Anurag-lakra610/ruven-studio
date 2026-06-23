@@ -107,6 +107,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
       text_content: "Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God, what is good and acceptable and perfect."
     },
     variants: [
+      { id: "d1111111-1111-1111-1111-111111111110", sku: "RU-HD-RNW-S", size: "S", color: "Warm Charcoal", stock: 60 },
       { id: "d1111111-1111-1111-1111-111111111115", sku: "RU-HD-RNW-M", size: "M", color: "Warm Charcoal", stock: 75 },
       { id: "d1111111-1111-1111-1111-111111111116", sku: "RU-HD-RNW-L", size: "L", color: "Warm Charcoal", stock: 80 },
       { id: "d1111111-1111-1111-1111-111111111117", sku: "RU-HD-RNW-XL", size: "XL", color: "Warm Charcoal", stock: 45 },
@@ -121,7 +122,7 @@ export const MOCK_DEVOTIONALS: MockDevotional[] = [
     slug: "the-armor-of-light",
     cover_image_url: "/hero_lifestyle.png",
     summary: "Explore how we can cast off darkness and walk in spiritual integrity in a chaotic world, inspired by Romans 13:12.",
-    author: "Super Admin",
+    author: "Ruven Studio",
     published_at: "2026-06-23T09:00:00Z",
     body_json: [
       { type: "paragraph", content: "In a generation driven by noise, social pressure, and anxiety, we are constantly faced with a choice of what we wear spiritually. The Apostle Paul writes in Romans 13:12: 'The night is far gone; the day is at hand. So then let us cast off the works of darkness and put on the armor of light.'" },

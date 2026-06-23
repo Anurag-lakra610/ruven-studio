@@ -1,16 +1,30 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { getProducts, getCategories, MockProduct, MockCategory } from "@/lib/db";
 import { useCart } from "@/context/CartContext";
-import { Heart, ShoppingBag, SlidersHorizontal, ArrowUpDown, X, Search, Star } from "lucide-react";
+import { Heart, ShoppingBag, SlidersHorizontal, X, Search } from "lucide-react";
+
+// BUG 1: Skeleton card placeholder component
+function SkeletonCard() {
+  return (
+    <div className="product-card animate-pulse">
+      <div className="plp-card-media bg-bg-secondary" style={{ aspectRatio: "4/5" }} />
+      <div className="plp-card-info p-4 space-y-3">
+        <div className="h-2 bg-bg-secondary rounded w-1/3" />
+        <div className="h-3 bg-bg-secondary rounded w-4/5" />
+        <div className="h-2 bg-bg-secondary rounded w-2/3" />
+        <div className="h-3 bg-bg-secondary rounded w-1/4" />
+      </div>
+    </div>
+  );
+}
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { cart, wishlist, toggleWishlist, addToCart, setCartOpen } = useCart();
+  const { wishlist, toggleWishlist, addToCart, setCartOpen } = useCart();
 
   // State
   const [products, setProducts] = useState<MockProduct[]>([]);
@@ -21,19 +35,38 @@ function ShopContent() {
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [isMobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  // BUG 1: Loading / error state
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
-  // Load from search params on mount / params change
-  useEffect(() => {
-    getCategories().then((res) => setCategories(res));
-    getProducts().then((res) => setProducts(res));
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setFetchError(null);
+    try {
+      const [cats, prods] = await Promise.all([getCategories(), getProducts()]);
+      setCategories(cats);
+      setProducts(prods);
+    } catch (err: any) {
+      console.error("Shop fetch error:", err);
+      setFetchError(err?.message || "Failed to load catalog. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // BUG 13: Read ?collection query param
   useEffect(() => {
     const cat = searchParams.get("category");
     const search = searchParams.get("search");
     const filt = searchParams.get("filter");
+    const collection = searchParams.get("collection");
 
     if (cat) setSelectedCategory(cat);
+    else if (collection) setSelectedCategory(collection);
     if (search) setSearchTerm(search);
     if (filt) {
       if (filt === "new-arrivals") setSortBy("newest");
@@ -41,13 +74,14 @@ function ShopContent() {
     }
   }, [searchParams]);
 
+  // BUG 13: Detect if currently filtering by a collection slug
+  const activeCollection = searchParams.get("collection");
+
   // Filtering Logic
   const filteredProducts = products.filter((product) => {
-    // Category match
     if (selectedCategory !== "all" && product.category_slug !== selectedCategory) {
       return false;
     }
-    // Search term match
     if (searchTerm) {
       const lower = searchTerm.toLowerCase();
       const nameMatch = product.name.toLowerCase().includes(lower);
@@ -55,7 +89,6 @@ function ShopContent() {
       const verseMatch = product.scripture?.text_content.toLowerCase().includes(lower) || false;
       if (!nameMatch && !descMatch && !verseMatch) return false;
     }
-    // Price match checkbox ranges
     if (selectedPrices.length > 0) {
       const match = selectedPrices.some((range) => {
         if (range === "under-2000") return product.base_price < 2000;
@@ -65,7 +98,6 @@ function ShopContent() {
       });
       if (!match) return false;
     }
-    // Size match
     if (selectedSizes.length > 0) {
       const hasSize = product.variants.some((v) => selectedSizes.includes(v.size) && v.stock > 0);
       if (!hasSize) return false;
@@ -77,9 +109,9 @@ function ShopContent() {
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === "price-low") return a.base_price - b.base_price;
     if (sortBy === "price-high") return b.base_price - a.base_price;
-    if (sortBy === "newest") return b.slug.localeCompare(a.slug); // Mock newer
-    if (sortBy === "best-selling") return b.base_price > a.base_price ? -1 : 1; // Mock best-selling
-    return 0; // Default featured
+    if (sortBy === "newest") return b.slug.localeCompare(a.slug);
+    if (sortBy === "best-selling") return b.base_price > a.base_price ? -1 : 1;
+    return 0;
   });
 
   const handleSizeToggle = (size: string) => {
@@ -130,6 +162,55 @@ function ShopContent() {
     setSelectedSizes([]);
   };
 
+  // BUG 1: Render loading skeletons
+  if (loading) {
+    return (
+      <div className="w-full flex flex-col bg-bg-warm dark:bg-zinc-950 min-h-screen">
+        <div className="plp-collection-hero">
+          <div className="plp-hero-bg-wrap">
+            <img src="/hero_lifestyle.png" alt="Ruven Studio Collection Banner" className="plp-hero-bg-img" />
+          </div>
+          <div className="plp-hero-overlay" />
+          <div className="plp-hero-content">
+            <h1 className="plp-collection-title">Oversized Faith Collection</h1>
+          </div>
+        </div>
+        <div className="section-padding shop-page-v2">
+          <div className="plp-layout">
+            <aside className="plp-sidebar-filters">
+              <div className="plp-filter-header"><h3>Filter Shop</h3></div>
+            </aside>
+            <div className="plp-grid-container">
+              <div className="product-grid-v2">
+                {[1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // BUG 1: Render error state
+  if (fetchError) {
+    return (
+      <div className="w-full min-h-[60vh] flex flex-col items-center justify-center gap-6 text-center px-6">
+        <div className="text-3xl">⚠️</div>
+        <h2 className="text-sm font-bold uppercase tracking-wider text-text-primary">Something went wrong</h2>
+        <p className="text-xs text-text-muted max-w-xs leading-relaxed">{fetchError}</p>
+        <button
+          onClick={fetchData}
+          className="px-8 py-3 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-burgundy-light transition-colors rounded-none"
+        >
+          Try Again
+        </button>
+        <Link href="/" className="text-xs text-text-muted underline hover:text-brand-burgundy transition-colors">
+          Return Home
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full flex flex-col bg-bg-warm dark:bg-zinc-950 min-h-screen">
       {/* Collection Hero Section */}
@@ -151,7 +232,7 @@ function ShopContent() {
             Minimal clothing inspired by scripture and designed to spark conversations about Christ. Made from organic heavyweight cotton.
           </p>
           <div className="plp-hero-verse-box">
-            <p className="plp-hero-verse-quote">"Do not be conformed to this world, but be transformed by the renewal of your mind..."</p>
+            <p className="plp-hero-verse-quote">&ldquo;Do not be conformed to this world, but be transformed by the renewal of your mind...&rdquo;</p>
             <p className="plp-hero-verse-ref">Romans 12:2</p>
           </div>
         </div>
@@ -160,7 +241,7 @@ function ShopContent() {
       {/* Collection Navigation Tabs */}
       <div className="plp-nav-container">
         <div className="plp-nav-tabs">
-          <button 
+          <button
             onClick={() => setSelectedCategory("all")}
             className={`plp-tab-btn ${selectedCategory === "all" ? "active" : ""}`}
           >
@@ -175,13 +256,13 @@ function ShopContent() {
               {cat.name}
             </button>
           ))}
-          <button 
+          <button
             onClick={() => setSortBy("newest")}
             className={`plp-tab-btn ${sortBy === "newest" ? "active" : ""}`}
           >
             New Arrivals
           </button>
-          <button 
+          <button
             onClick={() => setSortBy("best-selling")}
             className={`plp-tab-btn ${sortBy === "best-selling" ? "active" : ""}`}
           >
@@ -204,9 +285,9 @@ function ShopContent() {
               autoComplete="off"
             />
             {searchTerm && (
-              <button 
-                id="plp-search-clear" 
-                onClick={() => setSearchTerm("")} 
+              <button
+                id="plp-search-clear"
+                onClick={() => setSearchTerm("")}
                 aria-label="Clear Search"
               >
                 <X className="w-4 h-4" />
@@ -216,7 +297,7 @@ function ShopContent() {
           <div className="plp-search-suggestions">
             <span className="plp-suggest-label">Popular:</span>
             {["tee", "hoodie", "armor", "renewal"].map((tag) => (
-              <button 
+              <button
                 key={tag}
                 onClick={() => setSearchTerm(tag)}
                 className="plp-suggest-tag"
@@ -245,7 +326,7 @@ function ShopContent() {
                   )}
                   {searchTerm && (
                     <span className="plp-active-filter-tag">
-                      Search: "{searchTerm}"
+                      Search: &ldquo;{searchTerm}&rdquo;
                       <button onClick={() => setSearchTerm("")}>&times;</button>
                     </span>
                   )}
@@ -257,7 +338,7 @@ function ShopContent() {
                   ))}
                   {selectedPrices.map((pr) => (
                     <span key={pr} className="plp-active-filter-tag">
-                      Price: {pr === "under-2000" ? "Under ₹2,000" : pr === "2000-3000" ? "₹2,000 - ₹3,000" : "Over ₹3,000"}
+                      Price: {pr === "under-2000" ? "Under ₹2,000" : pr === "2000-3000" ? "₹2,000 – ₹3,000" : "Over ₹3,000"}
                       <button onClick={() => handlePriceToggle(pr)}>&times;</button>
                     </span>
                   ))}
@@ -268,12 +349,12 @@ function ShopContent() {
               )}
             </div>
           </div>
-          
+
           <div className="plp-toolbar-actions">
             {/* Mobile Filter Trigger */}
-            <button 
+            <button
               onClick={() => setMobileFiltersOpen(true)}
-              className="plp-mobile-filter-btn" 
+              className="plp-mobile-filter-btn"
               id="mobile-filter-toggle-btn"
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -284,11 +365,11 @@ function ShopContent() {
                 </span>
               )}
             </button>
-            
+
             <div className="plp-sort-wrapper">
               <label htmlFor="plp-sort-select" className="plp-sort-label">Sort By:</label>
-              <select 
-                id="plp-sort-select" 
+              <select
+                id="plp-sort-select"
                 className="plp-sort-dropdown"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -313,13 +394,13 @@ function ShopContent() {
                 <button onClick={clearAllFilters} className="plp-clear-all-btn">Clear All</button>
               )}
             </div>
-            
+
             {/* Size Filter */}
             <div className="plp-filter-group-item">
               <h4 className="plp-filter-title">Available Sizes</h4>
               <div className="plp-filter-options size-grid-filter">
                 {["S", "M", "L", "XL"].map((sz) => (
-                  <button 
+                  <button
                     key={sz}
                     onClick={() => handleSizeToggle(sz)}
                     className={`plp-size-filter-btn ${selectedSizes.includes(sz) ? "active" : ""}`}
@@ -335,8 +416,8 @@ function ShopContent() {
               <h4 className="plp-filter-title">Price Range</h4>
               <div className="plp-filter-options list-filter">
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("under-2000")}
                     onChange={() => handlePriceToggle("under-2000")}
@@ -344,17 +425,17 @@ function ShopContent() {
                   <span>Under ₹2,000</span>
                 </label>
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("2000-3000")}
                     onChange={() => handlePriceToggle("2000-3000")}
                   />
-                  <span>₹2,000 - ₹3,000</span>
+                  <span>₹2,000 – ₹3,000</span>
                 </label>
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("over-3000")}
                     onChange={() => handlePriceToggle("over-3000")}
@@ -385,7 +466,7 @@ function ShopContent() {
               <div className="plp-filter-options list-filter">
                 <label className="plp-checkbox-label">
                   <input type="checkbox" className="plp-filter-checkbox" defaultChecked />
-                  <span>Armor & Protection</span>
+                  <span>Armor &amp; Protection</span>
                 </label>
                 <label className="plp-checkbox-label">
                   <input type="checkbox" className="plp-filter-checkbox" defaultChecked />
@@ -397,12 +478,32 @@ function ShopContent() {
 
           {/* Main Grid */}
           <div className="plp-grid-container">
-            {sortedProducts.length === 0 ? (
+            {/* BUG 13: Collection-specific empty state */}
+            {activeCollection && sortedProducts.length === 0 ? (
+              <div className="plp-empty-state">
+                <span className="text-3xl plp-empty-illustration">🕊️</span>
+                <h3>Coming Soon</h3>
+                <p>This collection is launching soon. Join the list for early access.</p>
+                <div className="flex flex-col sm:flex-row gap-3 mt-4 w-full max-w-sm">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    aria-label="Email for early access"
+                    className="flex-1 h-11 px-4 text-xs border border-border-warm bg-bg-warm dark:bg-zinc-900 text-text-primary focus:border-brand-burgundy outline-none rounded-none"
+                  />
+                  <button className="h-11 px-5 bg-brand-burgundy text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-burgundy-light transition-colors rounded-none whitespace-nowrap">
+                    Notify Me
+                  </button>
+                </div>
+              </div>
+            ) : sortedProducts.length === 0 ? (
+              // BUG 1: Generic empty state
               <div className="plp-empty-state">
                 <span className="text-3xl plp-empty-illustration">🔍</span>
                 <h3>No products found</h3>
-                <p>We couldn't find any products matching your active filters. Try resetting search parameters.</p>
+                <p>We couldn&apos;t find any products matching your active filters. Try resetting your search.</p>
                 <button onClick={clearAllFilters} className="cta-button cta-button-primary">Reset Filters</button>
+                <Link href="/" className="text-xs text-text-muted underline mt-2 hover:text-brand-burgundy transition-colors">Return Home</Link>
               </div>
             ) : (
               <div className="product-grid-v2">
@@ -423,7 +524,7 @@ function ShopContent() {
                             <span className="plp-card-badge fav-badge">Best Seller</span>
                           )}
                         </div>
-                        <button 
+                        <button
                           onClick={() => handleWishlistToggle(product)}
                           className={`wishlist-btn ${isItemInWishlist(product.id) ? "active" : ""}`}
                           aria-label="Add to wishlist"
@@ -448,7 +549,7 @@ function ShopContent() {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="plp-card-info">
                         <div className="plp-card-meta">
                           <span className="plp-card-verse-ref">
@@ -463,12 +564,12 @@ function ShopContent() {
                         </Link>
                         {product.scripture?.text_content && (
                           <p className="plp-card-hover-verse">
-                            "{product.scripture.text_content.substring(0, 50)}..."
+                            &ldquo;{product.scripture.text_content.substring(0, 50)}...&rdquo;
                           </p>
                         )}
                         <div className="plp-card-price-row">
                           <span className="plp-card-price">
-                            ₹{product.base_price} 
+                            ₹{product.base_price}
                             {product.original_price && <span className="price-original">₹{product.original_price}</span>}
                           </span>
                           <button className="plp-card-compare-btn">
@@ -499,7 +600,7 @@ function ShopContent() {
               <h4>Sizes</h4>
               <div className="plp-filter-options size-grid-filter">
                 {["S", "M", "L", "XL"].map((sz) => (
-                  <button 
+                  <button
                     key={sz}
                     onClick={() => handleSizeToggle(sz)}
                     className={`plp-size-filter-btn ${selectedSizes.includes(sz) ? "active" : ""}`}
@@ -514,8 +615,8 @@ function ShopContent() {
               <h4>Price Range</h4>
               <div className="plp-filter-options list-filter">
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("under-2000")}
                     onChange={() => handlePriceToggle("under-2000")}
@@ -523,17 +624,17 @@ function ShopContent() {
                   <span>Under ₹2,000</span>
                 </label>
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("2000-3000")}
                     onChange={() => handlePriceToggle("2000-3000")}
                   />
-                  <span>₹2,000 - ₹3,000</span>
+                  <span>₹2,000 – ₹3,000</span>
                 </label>
                 <label className="plp-checkbox-label">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     className="plp-filter-checkbox"
                     checked={selectedPrices.includes("over-3000")}
                     onChange={() => handlePriceToggle("over-3000")}
@@ -542,21 +643,21 @@ function ShopContent() {
                 </label>
               </div>
             </div>
-            
+
             <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem" }}>
-              <button 
+              <button
                 onClick={() => {
                   clearAllFilters();
                   setMobileFiltersOpen(false);
-                }} 
-                className="cta-button cta-button-secondary" 
+                }}
+                className="cta-button cta-button-secondary"
                 style={{ flex: 1, padding: "0.8rem" }}
               >
                 Clear
               </button>
-              <button 
-                onClick={() => setMobileFiltersOpen(false)} 
-                className="cta-button cta-button-primary" 
+              <button
+                onClick={() => setMobileFiltersOpen(false)}
+                className="cta-button cta-button-primary"
                 style={{ flex: 1, padding: "0.8rem" }}
               >
                 Apply
@@ -572,8 +673,13 @@ function ShopContent() {
 export default function ShopPage() {
   return (
     <Suspense fallback={
-      <div className="w-full min-h-screen flex items-center justify-center bg-bg-warm dark:bg-zinc-950 text-text-muted text-xs font-bold uppercase tracking-widest">
-        Loading Collection Catalog...
+      <div className="w-full min-h-screen flex flex-col bg-bg-warm dark:bg-zinc-950">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center space-y-3">
+            <div className="w-8 h-8 border-2 border-brand-burgundy border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted">Loading Collection Catalog...</p>
+          </div>
+        </div>
       </div>
     }>
       <ShopContent />

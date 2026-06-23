@@ -368,7 +368,7 @@ h1, h2, h3, h4, h5, h6 {
 .announcement-cross {
   width: 13px;
   height: 13px;
-  color: var(--color-brand-gold);
+  color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
   opacity: 0.95;
 }
@@ -378,7 +378,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
