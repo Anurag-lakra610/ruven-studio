@@ -199,12 +199,10 @@ function LoginForm() {
 
     try {
       const supabase = createClient();
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
       const { error: authErr } = await supabase.auth.signInWithOtp({
         email: val,
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: `${siteUrl}/auth/callback`,
         }
       });
       if (authErr) throw authErr;
@@ -344,12 +342,10 @@ function LoginForm() {
     try {
       const supabase = createClient();
       if (isEmail) {
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
         const { error } = await supabase.auth.signInWithOtp({
           email: val,
           options: {
             shouldCreateUser: true,
-            emailRedirectTo: `${siteUrl}/auth/callback`,
           }
         });
         if (error) throw error;

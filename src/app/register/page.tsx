@@ -159,12 +159,10 @@ function RegisterForm() {
 
     try {
       const supabase = createClient();
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
       const { error: authErr } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: `${siteUrl}/auth/callback`,
           data: {
             first_name: firstName.trim(),
             last_name: lastName.trim(),
@@ -248,12 +246,10 @@ function RegisterForm() {
 
     try {
       const supabase = createClient();
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
       const { error } = await supabase.auth.signInWithOtp({
         email: email.trim(),
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: `${siteUrl}/auth/callback`,
           data: {
             first_name: firstName.trim(),
             last_name: lastName.trim(),
