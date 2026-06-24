@@ -399,7 +399,7 @@ export const MOCK_HOMEPAGE_SECTIONS: HomepageSection[] = [
       quote_author: "The Ruven Collective",
       verse_quote: "Do not be conformed to this world, but be transformed by the renewal of your mind...",
       verse_ref: "Romans 12:2",
-      image_url: "/brand_story_lifestyle.png"
+      image_url: "/sec2-3.png"
     }
   },
   {

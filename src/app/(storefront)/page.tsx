@@ -91,7 +91,7 @@ export default function StorefrontHomePage() {
     quote_author: "",
     verse_quote: "Do not be conformed to this world, but be transformed by the renewal of your mind...",
     verse_ref: "Romans 12:2",
-    image_url: "/brand_story_editorial.png"
+    image_url: "/sec2-3.png"
   };
 
   const rawTitle = missionSettings.title || "";
@@ -110,8 +110,8 @@ export default function StorefrontHomePage() {
     : rawQuote;
 
   const rawImg = missionSettings.image_url || "";
-  const displayImg = (rawImg.includes("lifestyle") || !rawImg)
-    ? "/brand_story_editorial.png"
+  const displayImg = (rawImg.includes("lifestyle") || rawImg.includes("editorial") || !rawImg)
+    ? "/sec2-3.png"
     : rawImg;
 
   // Featured Campaign variables
