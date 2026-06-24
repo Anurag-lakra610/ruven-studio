@@ -67,6 +67,7 @@ function LoginForm() {
   const [isEmail, setIsEmail] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [isDev, setIsDev] = useState(false);
+  const [isSandboxMode, setIsSandboxMode] = useState(false);
 
   // Focused states
   const [idFocused, setIdFocused] = useState(false);
@@ -151,6 +152,7 @@ function LoginForm() {
       const isSandboxBypass = isDummy || cleanPhone === "1234567890" || cleanPhone === "9876543210" || cleanPhone === "9999999999";
       if (isSandboxBypass) {
         await new Promise<void>((res) => setTimeout(res, 800));
+        setIsSandboxMode(true);
         setShowOtpScreen(true);
         setCountdown(60);
         setLoading(false);
@@ -174,6 +176,7 @@ function LoginForm() {
         });
         if (authErr) throw authErr;
 
+        setIsSandboxMode(false);
         setShowOtpScreen(true);
         setCountdown(60);
         setLoading(false);
@@ -187,6 +190,7 @@ function LoginForm() {
     // It is an email address
     if (isDummy || val === "admin@ruven.in" || val === "customer@ruven.in") {
       await new Promise<void>((res) => setTimeout(res, 800));
+      setIsSandboxMode(true);
       setShowOtpScreen(true);
       setCountdown(60);
       setLoading(false);
@@ -205,6 +209,7 @@ function LoginForm() {
       });
       if (authErr) throw authErr;
 
+      setIsSandboxMode(false);
       setShowOtpScreen(true);
       setCountdown(60);
       setLoading(false);
@@ -237,9 +242,7 @@ function LoginForm() {
 
     // 1. Phone number login verification
     if (!isEmail) {
-      const cleanPhone = val.replace(/\s/g, "");
-      const isSandboxBypass = isDummy || cleanPhone === "1234567890" || cleanPhone === "9876543210" || cleanPhone === "9999999999";
-      if (isSandboxBypass) {
+      if (isSandboxMode) {
         await new Promise<void>((res) => setTimeout(res, 1000));
         if (otpCode === "123456" || otpCode.length === 6) {
           document.cookie = "mock_customer_session=true; path=/; max-age=86400";
@@ -254,6 +257,7 @@ function LoginForm() {
       }
 
       // Format to E.164
+      const cleanPhone = val.replace(/\s/g, "");
       let formattedPhone = cleanPhone;
       if (!formattedPhone.startsWith("+")) {
         if (formattedPhone.length === 10) {
@@ -281,7 +285,7 @@ function LoginForm() {
     }
 
     // 2. Sandbox bypass login
-    if (isDummy || val === "admin@ruven.in" || val === "customer@ruven.in") {
+    if (isSandboxMode) {
       await new Promise<void>((res) => setTimeout(res, 1000));
       if (otpCode === "123456" || otpCode.length === 6) {
         if (val === "admin@ruven.in") {
@@ -525,10 +529,12 @@ function LoginForm() {
                   Verify code.
                 </h1>
                 <p style={{ fontSize: "13px", color: T.muted, lineHeight: 1.5, margin: "0 0 32px 0" }}>
-                  {!isEmail ? (
+                  {isSandboxMode ? (
                     <span style={{ color: T.successText, background: T.successBg, border: `1px solid ${T.successBorder}`, padding: "6px 8px", display: "block", fontSize: "11px", marginBottom: "16px" }}>
-                      <strong>Demo SMS Mode</strong>: Phone verification is simulated. Enter **123456** to verify.
+                      <strong>Demo Sandbox Mode</strong>: Verification is simulated. Enter **123456** to verify.
                     </span>
+                  ) : !isEmail ? (
+                    <span>We sent a 6-digit verification code via SMS to <strong style={{ color: T.dark }}>{identifier}</strong>. Please enter it below.</span>
                   ) : (
                     <span>We sent a 6-digit confirmation code to <strong style={{ color: T.dark }}>{identifier}</strong>. Please enter it below.</span>
                   )}
