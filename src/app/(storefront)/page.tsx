@@ -675,10 +675,10 @@ export default function StorefrontHomePage() {
       case "instagram-gallery":
         return showInstagram && (
           <section key="instagram-gallery" className="instagram-gallery section-padding-lg">
-            <div className="instagram-header">
-              <span className="section-subtitle-lowercase">{instagramSettings.subtitle}</span>
-              <h2 className="editorial-title-v2">{instagramSettings.title}</h2>
-              <a href={instagramSettings.instagram_link} target="_blank" rel="noopener noreferrer" className="instagram-handle">
+            <div className="instagram-header-v2">
+              <span className="instagram-subtitle-v2">{instagramSettings.subtitle}</span>
+              <h2 className="instagram-title-v2">{instagramSettings.title}</h2>
+              <a href={instagramSettings.instagram_link} target="_blank" rel="noopener noreferrer" className="instagram-handle-v2">
                 {instagramSettings.instagram_handle}
               </a>
             </div>
@@ -687,9 +687,9 @@ export default function StorefrontHomePage() {
                 <div key={idx} className="instagram-grid-item relative group">
                   <img src={item.image_url} alt="Ruven Studio Instagram fellowship styling" className="w-full h-full object-cover" />
                   
-                  {/* Semi-transparent dark overlay with Coming Soon text */}
-                  <div className="absolute inset-0 bg-black/35 flex items-center justify-center pointer-events-none">
-                    <span className="text-white text-[12px] font-medium tracking-[0.08em] uppercase">
+                  {/* Premium Glassmorphic Coming Soon Badge */}
+                  <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-black/35 backdrop-blur-md border border-white/10 rounded-full pointer-events-none">
+                    <span className="text-white text-[9px] font-bold tracking-[0.1em] uppercase">
                       Coming Soon
                     </span>
                   </div>
