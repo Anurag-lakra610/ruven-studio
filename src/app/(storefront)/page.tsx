@@ -46,15 +46,16 @@ export default function StorefrontHomePage() {
   const [sections, setSections] = useState<HomepageSection[]>([]);
   const [campaign, setCampaign] = useState<CampaignSettings | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const newArrivalsScrollRef = React.useRef<HTMLDivElement>(null);
+  const bestSellersScrollRef = React.useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
+    if (ref.current) {
+      const { scrollLeft, clientWidth } = ref.current;
       const scrollTo = direction === "left" 
         ? scrollLeft - clientWidth * 0.75 
         : scrollLeft + clientWidth * 0.75;
-      scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+      ref.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
 
@@ -393,96 +394,84 @@ export default function StorefrontHomePage() {
               </p>
             </div>
             
-            <div className="campaign-grid">
-              {/* Left Hero Campaign Card */}
-              {teeProduct && (
-                <article className="campaign-hero-card product-card" data-id={teeProduct.id}>
-                  <div className="campaign-hero-img-wrap">
-                    <img src={teeProduct.image} alt={teeProduct.name} className="campaign-hero-img" />
-                    <span className="campaign-tag-badge">New Release</span>
-                    <button 
-                      onClick={() => handleWishlistToggle(teeProduct)}
-                      className={`wishlist-btn ${isItemInWishlist(teeProduct.id) ? "active" : ""}`} 
-                      aria-label="Add to wishlist"
-                    >
-                      <Heart className="w-4 h-4 fill-current" />
-                    </button>
-                  </div>
-                  <div className="campaign-hero-info">
-                    <div className="campaign-info-meta">
-                      <span className="campaign-verse-tag">{teeProduct.scripture ? `${teeProduct.scripture.book} ${teeProduct.scripture.chapter}:${teeProduct.scripture.verse}` : "Romans 13:12"}</span>
-                      <span className="campaign-category-tag">Oversized Tee</span>
-                    </div>
-                    <h3 className="campaign-hero-title">{teeProduct.name}</h3>
-                    <p className="campaign-hero-desc">
-                      {teeProduct.description}
-                    </p>
-                    <div className="campaign-actions">
-                      <span className="campaign-price">
-                        ₹{teeProduct.base_price} {teeProduct.original_price && <span className="price-original">₹{teeProduct.original_price}</span>}
-                      </span>
-                      <div className="size-selector-v2">
-                        {["S", "M", "L", "XL"].map((size) => (
-                          <button 
-                            key={size}
-                            onClick={() => handleQuickAdd(teeProduct, size)}
-                            className="size-btn" 
-                            data-size={size}
-                          >
-                            {size}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              )}
+            <div className="best-sellers-wrapper relative group">
+              {/* Floating Left Navigation Button */}
+              <button 
+                onClick={() => scroll(newArrivalsScrollRef, "left")}
+                className="scroll-arrow-btn left-arrow"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
 
-              {/* Right supporting column */}
-              <div className="campaign-side-col">
-                {hoodieProduct && (
-                  <article className="campaign-supporting-card product-card" data-id={hoodieProduct.id}>
-                    <div className="supporting-img-wrap">
-                      <img src={hoodieProduct.image} alt={hoodieProduct.name} className="supporting-img" />
-                      <span className="campaign-tag-badge">Best Seller</span>
-                      <button 
-                        onClick={() => handleWishlistToggle(hoodieProduct)}
-                        className={`wishlist-btn ${isItemInWishlist(hoodieProduct.id) ? "active" : ""}`} 
-                        aria-label="Add to wishlist"
-                      >
-                        <Heart className="w-4 h-4 fill-current" />
-                      </button>
-                    </div>
-                    <div className="supporting-info">
-                      <span className="campaign-verse-tag">{hoodieProduct.scripture ? `${hoodieProduct.scripture.book} ${hoodieProduct.scripture.chapter}:${hoodieProduct.scripture.verse}` : "Romans 12:2"}</span>
-                      <h4 className="supporting-title">{hoodieProduct.name}</h4>
-                      <div className="flex justify-between items-center mt-2">
-                        <p className="supporting-price">₹{hoodieProduct.base_price}</p>
-                        <div className="size-selector-v2">
-                          {["M", "L", "XL"].map((size) => (
-                            <button 
-                              key={size}
-                              onClick={() => handleQuickAdd(hoodieProduct, size)}
-                              className="size-btn" 
-                              data-size={size}
-                            >
-                              {size}
-                            </button>
-                          ))}
+              <div ref={newArrivalsScrollRef} className="best-sellers-layout">
+                {[...products].reverse().map((product) => {
+                  const isHoodie = product.category_slug === "hoodies" || product.slug.includes("hoodie");
+                  const scriptureRef = product.scripture 
+                    ? `${product.scripture.book} ${product.scripture.chapter}:${product.scripture.verse}` 
+                    : "";
+                  const fabricDesc = isHoodie 
+                    ? "Fabric: 380 GSM Ultra-Heavy French Terry" 
+                    : "Fabric: 240 GSM Organic Heavyweight Cotton";
+
+                  return (
+                    <article key={product.id} className="nike-product-card" data-id={product.id}>
+                      <div className="nike-card-img-wrap">
+                        <img src={product.image} alt={product.name} className="nike-card-img" />
+                        
+                        <button 
+                          onClick={() => handleWishlistToggle(product)}
+                          className={`wishlist-btn ${isItemInWishlist(product.id) ? "active" : ""}`} 
+                          aria-label="Add to wishlist"
+                        >
+                          <Heart className="w-4 h-4 fill-current" />
+                        </button>
+                        
+                        {/* Slide-up Quick Add Drawer on Hover */}
+                        <div className="nike-card-quick-add">
+                          <span className="quick-add-drawer-label">Quick Add</span>
+                          <div className="quick-add-drawer-sizes">
+                            {(product.variants && product.variants.length > 0 
+                              ? product.variants.map((v) => v.size) 
+                              : ["S", "M", "L", "XL"]
+                            ).map((size) => (
+                              <button 
+                                key={size}
+                                onClick={() => handleQuickAdd(product, size)}
+                                className="quick-add-size-circle"
+                              >
+                                {size}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </article>
-                )}
-                
-                <div className="campaign-editorial-statement">
-                  <h3>{campaignSettings.statement_title}</h3>
-                  <p>{campaignSettings.statement_description}</p>
-                  <Link href={campaignSettings.statement_cta_link} className="editorial-text-link">
-                    {campaignSettings.statement_cta_text} →
-                  </Link>
-                </div>
+                      
+                      <div className="nike-card-details">
+                        <div className="nike-card-ref-row">
+                          <span className="nike-card-scripture-ref">{scriptureRef}</span>
+                          <span className="nike-card-badge">{isHoodie ? "Best Seller" : "New Drop"}</span>
+                        </div>
+                        <h3 className="nike-card-title">{product.name}</h3>
+                        <p className="nike-card-fabric">{fabricDesc}</p>
+                        <div className="nike-card-price-row">
+                          <span className="nike-card-price">₹{product.base_price}</span>
+                          {product.original_price && <span className="nike-card-price-original">₹{product.original_price}</span>}
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
+
+              {/* Floating Right Navigation Button */}
+              <button 
+                onClick={() => scroll(newArrivalsScrollRef, "right")}
+                className="scroll-arrow-btn right-arrow"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
           </section>
         );
@@ -521,14 +510,14 @@ export default function StorefrontHomePage() {
             <div className="best-sellers-wrapper relative group">
               {/* Floating Left Navigation Button */}
               <button 
-                onClick={() => scroll("left")}
+                onClick={() => scroll(bestSellersScrollRef, "left")}
                 className="scroll-arrow-btn left-arrow"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div ref={scrollRef} className="best-sellers-layout">
+              <div ref={bestSellersScrollRef} className="best-sellers-layout">
                 {products.map((product) => {
                   const isHoodie = product.category_slug === "hoodies" || product.slug.includes("hoodie");
                   const scriptureRef = product.scripture 
@@ -590,7 +579,7 @@ export default function StorefrontHomePage() {
 
               {/* Floating Right Navigation Button */}
               <button 
-                onClick={() => scroll("right")}
+                onClick={() => scroll(bestSellersScrollRef, "right")}
                 className="scroll-arrow-btn right-arrow"
                 aria-label="Scroll right"
               >

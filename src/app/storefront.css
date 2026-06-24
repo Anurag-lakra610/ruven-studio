@@ -2810,9 +2810,10 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.03);
 }
 
-/* Section 3: Featured Collection Campaign */
-.featured-campaign {
-  background-color: var(--color-bg-warm);
+.featured-campaign.section-padding-lg,
+.best-sellers-editorial.section-padding-lg {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .campaign-header {
@@ -2824,6 +2825,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: var(--max-width-site);
   margin-left: auto;
   margin-right: auto;
+  padding: 0 var(--spacing-2xl);
 }
 
 .editorial-title-v2 {
@@ -2855,7 +2857,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 1.1rem;
+  padding: 0.6rem;
   box-shadow: var(--shadow-subtle);
   transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
@@ -2924,7 +2926,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .campaign-hero-info {
-  padding: 1rem 0.2rem 0.2rem 0.2rem;
+  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
 }
 
 .campaign-info-meta {
@@ -3046,7 +3048,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 1.1rem;
+  padding: 0.6rem;
   box-shadow: var(--shadow-subtle);
   position: relative;
   transition: all var(--transition-medium);
@@ -3101,7 +3103,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .supporting-info {
-  padding: 1rem 0.2rem 0.2rem 0.2rem;
+  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
 }
 
 .supporting-title {
@@ -3352,13 +3354,15 @@ h1, h2, h3, h4, h5, h6 {
 .best-sellers-header {
   max-width: var(--max-width-site);
   margin: 0 auto var(--spacing-xl);
+  padding: 0 var(--spacing-2xl);
 }
 
 .best-sellers-wrapper {
   position: relative;
-  max-width: var(--max-width-site);
-  margin: 0 auto;
-  padding: 0 var(--spacing-xl);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .best-sellers-layout {
@@ -3367,7 +3371,10 @@ h1, h2, h3, h4, h5, h6 {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   gap: 2rem;
-  padding: 1.5rem 0 2.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2 + var(--spacing-2xl)));
+  padding-right: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2 + var(--spacing-2xl)));
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
 }
@@ -3413,11 +3420,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .scroll-arrow-btn.left-arrow {
-  left: -1rem;
+  left: max(1.5rem, calc((100vw - var(--max-width-site)) / 2 + 1.5rem));
 }
 
 .scroll-arrow-btn.right-arrow {
-  right: -1rem;
+  right: max(1.5rem, calc((100vw - var(--max-width-site)) / 2 + 1.5rem));
 }
 
 @media (max-width: 1024px) {
@@ -3437,7 +3444,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 1.1rem;
+  padding: 0.6rem;
   transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -3498,7 +3505,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Text Content details below the image wrapper */
 .nike-card-details {
-  padding: 1rem 0.2rem 0.2rem 0.2rem;
+  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
