@@ -22,22 +22,25 @@ const T = {
   successBg:    "#EBF7EE",
   successBorder:"#9EDCA9",
   successText:  "#1C522D",
+  brandBurgundy:"#670000",
+  brandBurgundyLight: "#8E1B1B",
 } as const;
 
 const baseInput: React.CSSProperties = {
   border: `1px solid ${T.border}`,
   borderRadius: 0,
-  background: T.bgWhite,
-  height: "42px",
-  padding: "0 12px",
+  background: "#FAF9F6",
+  height: "44px",
+  padding: "0 14px",
   fontSize: "13px",
   color: T.dark,
   width: "100%",
   outline: "none",
+  boxShadow: "none",
   display: "block",
   boxSizing: "border-box",
   fontFamily: "inherit",
-  transition: "border-color 0.15s ease",
+  transition: "border-color 0.15s ease, background-color 0.15s ease",
 };
 
 const labelSt: React.CSSProperties = {
@@ -317,7 +320,7 @@ function LoginForm() {
 
   const clearAuthError = () => { if (authError) setAuthError(""); };
 
-  const idBorder = idError ? T.errorRed : isIdValid ? T.successGreen : idFocused ? T.dark : T.border;
+  const idBorder = idError ? T.errorRed : isIdValid ? T.successGreen : idFocused ? T.brandBurgundy : T.border;
 
   return (
     <>
@@ -331,7 +334,14 @@ function LoginForm() {
         .back-link { color: ${T.muted}; transition: color 0.15s ease; }
         .back-link:hover { color: ${T.dark}; }
         .google-btn { transition: background 0.15s ease, border-color 0.15s ease; }
-        .google-btn:hover { background: #F9F9F9 !important; border-color: ${T.dark} !important; }
+        .google-btn:hover { background: #FAF9F6 !important; border-color: ${T.brandBurgundy} !important; color: ${T.brandBurgundy} !important; }
+        .btn-brand-primary {
+          background: ${T.brandBurgundy} !important;
+          transition: background 0.2s ease, transform 0.15s ease;
+        }
+        .btn-brand-primary:hover {
+          background: ${T.brandBurgundyLight} !important;
+        }
         @media (max-width: 767px) {
           .login-left-panel { display: none !important; }
           .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
@@ -400,10 +410,9 @@ function LoginForm() {
 
         {/* RIGHT FORM PANEL */}
         <div
-          className="login-right-panel"
+          className="login-right-panel auth-right-panel-bg"
           style={{
             flex: 1,
-            background: T.bgWhite,
             overflowY: "auto",
             display: "flex",
             alignItems: "center",
@@ -412,6 +421,10 @@ function LoginForm() {
             fontFamily: 'var(--font-sans)',
           }}
         >
+          {/* Blueprint Layout Grid & Faith-Inspired Watermark */}
+          <div className="auth-blueprint-grid" />
+          <div className="auth-watermark-graphic" />
+
           <div
             className="login-inner"
             style={{
@@ -420,7 +433,9 @@ function LoginForm() {
               padding: "48px 40px",
               background: T.bgWhite,
               border: "1px solid #E5E3DD",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)"
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
+              position: "relative",
+              zIndex: 2,
             }}
           >
             <Link href="/shop" className="back-link" style={{ fontSize: "12px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", cursor: "pointer", marginBottom: "32px" }}>
@@ -456,6 +471,7 @@ function LoginForm() {
                     <input
                       id="login-otp"
                       type="text"
+                      className="no-double-border"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={6}
@@ -466,7 +482,7 @@ function LoginForm() {
                       onBlur={() => setOtpFocused(false)}
                       aria-describedby={otpError ? "login-otp-error" : undefined}
                       aria-invalid={otpError ? "true" : "false"}
-                      style={{ ...baseInput, letterSpacing: otpCode ? "0.5em" : "normal", textAlign: otpCode ? "center" : "left", fontSize: otpCode ? "18px" : "13px", borderColor: otpError ? T.errorRed : isOtpValid ? T.successGreen : otpFocused ? T.dark : T.border }}
+                      style={{ ...baseInput, letterSpacing: otpCode ? "0.5em" : "normal", textAlign: otpCode ? "center" : "left", fontSize: otpCode ? "18px" : "13px", borderColor: otpError ? T.errorRed : isOtpValid ? T.successGreen : otpFocused ? T.brandBurgundy : T.border }}
                     />
                     {otpError && <span id="login-otp-error" role="alert" style={{ display: "block", fontSize: "11px", color: T.errorRed, marginTop: "4px" }}>{otpError}</span>}
                   </div>
@@ -474,9 +490,9 @@ function LoginForm() {
                   {/* Verify Button */}
                   <button
                     type="submit"
+                    className="btn-brand-primary"
                     disabled={loading}
                     style={{
-                      background: T.dark,
                       color: "#FFFFFF",
                       borderRadius: 0,
                       height: "44px",
@@ -568,6 +584,7 @@ function LoginForm() {
                     <input
                       id="login-identifier"
                       type="text"
+                      className="no-double-border"
                       placeholder="you@email.com or 9876543210"
                       value={identifier}
                       onChange={(e) => {
@@ -586,23 +603,23 @@ function LoginForm() {
 
                   {/* Links Row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "10px", marginBottom: "28px" }}>
-                    <label style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer", fontSize: "11px", color: "#666666", userSelect: "none" }}>
+                    <label className="ruven-checkbox-container" style={{ fontSize: "11px", color: "#666666" }}>
                       <input
                         type="checkbox"
+                        className="ruven-checkbox"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
-                        style={{ accentColor: T.dark, cursor: "pointer" }}
                       />
-                      Remember me
+                      <span>Remember me</span>
                     </label>
                   </div>
 
                   {/* Get OTP Button */}
                   <button
                     type="submit"
+                    className="btn-brand-primary"
                     disabled={loading}
                     style={{
-                      background: T.dark,
                       color: "#FFFFFF",
                       borderRadius: 0,
                       height: "44px",

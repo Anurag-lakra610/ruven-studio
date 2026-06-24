@@ -22,22 +22,25 @@ const T = {
   successBg:    "#EBF7EE",
   successBorder:"#9EDCA9",
   successText:  "#1C522D",
+  brandBurgundy:"#670000",
+  brandBurgundyLight: "#8E1B1B",
 } as const;
 
 const baseInput: React.CSSProperties = {
   border: `1px solid ${T.border}`,
   borderRadius: 0,
-  background: T.bgWhite,
-  height: "42px",
-  padding: "0 12px",
+  background: "#FAF9F6",
+  height: "44px",
+  padding: "0 14px",
   fontSize: "13px",
   color: T.dark,
   width: "100%",
   outline: "none",
+  boxShadow: "none",
   display: "block",
   boxSizing: "border-box",
   fontFamily: "inherit",
-  transition: "border-color 0.15s ease",
+  transition: "border-color 0.15s ease, background-color 0.15s ease",
 };
 
 const labelSt: React.CSSProperties = {
@@ -265,10 +268,10 @@ function RegisterForm() {
   };
 
   // Border logic
-  const fnBorder = fnError ? T.errorRed : isFnValid ? T.successGreen : fnFocused ? T.dark : T.border;
-  const lnBorder = lnError ? T.errorRed : isLnValid ? T.successGreen : lnFocused ? T.dark : T.border;
-  const phoneBorder = phoneError ? T.errorRed : isPhoneValid ? T.successGreen : phoneFocused ? T.dark : T.border;
-  const emailBorder = emailError ? T.errorRed : isEmailValid ? T.successGreen : emailFocused ? T.dark : T.border;
+  const fnBorder = fnError ? T.errorRed : isFnValid ? T.successGreen : fnFocused ? T.brandBurgundy : T.border;
+  const lnBorder = lnError ? T.errorRed : isLnValid ? T.successGreen : lnFocused ? T.brandBurgundy : T.border;
+  const phoneBorder = phoneError ? T.errorRed : isPhoneValid ? T.successGreen : phoneFocused ? T.brandBurgundy : T.border;
+  const emailBorder = emailError ? T.errorRed : isEmailValid ? T.successGreen : emailFocused ? T.brandBurgundy : T.border;
 
   return (
     <>
@@ -281,6 +284,13 @@ function RegisterForm() {
         }
         .back-link { color: ${T.muted}; transition: color 0.15s ease; }
         .back-link:hover { color: ${T.dark}; }
+        .btn-brand-primary {
+          background: ${T.brandBurgundy} !important;
+          transition: background 0.2s ease, transform 0.15s ease;
+        }
+        .btn-brand-primary:hover {
+          background: ${T.brandBurgundyLight} !important;
+        }
         @media (max-width: 767px) {
           .login-left-panel { display: none !important; }
           .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
@@ -349,10 +359,9 @@ function RegisterForm() {
 
         {/* RIGHT FORM PANEL */}
         <div
-          className="login-right-panel"
+          className="login-right-panel auth-right-panel-bg"
           style={{
             flex: 1,
-            background: T.bgWhite,
             overflowY: "auto",
             display: "flex",
             alignItems: "center",
@@ -361,7 +370,23 @@ function RegisterForm() {
             fontFamily: 'var(--font-sans)',
           }}
         >
-          <div className="login-inner" style={{ width: "100%", maxWidth: "380px", padding: "48px 40px", background: T.bgWhite, border: "1px solid #E5E3DD", boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)" }}>
+          {/* Blueprint Layout Grid & Faith-Inspired Watermark */}
+          <div className="auth-blueprint-grid" />
+          <div className="auth-watermark-graphic" />
+
+          <div
+            className="login-inner"
+            style={{
+              width: "100%",
+              maxWidth: "380px",
+              padding: "48px 40px",
+              background: T.bgWhite,
+              border: "1px solid #E5E3DD",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
             <Link href="/shop" className="back-link" style={{ fontSize: "12px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", cursor: "pointer", marginBottom: "32px" }}>
               &larr; Back to shop
             </Link>
@@ -389,6 +414,7 @@ function RegisterForm() {
                     <input
                       id="register-otp"
                       type="text"
+                      className="no-double-border"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={6}
@@ -399,7 +425,7 @@ function RegisterForm() {
                       onBlur={() => setOtpFocused(false)}
                       aria-describedby={otpError ? "register-otp-error" : undefined}
                       aria-invalid={otpError ? "true" : "false"}
-                      style={{ ...baseInput, letterSpacing: otpCode ? "0.5em" : "normal", textAlign: otpCode ? "center" : "left", fontSize: otpCode ? "18px" : "13px", borderColor: otpError ? T.errorRed : isOtpValid ? T.successGreen : otpFocused ? T.dark : T.border }}
+                      style={{ ...baseInput, letterSpacing: otpCode ? "0.5em" : "normal", textAlign: otpCode ? "center" : "left", fontSize: otpCode ? "18px" : "13px", borderColor: otpError ? T.errorRed : isOtpValid ? T.successGreen : otpFocused ? T.brandBurgundy : T.border }}
                     />
                     {otpError && <span id="register-otp-error" role="alert" style={{ display: "block", fontSize: "11px", color: T.errorRed, marginTop: "4px" }}>{otpError}</span>}
                   </div>
@@ -407,9 +433,9 @@ function RegisterForm() {
                   {/* Verify Button */}
                   <button
                     type="submit"
+                    className="btn-brand-primary"
                     disabled={loading}
                     style={{
-                      background: T.dark,
                       color: "#FFFFFF",
                       borderRadius: 0,
                       height: "44px",
@@ -498,6 +524,7 @@ function RegisterForm() {
                       <input
                         id="register-firstname"
                         type="text"
+                        className="no-double-border"
                         placeholder="John"
                         value={firstName}
                         onChange={(e) => { setFirstName(e.target.value); if (fnError) setFnError(""); }}
@@ -515,6 +542,7 @@ function RegisterForm() {
                       <input
                         id="register-lastname"
                         type="text"
+                        className="no-double-border"
                         placeholder="Doe"
                         value={lastName}
                         onChange={(e) => { setLastName(e.target.value); if (lnError) setLnError(""); }}
@@ -534,6 +562,7 @@ function RegisterForm() {
                     <input
                       id="register-phone"
                       type="tel"
+                      className="no-double-border"
                       placeholder="+91 98765 43210"
                       value={phone}
                       onChange={(e) => { setPhone(e.target.value); if (phoneError) setPhoneError(""); }}
@@ -552,6 +581,7 @@ function RegisterForm() {
                     <input
                       id="register-email"
                       type="email"
+                      className="no-double-border"
                       placeholder="you@email.com"
                       value={email}
                       onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(""); }}
@@ -566,12 +596,12 @@ function RegisterForm() {
 
                   {/* Terms Checkbox */}
                   <div style={{ marginBottom: "24px" }}>
-                    <label style={{ display: "flex", alignItems: "flex-start", gap: "8px", cursor: "pointer", fontSize: "11px", color: "#666666", userSelect: "none" }}>
+                    <label className="ruven-checkbox-container" style={{ fontSize: "11px", color: "#666666" }}>
                       <input
                         type="checkbox"
+                        className="ruven-checkbox"
                         checked={agreeTerms}
                         onChange={(e) => { setAgreeTerms(e.target.checked); if (termsError) setTermsError(""); }}
-                        style={{ accentColor: T.dark, cursor: "pointer", marginTop: "2px" }}
                       />
                       <span>
                         I agree to the{" "}
@@ -586,9 +616,9 @@ function RegisterForm() {
                   {/* Submit Button */}
                   <button
                     type="submit"
+                    className="btn-brand-primary"
                     disabled={loading}
                     style={{
-                      background: T.dark,
                       color: "#FFFFFF",
                       borderRadius: 0,
                       height: "44px",

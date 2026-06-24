@@ -22,6 +22,8 @@ const T = {
   successBg:    "#EBF7EE",
   successBorder:"#9EDCA9",
   successText:  "#1C522D",
+  brandBurgundy:"#670000",
+  brandBurgundyLight: "#8E1B1B",
 } as const;
 
 const baseInput: React.CSSProperties = {
@@ -58,6 +60,13 @@ function ResetPasswordForm() {
       <style>{`
         .back-link { color: ${T.muted}; transition: color 0.15s ease; }
         .back-link:hover { color: ${T.dark}; }
+        .btn-brand-primary {
+          background: ${T.brandBurgundy} !important;
+          transition: background 0.2s ease, transform 0.15s ease;
+        }
+        .btn-brand-primary:hover {
+          background: ${T.brandBurgundyLight} !important;
+        }
         @media (max-width: 767px) {
           .login-left-panel { display: none !important; }
           .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
@@ -126,10 +135,9 @@ function ResetPasswordForm() {
 
         {/* RIGHT FORM PANEL */}
         <div
-          className="login-right-panel"
+          className="login-right-panel auth-right-panel-bg"
           style={{
             flex: 1,
-            background: T.bgWhite,
             overflowY: "auto",
             display: "flex",
             alignItems: "center",
@@ -138,6 +146,10 @@ function ResetPasswordForm() {
             fontFamily: 'var(--font-sans)',
           }}
         >
+          {/* Blueprint Layout Grid & Faith-Inspired Watermark */}
+          <div className="auth-blueprint-grid" />
+          <div className="auth-watermark-graphic" />
+
           <div
             className="login-inner"
             style={{
@@ -146,7 +158,9 @@ function ResetPasswordForm() {
               padding: "48px 40px",
               background: T.bgWhite,
               border: "1px solid #E5E3DD",
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)"
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
+              position: "relative",
+              zIndex: 2,
             }}
           >
             <h2 style={{ fontSize: "22px", fontWeight: 600, color: T.dark, letterSpacing: "-0.02em", marginBottom: "16px", textTransform: "uppercase" }}>
@@ -158,9 +172,9 @@ function ResetPasswordForm() {
 
             <Link
               href="/login"
+              className="btn-brand-primary"
               style={{
                 display: "inline-block",
-                background: T.dark,
                 color: "#FFFFFF",
                 fontSize: "12px",
                 fontWeight: 500,
