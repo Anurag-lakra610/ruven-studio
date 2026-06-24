@@ -64,10 +64,14 @@ export const Footer: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="h-[52px] px-6 bg-white text-brand-burgundy text-xs font-bold uppercase tracking-widest hover:bg-zinc-100 transition-colors flex items-center gap-2 whitespace-nowrap rounded-none"
+                  className="cta-button cta-button-white h-[52px]"
                 >
-                  <span>Subscribe</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="btn-content">
+                    <span className="btn-text">Subscribe</span>
+                    <span className="btn-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </span>
+                  </span>
                 </button>
               </div>
               {emailError && (

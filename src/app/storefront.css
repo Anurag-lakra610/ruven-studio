@@ -269,6 +269,31 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 10px 25px rgba(28, 28, 28, 0.08);
 }
 
+.cta-button-white {
+  background-color: var(--color-white);
+  color: var(--color-brand-burgundy);
+  border: 1px solid var(--color-white);
+}
+
+.cta-button-white::before {
+  background-color: #F5F5F7;
+}
+
+.cta-button-white:hover::before {
+  transform: scaleY(1);
+}
+
+.cta-button-white:hover {
+  border-color: #F5F5F7;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+}
+
+.cta-button-white:hover .btn-text,
+.cta-button-white:hover .btn-icon {
+  color: var(--color-brand-burgundy);
+}
+
 /* Icon Slide Button styles (Framer style) */
 .cta-button .btn-content {
   display: inline-flex;
