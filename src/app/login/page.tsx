@@ -145,13 +145,42 @@ function LoginForm() {
       process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") ||
       !process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-    // Check if it is a phone number (always mock SMS OTP since phone SMS is not free)
+    // Check if it is a phone number
     if (!emailCheck) {
-      // It is a phone number!
-      await new Promise<void>((res) => setTimeout(res, 800));
-      setShowOtpScreen(true);
-      setCountdown(60);
-      setLoading(false);
+      // Check if sandbox testing bypass
+      const isSandboxBypass = isDummy || cleanPhone === "1234567890" || cleanPhone === "9876543210" || cleanPhone === "9999999999";
+      if (isSandboxBypass) {
+        await new Promise<void>((res) => setTimeout(res, 800));
+        setShowOtpScreen(true);
+        setCountdown(60);
+        setLoading(false);
+        return;
+      }
+
+      // Format to E.164
+      let formattedPhone = cleanPhone;
+      if (!formattedPhone.startsWith("+")) {
+        if (formattedPhone.length === 10) {
+          formattedPhone = "+91" + formattedPhone;
+        } else {
+          formattedPhone = "+" + formattedPhone;
+        }
+      }
+
+      try {
+        const supabase = createClient();
+        const { error: authErr } = await supabase.auth.signInWithOtp({
+          phone: formattedPhone
+        });
+        if (authErr) throw authErr;
+
+        setShowOtpScreen(true);
+        setCountdown(60);
+        setLoading(false);
+      } catch (err: any) {
+        setAuthError(err.message || "Failed to send code. Please try again.");
+        setLoading(false);
+      }
       return;
     }
 
@@ -206,16 +235,46 @@ function LoginForm() {
 
     const val = identifier.trim();
 
-    // 1. Phone number login verification (Mock)
+    // 1. Phone number login verification
     if (!isEmail) {
-      await new Promise<void>((res) => setTimeout(res, 1000));
-      if (otpCode === "123456" || otpCode.length === 6) {
-        document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-        document.cookie = `mock_user_email=${val}; path=/; max-age=86400`;
-        document.cookie = "mock_user_name=Phone Customer; path=/; max-age=86400";
+      const cleanPhone = val.replace(/\s/g, "");
+      const isSandboxBypass = isDummy || cleanPhone === "1234567890" || cleanPhone === "9876543210" || cleanPhone === "9999999999";
+      if (isSandboxBypass) {
+        await new Promise<void>((res) => setTimeout(res, 1000));
+        if (otpCode === "123456" || otpCode.length === 6) {
+          document.cookie = "mock_customer_session=true; path=/; max-age=86400";
+          document.cookie = `mock_user_email=${val}; path=/; max-age=86400`;
+          document.cookie = "mock_user_name=Phone Customer; path=/; max-age=86400";
+          router.push("/account");
+        } else {
+          setOtpError("Incorrect OTP code. Try 123456.");
+          setLoading(false);
+        }
+        return;
+      }
+
+      // Format to E.164
+      let formattedPhone = cleanPhone;
+      if (!formattedPhone.startsWith("+")) {
+        if (formattedPhone.length === 10) {
+          formattedPhone = "+91" + formattedPhone;
+        } else {
+          formattedPhone = "+" + formattedPhone;
+        }
+      }
+
+      try {
+        const supabase = createClient();
+        const { error: authErr } = await supabase.auth.verifyOtp({
+          phone: formattedPhone,
+          token: otpCode.trim(),
+          type: 'sms'
+        });
+        if (authErr) throw authErr;
+
         router.push("/account");
-      } else {
-        setOtpError("Incorrect OTP code. Try 123456.");
+      } catch (err: any) {
+        setOtpError(err.message || "Incorrect verification code. Please try again.");
         setLoading(false);
       }
       return;
@@ -272,21 +331,39 @@ function LoginForm() {
       process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") ||
       !process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-    if (isDummy || !isEmail || val === "admin@ruven.in" || val === "customer@ruven.in") {
+    const cleanPhone = val.replace(/\s/g, "");
+    const isSandboxBypass = isDummy || cleanPhone === "1234567890" || cleanPhone === "9876543210" || cleanPhone === "9999999999" || val === "admin@ruven.in" || val === "customer@ruven.in";
+    if (isSandboxBypass) {
       return;
     }
 
     try {
       const supabase = createClient();
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
-      const { error } = await supabase.auth.signInWithOtp({
-        email: val,
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${siteUrl}/auth/callback`,
+      if (isEmail) {
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+        const { error } = await supabase.auth.signInWithOtp({
+          email: val,
+          options: {
+            shouldCreateUser: true,
+            emailRedirectTo: `${siteUrl}/auth/callback`,
+          }
+        });
+        if (error) throw error;
+      } else {
+        // Format to E.164
+        let formattedPhone = cleanPhone;
+        if (!formattedPhone.startsWith("+")) {
+          if (formattedPhone.length === 10) {
+            formattedPhone = "+91" + formattedPhone;
+          } else {
+            formattedPhone = "+" + formattedPhone;
+          }
         }
-      });
-      if (error) throw error;
+        const { error } = await supabase.auth.signInWithOtp({
+          phone: formattedPhone
+        });
+        if (error) throw error;
+      }
     } catch (err: any) {
       setAuthError(err.message || "Failed to resend code. Please try again.");
     }
