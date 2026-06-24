@@ -21,6 +21,10 @@ const T = {
   errorBg:      "#FCEBEB",
   errorBorder:  "#F09595",
   errorText:    "#A32D2D",
+  successGreen: "#2D7D46",
+  successBg:    "#EBF7EE",
+  successBorder:"#9EDCA9",
+  successText:  "#1C522D",
 } as const;
 
 /* Shared style objects */
@@ -51,7 +55,7 @@ const labelSt: React.CSSProperties = {
 };
 
 /* ─────────────────────────────────────────────
-   Inner Login/SignUp Form (client logic lives here)
+   Inner Login Form
 ───────────────────────────────────────────── */
 function LoginForm() {
   const router = useRouter();
@@ -60,7 +64,6 @@ function LoginForm() {
   const [email,      setEmail]      = useState("");
   const [password,   setPassword]   = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [isSignUp,   setIsSignUp]   = useState(false);
 
   /* UI state */
   const [showPassword, setShowPassword] = useState(false);
@@ -71,15 +74,24 @@ function LoginForm() {
   const [emailFocused, setEmailFocused]   = useState(false);
   const [pwFocused,    setPwFocused]      = useState(false);
 
-  /* Error states — three distinct types per spec */
+  /* Error and Success states */
   const [emailError,  setEmailError]  = useState("");
   const [pwError,     setPwError]     = useState("");
   const [authError,   setAuthError]   = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const h = window.location.hostname;
     setIsDev(h === "localhost" || h === "127.0.0.1" || window.location.port !== "");
+
+    // Load remember me settings
+    const savedEmail = localStorage.getItem("ruven_remembered_email");
+    const savedRememberMe = localStorage.getItem("ruven_remember_me") === "true";
+    if (savedRememberMe && savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
   }, []);
 
   /* ── Validation ─────────────────────────── */
@@ -99,20 +111,27 @@ function LoginForm() {
     if (!password) {
       setPwError("Password is required.");
       ok = false;
-    } else if (isSignUp && password.length < 6) {
-      setPwError("Password must be at least 6 characters.");
-      ok = false;
     }
 
     return ok;
-  }, [email, password, isSignUp]);
+  }, [email, password]);
 
-  /* ── Submit (Login / Sign Up) ────────────── */
+  /* ── Submit (Login) ────────────── */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError("");
+    setSuccessMessage("");
     if (!validateForm()) return;
     setLoading(true);
+
+    // Save/clear remember me settings
+    if (rememberMe) {
+      localStorage.setItem("ruven_remembered_email", email.trim());
+      localStorage.setItem("ruven_remember_me", "true");
+    } else {
+      localStorage.removeItem("ruven_remembered_email");
+      localStorage.removeItem("ruven_remember_me");
+    }
 
     const isDummy =
       process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("dummy") ||
@@ -120,69 +139,37 @@ function LoginForm() {
 
     if (isDummy) {
       await new Promise<void>((res) => setTimeout(res, 1200));
-      if (isSignUp) {
-        // Mock successful sign up for any email
+      // Mock login
+      if (email === "admin@ruven.in" && password === "admin123") {
+        document.cookie = "mock_admin_session=true; path=/; max-age=86400";
+        document.cookie = "mock_user_email=admin@ruven.in; path=/; max-age=86400";
+        document.cookie = "mock_user_name=Super Admin; path=/; max-age=86400";
+        router.push("/admin");
+      } else if (email === "customer@ruven.in" && password === "customer123") {
+        document.cookie = "mock_customer_session=true; path=/; max-age=86400";
+        document.cookie = "mock_user_email=customer@ruven.in; path=/; max-age=86400";
+        document.cookie = "mock_user_name=John Doe; path=/; max-age=86400";
+        router.push("/account");
+      } else {
+        // Allow custom mock email login in dev sandbox for convenience
         document.cookie = "mock_customer_session=true; path=/; max-age=86400";
         document.cookie = `mock_user_email=${email.trim()}; path=/; max-age=86400`;
         const derivedName = email.split("@")[0].replace(/[._-]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
         document.cookie = `mock_user_name=${derivedName}; path=/; max-age=86400`;
         router.push("/account");
-      } else {
-        // Mock login
-        if (email === "admin@ruven.in" && password === "admin123") {
-          document.cookie = "mock_admin_session=true; path=/; max-age=86400";
-          document.cookie = "mock_user_email=admin@ruven.in; path=/; max-age=86400";
-          document.cookie = "mock_user_name=Super Admin; path=/; max-age=86400";
-          router.push("/admin");
-        } else if (email === "customer@ruven.in" && password === "customer123") {
-          document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-          document.cookie = "mock_user_email=customer@ruven.in; path=/; max-age=86400";
-          document.cookie = "mock_user_name=John Doe; path=/; max-age=86400";
-          router.push("/account");
-        } else {
-          // Allow custom mock email login in dev sandbox for convenience
-          document.cookie = "mock_customer_session=true; path=/; max-age=86400";
-          document.cookie = `mock_user_email=${email.trim()}; path=/; max-age=86400`;
-          const derivedName = email.split("@")[0].replace(/[._-]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
-          document.cookie = `mock_user_name=${derivedName}; path=/; max-age=86400`;
-          router.push("/account");
-        }
       }
       return;
     }
 
     try {
       const supabase = createClient();
-      if (isSignUp) {
-        // Real Supabase sign up
-        const { data, error: authErr } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/account`,
-          }
-        });
-        if (authErr) throw authErr;
-        
-        if (data?.session) {
-          if (email.endsWith("@ruvenstudio.in") || email.endsWith("@ruven.in")) {
-            router.push("/admin");
-          } else {
-            router.push("/account");
-          }
-        } else {
-          setAuthError("Registration successful! Please check your email inbox to confirm your account.");
-          setLoading(false);
-        }
+      // Real Supabase sign in
+      const { error: authErr } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      if (authErr) throw authErr;
+      if (email.endsWith("@ruvenstudio.in") || email.endsWith("@ruven.in")) {
+        router.push("/admin");
       } else {
-        // Real Supabase sign in
-        const { error: authErr } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-        if (authErr) throw authErr;
-        if (email.endsWith("@ruvenstudio.in") || email.endsWith("@ruven.in")) {
-          router.push("/admin");
-        } else {
-          router.push("/account");
-        }
+        router.push("/account");
       }
     } catch (err: any) {
       setAuthError(err.message || "Incorrect email or password. Please try again.");
@@ -420,7 +407,7 @@ function LoginForm() {
                 margin: "0 0 6px 0",
               }}
             >
-              {isSignUp ? "Create account." : "Welcome back."}
+              Welcome back.
             </h1>
 
             {/* ── Sub-heading ────────────────── */}
@@ -432,7 +419,7 @@ function LoginForm() {
                 margin: "0 0 36px 0",
               }}
             >
-              {isSignUp ? "Sign up for a Ruven Studio account." : "Sign in to your Ruven Studio account."}
+              Sign in to your Ruven Studio account.
             </p>
 
             {/* ══════════════════════════════════
@@ -479,7 +466,7 @@ function LoginForm() {
               </div>
 
               {/* ── Password field ─────────────── */}
-              <div>
+              <div style={{ marginBottom: "10px" }}>
                 <label htmlFor="login-password" style={labelSt}>
                   Password
                 </label>
@@ -488,7 +475,7 @@ function LoginForm() {
                     id="login-password"
                     type={showPassword ? "text" : "password"}
                     name="password"
-                    autoComplete={isSignUp ? "new-password" : "current-password"}
+                    autoComplete="current-password"
                     placeholder="••••••••"
                     tabIndex={0}
                     value={password}
@@ -552,7 +539,7 @@ function LoginForm() {
               {/* ── Links row ──────────────────── */}
               <div
                 style={{
-                  display: isSignUp ? "none" : "flex",
+                  display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginTop: "10px",
@@ -598,6 +585,25 @@ function LoginForm() {
                 </Link>
               </div>
 
+              {/* ── Success notification banner (gold/green) ── */}
+              {successMessage && (
+                <div
+                  role="alert"
+                  style={{
+                    background: T.successBg,
+                    border: `1px solid ${T.successBorder}`,
+                    borderRadius: 0,
+                    padding: "10px 14px",
+                    marginBottom: "16px",
+                    fontSize: "12px",
+                    color: T.successText,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {successMessage}
+                </div>
+              )}
+
               {/* ── Auth error banner (Type 3) ── */}
               {authError && (
                 <div
@@ -608,7 +614,6 @@ function LoginForm() {
                     border: `1px solid ${T.errorBorder}`,
                     borderRadius: 0,
                     padding: "10px 14px",
-                    marginTop: isSignUp ? "20px" : "0",
                     marginBottom: "16px",
                     fontSize: "12px",
                     color: T.errorText,
@@ -619,10 +624,7 @@ function LoginForm() {
                 </div>
               )}
 
-              {/* Spacer when error is not showing in Sign Up mode */}
-              {isSignUp && !authError && <div style={{ height: "24px" }} />}
-
-              {/* ── Sign In / Sign Up button ────── */}
+              {/* ── Sign In button ────── */}
               <button
                 type="submit"
                 id="signin-btn"
@@ -666,10 +668,10 @@ function LoginForm() {
                         flexShrink: 0,
                       }}
                     />
-                    {isSignUp ? "Creating account…" : "Signing in…"}
+                    Signing in…
                   </>
                 ) : (
-                  isSignUp ? "Create Account" : "Sign In"
+                  "Sign In"
                 )}
               </button>
 
@@ -748,7 +750,7 @@ function LoginForm() {
                 Continue with Google
               </button>
 
-              {/* ── Toggle Sign In / Sign Up Link ── */}
+              {/* ── Link to Register ── */}
               <p
                 style={{
                   textAlign: "center",
@@ -758,20 +760,10 @@ function LoginForm() {
                   fontFamily: "inherit",
                 }}
               >
-                {isSignUp ? "Already have an account?" : "Don't have an account?"}
-                <button
-                  type="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    setIsSignUp(!isSignUp);
-                    setAuthError("");
-                    setEmailError("");
-                    setPwError("");
-                  }}
+                Don&apos;t have an account?
+                <Link
+                  href="/register"
                   style={{
-                    background: "none",
-                    border: "none",
-                    padding: 0,
                     color: T.dark,
                     fontWeight: 600,
                     textDecoration: "underline",
@@ -781,8 +773,8 @@ function LoginForm() {
                     fontSize: "12px",
                   }}
                 >
-                  {isSignUp ? "Sign in" : "Create account"}
-                </button>
+                  Create account
+                </Link>
               </p>
 
               {/* ── Dev sandbox (localhost only) ─ */}
