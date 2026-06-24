@@ -434,6 +434,7 @@ export default function StorefrontHomePage() {
                 className="best-sellers-layout"
                 onScroll={() => updateScrollButtons(newArrivalsScrollRef, setNewArrivalsShowLeft, setNewArrivalsShowRight)}
               >
+                <div className="scroll-spacer-left" />
                 {[...products].reverse().map((product) => {
                   const isHoodie = product.category_slug === "hoodies" || product.slug.includes("hoodie");
                   const scriptureRef = product.scripture 
@@ -491,6 +492,7 @@ export default function StorefrontHomePage() {
                     </article>
                   );
                 })}
+                <div className="scroll-spacer-right" />
               </div>
 
               {/* Floating Right Navigation Button */}
@@ -551,6 +553,7 @@ export default function StorefrontHomePage() {
                 className="best-sellers-layout"
                 onScroll={() => updateScrollButtons(bestSellersScrollRef, setBestSellersShowLeft, setBestSellersShowRight)}
               >
+                <div className="scroll-spacer-left" />
                 {products.map((product) => {
                   const isHoodie = product.category_slug === "hoodies" || product.slug.includes("hoodie");
                   const scriptureRef = product.scripture 
@@ -608,6 +611,7 @@ export default function StorefrontHomePage() {
                     </article>
                   );
                 })}
+                <div className="scroll-spacer-right" />
               </div>
 
               {/* Floating Right Navigation Button */}
