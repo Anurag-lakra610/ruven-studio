@@ -61,7 +61,12 @@ function ResetPasswordForm() {
         @media (max-width: 767px) {
           .login-left-panel { display: none !important; }
           .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
-          .login-inner { padding: 0 !important; }
+          .login-inner {
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+          }
         }
       `}</style>
 
@@ -133,7 +138,17 @@ function ResetPasswordForm() {
             fontFamily: 'var(--font-sans)',
           }}
         >
-          <div className="login-inner" style={{ width: "100%", maxWidth: "380px", padding: "48px 40px", background: T.bgWhite, border: `1px solid ${T.border}` }}>
+          <div
+            className="login-inner"
+            style={{
+              width: "100%",
+              maxWidth: "380px",
+              padding: "48px 40px",
+              background: T.bgWhite,
+              border: "1px solid #E5E3DD",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)"
+            }}
+          >
             <h2 style={{ fontSize: "22px", fontWeight: 600, color: T.dark, letterSpacing: "-0.02em", marginBottom: "16px", textTransform: "uppercase" }}>
               No Password Needed.
             </h2>
@@ -159,7 +174,7 @@ function ResetPasswordForm() {
                 textAlign: "center"
               }}
             >
-              Go to Sign In
+              Go to Login
             </Link>
           </div>
         </div>

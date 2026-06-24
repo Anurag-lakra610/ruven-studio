@@ -335,7 +335,12 @@ function LoginForm() {
         @media (max-width: 767px) {
           .login-left-panel { display: none !important; }
           .login-right-panel { width: 100% !important; padding: 32px 24px !important; }
-          .login-inner { padding: 0 !important; }
+          .login-inner {
+            padding: 0 !important;
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+          }
         }
       `}</style>
 
@@ -407,7 +412,17 @@ function LoginForm() {
             fontFamily: 'var(--font-sans)',
           }}
         >
-          <div className="login-inner" style={{ width: "100%", maxWidth: "380px", padding: "48px 40px", background: T.bgWhite }}>
+          <div
+            className="login-inner"
+            style={{
+              width: "100%",
+              maxWidth: "380px",
+              padding: "48px 40px",
+              background: T.bgWhite,
+              border: "1px solid #E5E3DD",
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)"
+            }}
+          >
             <Link href="/shop" className="back-link" style={{ fontSize: "12px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px", cursor: "pointer", marginBottom: "32px" }}>
               &larr; Back to shop
             </Link>
