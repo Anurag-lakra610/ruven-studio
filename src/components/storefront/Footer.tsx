@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="cta-button cta-button-white h-[52px]"
+                  className="cta-button cta-button-charcoal h-[52px]"
                 >
                   <span className="btn-content">
                     <span className="btn-text">Subscribe</span>
