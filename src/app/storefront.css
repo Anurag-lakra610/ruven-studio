@@ -2822,10 +2822,9 @@ h1, h2, h3, h4, h5, h6 {
   align-items: flex-end;
   gap: var(--spacing-xl);
   margin-bottom: 1.2rem;
-  max-width: var(--max-width-site);
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 var(--spacing-2xl);
+  width: 100%;
+  padding-left: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
+  padding-right: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
 }
 
 .editorial-title-v2 {
@@ -2857,7 +2856,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 0.6rem;
+  padding: 5px;
   box-shadow: var(--shadow-subtle);
   transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
@@ -2926,7 +2925,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .campaign-hero-info {
-  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
+  padding: 8px 8px 6px 8px;
 }
 
 .campaign-info-meta {
@@ -3048,7 +3047,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 0.6rem;
+  padding: 5px;
   box-shadow: var(--shadow-subtle);
   position: relative;
   transition: all var(--transition-medium);
@@ -3103,7 +3102,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .supporting-info {
-  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
+  padding: 8px 8px 6px 8px;
 }
 
 .supporting-title {
@@ -3352,9 +3351,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .best-sellers-header {
-  max-width: var(--max-width-site);
-  margin: 0 auto 1.2rem;
-  padding: 0 var(--spacing-2xl);
+  width: 100%;
+  margin-bottom: 1.2rem;
+  padding-left: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
+  padding-right: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
 }
 
 .best-sellers-wrapper {
@@ -3373,8 +3373,8 @@ h1, h2, h3, h4, h5, h6 {
   gap: 2rem;
   padding-top: 1.5rem;
   padding-bottom: 2.5rem;
-  padding-left: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2 + var(--spacing-2xl)));
-  padding-right: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2 + var(--spacing-2xl)));
+  padding-left: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
+  padding-right: max(var(--spacing-2xl), calc((100vw - var(--max-width-site)) / 2));
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
 }
@@ -3444,7 +3444,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  padding: 0.6rem;
+  padding: 5px;
   transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -3505,7 +3505,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Text Content details below the image wrapper */
 .nike-card-details {
-  padding: 0.8rem 0.4rem 0.4rem 0.4rem;
+  padding: 8px 8px 6px 8px;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
