@@ -681,27 +681,30 @@ export const Header: React.FC = () => {
             )}
 
             {isProfileDropdownOpen && isAuthenticated && (
-              <div className="absolute right-0 top-full mt-2 w-[240px] bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 shadow-xl z-50 p-5 rounded-none text-left animate-fade-in font-sans">
-                <div className="space-y-3">
-                  {/* Title / Welcome */}
-                  <div className="space-y-0.5">
-                    <h4 className="text-[11px] font-bold text-zinc-900 dark:text-zinc-50 uppercase tracking-wide">
+              <div 
+                className="absolute right-0 top-full mt-2 w-[260px] bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 shadow-xl z-50 p-5 rounded-none text-left animate-fade-in font-sans"
+                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+              >
+                <div className="space-y-1">
+                  {/* User greeting */}
+                  <div className="px-1 pb-2">
+                    <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-50 uppercase tracking-wider">
                       Hello {userName.split(" ")[0]}
                     </h4>
-                    <p className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono tracking-wider uppercase">
+                    <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono tracking-wider uppercase mt-0.5">
                       {memberLevel}
                     </p>
                   </div>
 
                   <div className="border-b border-zinc-150 dark:border-zinc-800/80 my-2" />
 
-                  {/* Primary CTA */}
+                  {/* Shopping CTA */}
                   <button
                     onClick={() => {
                       setIsProfileDropdownOpen(false);
                       router.push("/shop");
                     }}
-                    className="w-full text-center py-2.5 bg-[#670000] text-white hover:bg-black transition-colors text-[9px] font-bold uppercase tracking-widest rounded-none cursor-pointer"
+                    className="w-full text-center py-2.5 bg-[#670000] text-white hover:bg-black transition-colors text-[9px] font-bold uppercase tracking-widest rounded-none cursor-pointer my-1.5"
                   >
                     Continue Shopping
                   </button>
@@ -709,20 +712,20 @@ export const Header: React.FC = () => {
                   <div className="border-b border-zinc-150 dark:border-zinc-800/80 my-2" />
 
                   {/* Nav links */}
-                  <div className="space-y-2">
+                  <div className="space-y-0.5">
                     {[
                       { label: "My Orders", path: "/account/orders" },
                       { label: "Wishlist", path: "/account/wishlist" },
                       { label: "Recently Viewed", path: "/account/recent" },
                       { label: "Saved Addresses", path: "/account/addresses" },
                       { label: "Journal Library", path: "/account/journal" },
-                      { label: "Rewards & Tier", path: "/account/rewards" }
+                      { label: "Rewards & Membership", path: "/account/rewards" }
                     ].map((link) => (
                       <Link
                         key={link.path}
                         href={link.path}
                         onClick={() => setIsProfileDropdownOpen(false)}
-                        className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 hover:text-[#670000] dark:hover:text-red-400 transition-colors"
+                        className="block py-2 px-1 text-xs font-medium text-zinc-600 hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -731,21 +734,21 @@ export const Header: React.FC = () => {
 
                   <div className="border-b border-zinc-150 dark:border-zinc-800/80 my-2" />
 
-                  {/* Edit Profile & Sign out */}
-                  <div className="space-y-2">
+                  {/* Account Settings & Logout */}
+                  <div className="space-y-0.5 pt-1">
                     <Link
                       href="/account/profile"
                       onClick={() => setIsProfileDropdownOpen(false)}
-                      className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 hover:text-[#670000] dark:hover:text-red-400 transition-colors"
+                      className="block py-2 px-1 text-xs font-medium text-zinc-650 hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
                     >
-                      Edit Profile
+                      Profile Settings
                     </Link>
                     <button
                       onClick={() => {
                         setIsProfileDropdownOpen(false);
                         handleLogout();
                       }}
-                      className="w-full text-left text-[10px] font-bold uppercase tracking-wider text-[#670000] dark:text-red-400 hover:underline cursor-pointer transition-colors"
+                      className="w-full text-left py-2 px-1 text-xs font-bold text-[#670000] dark:text-red-400 hover:underline cursor-pointer transition-colors"
                     >
                       Logout
                     </button>

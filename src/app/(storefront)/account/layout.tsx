@@ -78,12 +78,15 @@ function AccountLayoutInner({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="w-full bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 py-12 pb-24 min-h-[75vh] px-4 md:px-8">
-      <div className="max-w-[1100px] mx-auto">
+    <div className="w-full bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 py-12 pb-24 min-h-[75vh]">
+      <div 
+        className="w-full px-4 md:px-8 lg:px-12"
+        style={{ maxWidth: "1150px", width: "100%", margin: "0 auto" }}
+      >
         
         {/* Clean Page Title Subheader */}
         <div className="border-b border-zinc-150 dark:border-zinc-800/80 pb-4 mb-8">
-          <h1 className="text-lg font-bold uppercase tracking-widest text-zinc-900 dark:text-zinc-50">
+          <h1 className="text-base font-bold uppercase tracking-widest text-zinc-900 dark:text-zinc-50">
             Account
           </h1>
           <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono tracking-widest uppercase mt-0.5">
@@ -92,7 +95,7 @@ function AccountLayoutInner({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Grid Layout Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Sidebar Menu */}
           <div className="lg:col-span-3 space-y-5 lg:border-r lg:border-zinc-150 lg:dark:border-zinc-800/80 lg:pr-8">
@@ -137,7 +140,7 @@ function AccountLayoutInner({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Sub-Page Content */}
-          <div className="lg:col-span-9 animate-fade-in pl-0 lg:pl-2">
+          <div className="lg:col-span-9 animate-fade-in pl-0 lg:pl-8">
             {children}
           </div>
 
