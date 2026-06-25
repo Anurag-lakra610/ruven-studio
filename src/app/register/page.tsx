@@ -29,7 +29,7 @@ const T = {
 const baseInput: React.CSSProperties = {
   border: `1px solid ${T.border}`,
   borderRadius: 0,
-  background: "#FAF9F6",
+  background: T.bgWhite,
   height: "44px",
   padding: "0 14px",
   fontSize: "13px",
@@ -377,7 +377,7 @@ function RegisterForm() {
               maxWidth: "380px",
               padding: "48px 40px",
               background: T.bgWhite,
-              border: "1px solid #E5E3DD",
+              border: "1px solid #ECECEC",
               boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
               position: "relative",
               zIndex: 2,

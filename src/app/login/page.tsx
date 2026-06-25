@@ -29,7 +29,7 @@ const T = {
 const baseInput: React.CSSProperties = {
   border: `1px solid ${T.border}`,
   borderRadius: 0,
-  background: "#FAF9F6",
+  background: T.bgWhite,
   height: "44px",
   padding: "0 14px",
   fontSize: "13px",
@@ -432,7 +432,7 @@ function LoginForm() {
         .back-link { color: ${T.muted}; transition: color 0.15s ease; }
         .back-link:hover { color: ${T.dark}; }
         .google-btn { transition: background 0.15s ease, border-color 0.15s ease; }
-        .google-btn:hover { background: #FAF9F6 !important; border-color: ${T.brandBurgundy} !important; color: ${T.brandBurgundy} !important; }
+        .google-btn:hover { background: #F9F9F9 !important; border-color: ${T.brandBurgundy} !important; color: ${T.brandBurgundy} !important; }
         .btn-brand-primary {
           background: ${T.brandBurgundy} !important;
           transition: background 0.2s ease, transform 0.15s ease;
@@ -530,7 +530,7 @@ function LoginForm() {
               maxWidth: "380px",
               padding: "48px 40px",
               background: T.bgWhite,
-              border: "1px solid #E5E3DD",
+              border: "1px solid #ECECEC",
               boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
               position: "relative",
               zIndex: 2,

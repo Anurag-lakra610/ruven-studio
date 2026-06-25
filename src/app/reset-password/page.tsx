@@ -157,7 +157,7 @@ function ResetPasswordForm() {
               maxWidth: "380px",
               padding: "48px 40px",
               background: T.bgWhite,
-              border: "1px solid #E5E3DD",
+              border: "1px solid #ECECEC",
               boxShadow: "0 10px 30px rgba(0, 0, 0, 0.02), 0 1px 8px rgba(0, 0, 0, 0.01)",
               position: "relative",
               zIndex: 2,

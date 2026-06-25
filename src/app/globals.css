@@ -181,7 +181,7 @@
   position: relative;
   background-color: #FFFFFF !important;
   background-image: 
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.95) 0%, #FAF9F6 100%);
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.95) 0%, #FFFFFF 100%);
   overflow: hidden;
 }
 
