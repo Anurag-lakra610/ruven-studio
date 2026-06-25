@@ -694,86 +694,89 @@ export const Header: React.FC = () => {
             )}
 
             {isProfileDropdownOpen && isAuthenticated && (
-              <div 
-                className="absolute right-0 top-full mt-2 w-[270px] bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 shadow-xl z-50 p-5 pt-4 rounded-none text-left animate-fade-in font-sans"
-                style={{ 
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.1)",
-                  color: "#3e4152"
-                }}
-              >
-                <div className="space-y-1">
-                  {/* User greeting */}
-                  <div className="px-1 pb-1">
-                    <h4 className="text-[12px] font-bold text-[#3e4152] dark:text-zinc-50 uppercase tracking-wide">
-                      Hello {userName}
-                    </h4>
-                    <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono mt-0.5">
-                      {phone}
-                    </p>
-                  </div>
+              <div className="absolute right-0 top-full pt-2.5 z-50 animate-fade-in">
+                <div 
+                  className="w-[270px] bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 shadow-xl p-5 pt-4 rounded-none text-left font-sans"
+                  style={{ 
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.05), 0 0 1px rgba(0,0,0,0.1)",
+                    color: "#3e4152"
+                  }}
+                >
+                  <div className="space-y-1">
+                    {/* User greeting */}
+                    <div className="px-1 pb-1">
+                      <h4 className="text-[12px] font-bold text-[#3e4152] dark:text-zinc-50 uppercase tracking-wide">
+                        Hello {userName}
+                      </h4>
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono mt-0.5">
+                        {phone}
+                      </p>
+                    </div>
 
-                  <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
+                    <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
 
-                  {/* Group 1 */}
-                  <div className="space-y-0.5">
-                    {[
-                      { label: "Orders", path: "/account/orders" },
-                      { label: "Wishlist", path: "/account/wishlist" },
-                      { label: "Recently Viewed", path: "/account/recent" },
-                      { label: "Journal Library", path: "/account/journal" },
-                      { label: "Rewards & Membership", path: "/account/rewards" }
-                    ].map((link) => (
+                    {/* Group 1 */}
+                    <div className="space-y-0.5">
+                      {[
+                        { label: "Orders", path: "/account/orders" },
+                        { label: "Wishlist", path: "/account/wishlist" },
+                        { label: "Recently Viewed", path: "/account/recent" },
+                        { label: "Journal Library", path: "/account/journal" },
+                        { label: "Rewards & Membership", path: "/account/rewards" }
+                      ].map((link) => (
+                        <Link
+                          key={link.path}
+                          href={link.path}
+                          onClick={() => setIsProfileDropdownOpen(false)}
+                          className="block py-1.5 px-1 text-[12px] font-normal text-[#3e4152] hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
+
+                    {/* Group 2 */}
+                    <div className="space-y-0.5">
+                      {[
+                        { label: "Saved Addresses", path: "/account/addresses" },
+                        { label: "Preferences & Settings", path: "/account/settings" },
+                        { label: "Contact Support", path: "/support" }
+                      ].map((link) => (
+                        <Link
+                          key={link.path}
+                          href={link.path}
+                          onClick={() => setIsProfileDropdownOpen(false)}
+                          className="block py-1.5 px-1 text-[12px] font-normal text-[#3e4152] hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
+
+                    {/* Group 3 */}
+                    <div className="space-y-0.5 pt-1">
                       <Link
-                        key={link.path}
-                        href={link.path}
+                        key="/account/profile"
+                        href="/account/profile"
                         onClick={() => setIsProfileDropdownOpen(false)}
                         className="block py-1.5 px-1 text-[12px] font-normal text-[#3e4152] hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
                       >
-                        {link.label}
+                        Edit Profile
                       </Link>
-                    ))}
-                  </div>
-
-                  <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
-
-                  {/* Group 2 */}
-                  <div className="space-y-0.5">
-                    {[
-                      { label: "Saved Addresses", path: "/account/addresses" },
-                      { label: "Preferences & Settings", path: "/account/settings" },
-                      { label: "Contact Support", path: "/support" }
-                    ].map((link) => (
-                      <Link
-                        key={link.path}
-                        href={link.path}
-                        onClick={() => setIsProfileDropdownOpen(false)}
-                        className="block py-1.5 px-1 text-[12px] font-normal text-[#3e4152] hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
+                      <button
+                        onClick={() => {
+                          setIsProfileDropdownOpen(false);
+                          handleLogout();
+                        }}
+                        className="w-full text-left py-1.5 px-1 text-[12px] font-bold text-[#670000] dark:text-red-400 hover:underline cursor-pointer transition-colors"
                       >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-
-                  <div className="border-b border-[#F5F5F6] dark:border-zinc-800/80 my-2" />
-
-                  {/* Group 3 */}
-                  <div className="space-y-0.5 pt-1">
-                    <Link
-                      href="/account/profile"
-                      onClick={() => setIsProfileDropdownOpen(false)}
-                      className="block py-2 px-1 text-xs font-medium text-zinc-650 hover:text-[#670000] dark:text-zinc-400 dark:hover:text-red-400 transition-colors"
-                    >
-                      Profile Settings
-                    </Link>
-                    <button
-                      onClick={() => {
-                        setIsProfileDropdownOpen(false);
-                        handleLogout();
-                      }}
-                      className="w-full text-left py-2 px-1 text-xs font-bold text-[#670000] dark:text-red-400 hover:underline cursor-pointer transition-colors"
-                    >
-                      Logout
-                    </button>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
