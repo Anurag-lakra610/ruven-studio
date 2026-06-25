@@ -88,116 +88,175 @@ export default function AccountPage() {
 
   if (loading || !user) {
     return (
-      <div className="w-full min-h-[400px] flex flex-col items-center justify-center bg-bg-warm dark:bg-zinc-950 gap-4">
-        <svg className="animate-spin h-8 w-8 text-brand-burgundy dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span className="text-[10px] tracking-widest text-text-muted uppercase font-bold animate-pulse">Verifying Session...</span>
+      <div className="w-full min-h-[500px] flex flex-col items-center justify-center bg-[#F5F3EE] dark:bg-[#121212] gap-4 relative overflow-hidden">
+        {/* Blueprint Layout Grid & Faith-Inspired Watermark */}
+        <div className="auth-blueprint-grid" />
+        <div className="auth-watermark-graphic" />
+        
+        <div className="relative z-10 flex flex-col items-center gap-4">
+          <svg className="animate-spin h-8 w-8 text-[#670000] dark:text-[#B33A3A]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span className="text-[10px] tracking-[0.2em] text-[#888880] uppercase font-bold animate-pulse">Verifying Session...</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full bg-bg-warm dark:bg-zinc-950 py-12 px-6 md:px-12 lg:px-20 min-h-[calc(100vh-160px)]">
-      <div className="max-w-[1200px] mx-auto space-y-10">
+    <div className="w-full bg-[#F5F3EE] dark:bg-[#121212] py-16 px-6 md:px-12 lg:px-20 min-h-[calc(100vh-160px)] relative overflow-hidden flex items-center justify-center">
+      {/* Blueprint Layout Grid & Faith-Inspired Watermark */}
+      <div className="auth-blueprint-grid" />
+      <div className="auth-watermark-graphic" />
+
+      <div className="max-w-[1200px] w-full mx-auto space-y-12 relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-border-warm">
-          <div className="space-y-1">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-zinc-500 dark:text-zinc-400 uppercase block">Customer Dashboard</span>
-            <h1 className="text-2xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
-              <User className="w-6 h-6 text-brand-burgundy" />
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-[#E5E3DD] dark:border-[#2C2C2A]">
+          <div className="space-y-2">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#888880] uppercase block">
+              Customer Dashboard
+            </span>
+            <h1 className="text-3xl font-medium tracking-tight text-[#1A1A18] dark:text-[#ECECEC] flex items-center gap-3">
+              <User className="w-7 h-7 text-[#670000] dark:text-[#B33A3A] stroke-[1.5]" />
               <span>Welcome back, {user.name}</span>
             </h1>
           </div>
           <button
             onClick={handleLogout}
-            className="px-5 py-2 border border-border-warm hover:bg-bg-card rounded-none text-xs font-bold uppercase tracking-wider text-text-primary flex items-center gap-1.5 transition-colors"
+            className="px-6 py-2.5 border border-[#E5E3DD] dark:border-[#2C2C2A] bg-white dark:bg-[#1E1E1C] text-[10px] font-bold uppercase tracking-widest text-[#1A1A18] dark:text-[#ECECEC] hover:bg-[#670000] dark:hover:bg-[#B33A3A] hover:border-[#670000] dark:hover:border-[#B33A3A] hover:text-white dark:hover:text-white flex items-center gap-2 transition-all duration-300 rounded-none cursor-pointer"
           >
-            <LogOut className="w-4 h-4 text-brand-burgundy" />
+            <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Left profile info */}
-          <div className="lg:col-span-4 bg-white dark:bg-zinc-900 border border-border-warm rounded-none p-6 space-y-6">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary pb-3 border-b border-border-warm">
+          <div className="lg:col-span-4 bg-white dark:bg-[#1E1E1C] border border-[#E5E3DD] dark:border-[#2C2C2A] rounded-none p-6 shadow-sm relative">
+            <div className="h-[3px] bg-[#670000] dark:bg-[#B33A3A] -mx-6 -mt-6 mb-6" />
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A18] dark:text-[#ECECEC] pb-4 border-b border-[#F5F3EE] dark:border-[#2C2C2A]">
               Profile Summary
             </h3>
 
-            <div className="space-y-4 text-xs text-text-muted">
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-zinc-400 dark:text-zinc-500 flex-shrink-0" />
+            <div className="space-y-6 mt-6">
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-[#F5F3EE] dark:bg-[#2C2C2A] text-[#670000] dark:text-[#B33A3A] flex-shrink-0">
+                  <Mail className="w-4 h-4 stroke-[1.5]" />
+                </div>
                 <div>
-                  <span className="text-[8px] font-bold uppercase tracking-wider block text-text-primary">Email Address</span>
-                  <span>{user.email}</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#888880] block">Email Address</span>
+                  <span className="text-xs text-[#1A1A18] dark:text-[#ECECEC] font-medium break-all mt-0.5 block">{user.email}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-zinc-400 dark:text-zinc-500 flex-shrink-0" />
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-[#F5F3EE] dark:bg-[#2C2C2A] text-[#670000] dark:text-[#B33A3A] flex-shrink-0">
+                  <Phone className="w-4 h-4 stroke-[1.5]" />
+                </div>
                 <div>
-                  <span className="text-[8px] font-bold uppercase tracking-wider block text-text-primary">Phone Number</span>
-                  <span>+91 98765 43210</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#888880] block">Phone Number</span>
+                  <span className="text-xs text-[#1A1A18] dark:text-[#ECECEC] font-medium mt-0.5 block">+91 98765 43210</span>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-zinc-400 dark:text-zinc-500 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-[#F5F3EE] dark:bg-[#2C2C2A] text-[#670000] dark:text-[#B33A3A] flex-shrink-0">
+                  <MapPin className="w-4 h-4 stroke-[1.5]" />
+                </div>
                 <div>
-                  <span className="text-[8px] font-bold uppercase tracking-wider block text-text-primary">Shipping Location</span>
-                  <p className="leading-relaxed text-text-primary">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#888880] block">Shipping Location</span>
+                  <p className="text-xs text-[#1A1A18] dark:text-[#ECECEC] font-medium mt-0.5 leading-relaxed">
                     12/A, Sector 3, Mumbai,<br />Maharashtra - 400001, India
                   </p>
                 </div>
+              </div>
+
+              <div className="pt-2">
+                <button className="w-full py-2.5 border border-[#1A1A18] dark:border-[#ECECEC] bg-white dark:bg-[#1E1E1C] hover:bg-[#1A1A18] dark:hover:bg-[#ECECEC] hover:text-white dark:hover:text-[#1A1A18] transition-all duration-300 text-[10px] tracking-widest font-bold uppercase rounded-none cursor-pointer">
+                  Edit Address
+                </button>
               </div>
             </div>
           </div>
 
           {/* Right order list */}
-          <div className="lg:col-span-8 bg-white dark:bg-zinc-900 border border-border-warm rounded-none p-6 space-y-6">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary pb-3 border-b border-border-warm">
+          <div className="lg:col-span-8 bg-white dark:bg-[#1E1E1C] border border-[#E5E3DD] dark:border-[#2C2C2A] rounded-none p-6 shadow-sm relative">
+            <div className="h-[3px] bg-[#670000] dark:bg-[#B33A3A] -mx-6 -mt-6 mb-6" />
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A18] dark:text-[#ECECEC] pb-4 border-b border-[#F5F3EE] dark:border-[#2C2C2A]">
               Order Transaction History
             </h3>
 
-            {orders.length === 0 ? (
-              <div className="py-12 text-center text-xs space-y-3">
-                <Package className="w-8 h-8 text-text-muted stroke-[1] mx-auto" />
-                <p className="text-text-muted">You haven't placed any storefront orders yet.</p>
-              </div>
-            ) : (
-              <div className="divide-y divide-zinc-100 dark:divide-zinc-800 space-y-4">
-                {orders.map((ord) => (
-                  <div key={ord.number} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 first:pt-0 last:pb-0">
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="font-mono font-bold text-brand-burgundy tracking-wide">{ord.number}</span>
-                        <span className="text-[9px] px-2.5 py-0.5 rounded-none font-bold uppercase tracking-wider bg-zinc-100 dark:bg-zinc-800 text-text-muted">
-                          {ord.status}
-                        </span>
-                      </div>
-                      <p className="text-xs font-bold text-text-primary uppercase tracking-wide">
-                        {ord.items}
-                      </p>
-                      <div className="flex items-center gap-1.5 text-[10px] text-text-muted">
-                        <Calendar className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
-                        <span>Placed on {ord.date}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex sm:flex-col items-baseline sm:items-end justify-between w-full sm:w-auto gap-4">
-                      <span className="text-sm font-bold text-text-primary">₹{ord.total}</span>
-                      <Link
-                        href={`/tracking?order_number=${ord.number}`}
-                        className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-brand-burgundy transition-colors flex items-center gap-1"
-                      >
-                        <span>Track Cargo</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </Link>
-                    </div>
+            <div className="mt-6">
+              {orders.length === 0 ? (
+                <div className="py-16 text-center space-y-4">
+                  <div className="p-4 bg-[#F5F3EE] dark:bg-[#1A1A18] text-[#670000] dark:text-[#B33A3A] inline-block rounded-none">
+                    <Package className="w-8 h-8 stroke-[1.25]" />
                   </div>
-                ))}
-              </div>
-            )}
+                  <div className="space-y-1">
+                    <p className="text-sm font-bold text-[#1A1A18] dark:text-[#ECECEC] uppercase tracking-wider">No active cargo</p>
+                    <p className="text-xs text-[#888880]">You haven't placed any storefront orders yet.</p>
+                  </div>
+                  <div className="pt-2">
+                    <Link
+                      href="/shop"
+                      className="inline-block px-6 py-2.5 bg-[#670000] hover:bg-[#8E1B1B] text-white text-[10px] tracking-widest font-bold uppercase transition-all duration-300 rounded-none"
+                    >
+                      Explore Collections
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {orders.map((ord) => (
+                    <div
+                      key={ord.number}
+                      className="p-5 border border-[#E5E3DD] dark:border-[#2C2C2A] bg-[#FAFAFA] dark:bg-[#1A1A18]/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 transition-all duration-300 hover:border-[#670000] dark:hover:border-[#B33A3A]"
+                    >
+                      <div className="space-y-3 flex-1">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="font-mono font-bold text-xs text-[#670000] dark:text-[#B33A3A] tracking-wider bg-[#670000]/5 dark:bg-[#B33A3A]/10 px-2 py-1">
+                            {ord.number}
+                          </span>
+                          {ord.status === "Processing" ? (
+                            <span className="inline-flex items-center gap-1.5 text-[10px] px-2.5 py-0.5 rounded-none font-bold uppercase tracking-wider bg-[#FFFBEB] text-[#B45309] border border-[#FDE68A]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#B45309] animate-pulse" />
+                              {ord.status}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 text-[10px] px-2.5 py-0.5 rounded-none font-bold uppercase tracking-wider bg-[#EBF7EE] text-[#1C522D] border border-[#A7F3D0]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#1C522D]" />
+                              {ord.status}
+                            </span>
+                          )}
+                        </div>
+                        
+                        <h4 className="text-sm font-semibold tracking-wide text-[#1A1A18] dark:text-[#ECECEC] uppercase">
+                          {ord.items}
+                        </h4>
+
+                        <div className="flex items-center gap-2 text-[10px] text-[#888880]">
+                          <Calendar className="w-3.5 h-3.5 text-[#888880]" />
+                          <span>Placed on {ord.date}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex md:flex-col items-baseline md:items-end justify-between w-full md:w-auto gap-4 pt-4 md:pt-0 border-t md:border-t-0 border-[#E5E3DD] dark:border-[#2C2C2A]">
+                        <div className="space-y-0.5">
+                          <span className="text-[9px] font-bold uppercase tracking-wider text-[#888880] block md:text-right">Total Amount</span>
+                          <span className="text-base font-bold text-[#1A1A18] dark:text-[#ECECEC]">₹{ord.total}</span>
+                        </div>
+                        <Link
+                          href={`/tracking?order_number=${ord.number}`}
+                          className="px-4 py-2 border border-[#1A1A18] dark:border-[#ECECEC] hover:bg-[#1A1A18] dark:hover:bg-[#ECECEC] hover:text-white dark:hover:text-[#1A1A18] transition-all duration-300 text-[10px] tracking-widest font-bold uppercase rounded-none flex items-center gap-1.5"
+                        >
+                          <span>Track Cargo</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
